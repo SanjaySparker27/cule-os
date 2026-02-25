@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pet Partner | Indian Pet Marketplace</title>
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Space+Grotesk:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <div class="backdrop">
+      <span class="blob blob-one" aria-hidden="true"></span>
+      <span class="blob blob-two" aria-hidden="true"></span>
+      <span class="grid-overlay" aria-hidden="true"></span>
+    </div>
+
+    <header class="nav">
+      <div class="brand">
+        <span class="brand-mark">PP</span>
+        <div>
+          <p>Pet Partner</p>
+          <small>French aesthetic · Indian compliance</small>
+        </div>
+      </div>
+      <nav>
+        <a href="#market">Marketplace</a>
+        <a href="#categories">Categories</a>
+        <a href="#compliance">Compliance</a>
+        <a href="#login">Login</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="ghost" data-auth="seller">Seller Portal</button>
+        <button class="solid" data-auth="buyer">Login</button>
+        <div class="cart" aria-label="Cart">
+          <span class="cart-count" id="cart-count">0</span>
+          <span>Cart</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="hero" id="home">
+        <div class="hero-copy">
+          <p class="eyebrow">Licensed pan-India live pet marketplace</p>
+          <h1>Adopt joy with Parisian elegance.</h1>
+          <p class="lede">
+            We curate only registered pet shops and licensed breeders, vet-cleared
+            animals, and compliance-first logistics — so you pick with heart, while
+            we guard the rules.
+          </p>
+          <div class="hero-actions">
+            <button class="solid" data-scroll="#market">Start browsing</button>
+            <button class="ghost" data-contact>Book a live video check</button>
+          </div>
+          <div class="hero-stats">
+            <div>
+              <strong>180+</strong>
+              <span>Verified breeders & pet shops</span>
+            </div>
+            <div>
+              <strong>22</strong>
+              <span>States covered with licence checks</span>
+            </div>
+            <div>
+              <strong>48h</strong>
+              <span>Vet fit-to-travel certification window</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-label="Animated pet showcase">
+          <div class="remotion-strip">
+            <div class="frame frame-one">
+              <p>Golden Retriever · Bengaluru</p>
+              <span>Vaccinated · Microchipped</span>
+            </div>
+            <div class="frame frame-two">
+              <p>Persian Cat · Mumbai</p>
+              <span>Indoor only · Vet cleared</span>
+            </div>
+            <div class="frame frame-three">
+              <p>Leopard Gecko · Pune</p>
+              <span>Captive bred · Care sheet</span>
+            </div>
+          </div>
+          <div class="timeline" aria-hidden="true">
+            <span class="tick"></span>
+            <span class="tick"></span>
+            <span class="tick"></span>
+          </div>
+          <div class="compliance-badge">
+            <p>AWBI & State licence required</p>
+            <small>Seller identity masked; documents verified.</small>
+          </div>
+        </div>
+      </section>
+
+      <section class="gallery" id="gallery">
+        <div class="section-head">
+          <p class="eyebrow">Nature-forward</p>
+          <h2>Happy companions in their element</h2>
+          <p class="hint">Real-life settings to set expectations for space, light, and care.</p>
+        </div>
+        <div class="gallery-grid">
+          <figure class="gallery-card">
+            <img src="https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=1200&q=80" alt="Golden Retriever sitting in a park" />
+            <figcaption class="label">Dogs</figcaption>
+          </figure>
+          <figure class="gallery-card">
+            <img src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=1200&q=80" alt="Persian cat on a sofa" />
+            <figcaption class="label">Cats</figcaption>
+          </figure>
+          <figure class="gallery-card">
+            <img src="https://images.unsplash.com/photo-1508672019048-805c876b67e2?auto=format&fit=crop&w=1200&q=80" alt="Group of colorful parrots" />
+            <figcaption class="label">Birds (Exotic)</figcaption>
+          </figure>
+          <figure class="gallery-card">
+            <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80" alt="Koi fish swimming in a pond" />
+            <figcaption class="label">Aquatics</figcaption>
+          </figure>
+          <figure class="gallery-card">
+            <img src="https://images.unsplash.com/photo-1508186225823-0963cf9ab0de?auto=format&fit=crop&w=1200&q=80" alt="Rabbit and guinea pig together on grass" />
+            <figcaption class="label">Small Pets</figcaption>
+          </figure>
+          <figure class="gallery-card">
+            <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1200&q=80" alt="Bearded dragon on a rock" />
+            <figcaption class="label">Reptiles</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="filters" id="market">
+        <div class="filters-head">
+          <div>
+            <p class="eyebrow">Live & ready</p>
+            <h2>Choose your companion</h2>
+            <p class="hint">Filter by species, breed, gender, age, colour, and state.</p>
+          </div>
+          <div class="status-chip" id="results-count">0 companions</div>
+        </div>
+        <div class="filter-grid">
+          <label>
+            Species
+            <select id="filter-species"></select>
+          </label>
+          <label>
+            Breed
+            <select id="filter-breed"></select>
+          </label>
+          <label>
+            Gender
+            <select id="filter-gender">
+              <option value="all">Any</option>
+              <option value="female">Female</option>
+              <option value="male">Male</option>
+            </select>
+          </label>
+          <label>
+            Age
+            <select id="filter-age">
+              <option value="all">Any</option>
+              <option value="0-6">Up to 6 months</option>
+              <option value="6-12">6–12 months</option>
+              <option value="12-36">1–3 years</option>
+              <option value="36+">3+ years</option>
+            </select>
+          </label>
+          <label>
+            Colour
+            <select id="filter-colour"></select>
+          </label>
+          <label>
+            State
+            <select id="filter-state"></select>
+          </label>
+          <div class="filter-actions">
+            <button class="ghost" id="reset-filters">Reset filters</button>
+            <button class="solid" data-auth="buyer">Login to reserve</button>
+          </div>
+        </div>
+
+        <div class="card-grid" id="pet-grid" aria-live="polite"></div>
+      </section>
+
+      <section class="categories" id="categories">
+        <div class="section-head">
+          <p class="eyebrow">By the book</p>
+          <h2>Categories allowed across India</h2>
+          <p class="hint">
+            Only domesticated or lawfully imported exotics with proof of captive breeding;
+            native wildlife is blocked automatically.
+          </p>
+        </div>
+        <div class="category-grid">
+          <article class="category-card">
+            <h3>Dogs</h3>
+            <p>KC-registered breeds & Indies; 8+ weeks, microchip + DHPPiL shots.</p>
+          </article>
+          <article class="category-card">
+            <h3>Cats</h3>
+            <p>Persian, Siamese, Ragdoll, Indie; FVRCP + FeLV, indoor-first policy.</p>
+          </article>
+          <article class="category-card">
+            <h3>Small Pets</h3>
+            <p>Hamsters, rabbits, guinea pigs, hedgehogs, sugar gliders (declared exotics).</p>
+          </article>
+          <article class="category-card">
+            <h3>Birds (Exotic)</h3>
+            <p>Budgies, cockatiels, lovebirds, finches; no Indian native species.</p>
+          </article>
+          <article class="category-card">
+            <h3>Aquatics</h3>
+            <p>Freshwater & marine ornamentals from permitted lists; oxygen-packed transport.</p>
+          </article>
+          <article class="category-card">
+            <h3>Reptiles</h3>
+            <p>Captive-bred leopard geckos, corn snakes, bearded dragons; care sheets mandated.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="compliance" id="compliance">
+        <div class="section-head">
+          <p class="eyebrow">Compliance-first</p>
+          <h2>How we keep it legal</h2>
+        </div>
+        <div class="steps">
+          <article>
+            <h3>Licence gate</h3>
+            <p>Every seller uploads State Pet Shop licence or breeder permit; platform verifies validity and expiry.</p>
+          </article>
+          <article>
+            <h3>Vet sign-off</h3>
+            <p>Fitness-to-travel certificate & vaccination log required per listing; buyers see health card before paying.</p>
+          </article>
+          <article>
+            <h3>Masked identity</h3>
+            <p>Seller name stays hidden; grievance redressal and emergency contact remain visible as per IT rules.</p>
+          </article>
+          <article>
+            <h3>Species blocklist</h3>
+            <p>Schedule I–IV wildlife, native birds, and undeclared exotics are auto-rejected with audit trail.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="cta" id="login">
+        <div>
+          <h2>Log in or join as a vetted seller</h2>
+          <p>Unified portal for buyers, breeders, and pet shops with document locker & renewal reminders.</p>
+        </div>
+        <div class="cta-actions">
+          <button class="solid" data-auth="buyer">Login</button>
+          <button class="ghost" data-auth="seller">Apply as seller</button>
+        </div>
+      </section>
+    </main>
+
+    <div class="lightbox hidden" id="lightbox" role="dialog" aria-modal="true" aria-label="Pet photos">
+      <div class="lightbox__content">
+        <button class="lightbox__close" aria-label="Close gallery">×</button>
+        <div class="lightbox__image-wrap">
+          <img id="lightbox-image" src="" alt="" />
+          <p id="lightbox-caption"></p>
+        </div>
+        <div class="lightbox__controls">
+          <button id="lightbox-prev" aria-label="Previous image">‹</button>
+          <button id="lightbox-next" aria-label="Next image">›</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal hidden" id="auth-modal" role="dialog" aria-modal="true" aria-label="Authentication">
+      <div class="modal__card">
+        <div class="modal__header">
+          <h3 id="auth-title">Login</h3>
+          <button class="modal__close" id="auth-close" aria-label="Close">×</button>
+        </div>
+        <form id="auth-form">
+          <label>
+            Email
+            <input type="email" required placeholder="you@example.com" />
+          </label>
+          <label>
+            Password
+            <input type="password" required placeholder="••••••••" />
+          </label>
+          <label>
+            Role
+            <select id="auth-role">
+              <option value="buyer">Buyer</option>
+              <option value="seller">Seller / Breeder</option>
+            </select>
+          </label>
+          <button type="submit" class="solid">Continue</button>
+        </form>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <p>© 2026 Pet Partner. Built for India, inspired by France.</p>
+      <div class="footer-links">
+        <a href="#compliance">Compliance Center</a>
+        <a href="#categories">Categories</a>
+        <a href="#market">Marketplace</a>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
