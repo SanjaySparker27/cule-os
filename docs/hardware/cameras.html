@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera Setup - Cule OS Documentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #294172;
+            --primary-dark: #1a2a4a;
+            --primary-light: #3c6eb4;
+            --accent: #e59728;
+            --text: #333;
+            --text-light: #666;
+            --bg: #fff;
+            --bg-gray: #f6f6f6;
+            --border: #e0e0e0;
+            --code-bg: #f4f4f4;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Open Sans', sans-serif; color: var(--text); line-height: 1.6; }
+        .header { background: var(--primary); padding: 16px 24px; }
+        .header-content { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: white; font-weight: 700; font-size: 20px; }
+        .logo-icon { width: 40px; height: 40px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+        .nav-links { display: flex; gap: 32px; list-style: none; }
+        .nav-links a { color: rgba(255,255,255,0.9); text-decoration: none; font-size: 14px; font-weight: 600; }
+        .nav-links a:hover { color: var(--accent); }
+        .breadcrumbs { background: var(--bg-gray); padding: 16px 24px; border-bottom: 1px solid var(--border); }
+        .breadcrumbs-content { max-width: 1400px; margin: 0 auto; }
+        .breadcrumbs a { color: var(--primary-light); text-decoration: none; }
+        .content { max-width: 1000px; margin: 0 auto; padding: 40px 24px; }
+        h1 { font-size: 36px; color: var(--primary); margin-bottom: 24px; }
+        h2 { font-size: 28px; color: var(--primary); margin: 40px 0 20px; border-bottom: 2px solid var(--border); padding-bottom: 12px; }
+        h3 { font-size: 22px; color: var(--primary); margin: 32px 0 16px; }
+        p { margin-bottom: 16px; color: var(--text-light); }
+        pre { background: var(--code-bg); padding: 20px; border-radius: 8px; overflow-x: auto; font-family: 'Consolas', monospace; font-size: 14px; margin: 20px 0; }
+        code { background: var(--code-bg); padding: 2px 6px; border-radius: 4px; font-family: 'Consolas', monospace; font-size: 14px; }
+        .camera-table { width: 100%; border-collapse: collapse; margin: 24px 0; }
+        .camera-table th, .camera-table td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border); }
+        .camera-table th { background: var(--bg-gray); font-weight: 600; color: var(--primary); }
+        .badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; margin-left: 8px; }
+        .badge-csi { background: #dbeafe; color: #1e40af; }
+        .badge-usb { background: #dcfce7; color: #166534; }
+        .badge-gmsl { background: #f3e8ff; color: #7c3aed; }
+        .badge-ip { background: #fef3c7; color: #92400e; }
+        .notice { background: #e0f2fe; border-left: 4px solid var(--primary-light); padding: 16px 20px; margin: 24px 0; border-radius: 0 8px 8px 0; }
+        .notice.warning { background: #fef3c7; border-left-color: var(--accent); }
+        .notice.success { background: #dcfce7; border-left-color: #22c55e; }
+        .tabs { display: flex; gap: 8px; margin-bottom: 24px; border-bottom: 2px solid var(--border); }
+        .tab { padding: 12px 24px; background: none; border: none; cursor: pointer; font-size: 14px; font-weight: 600; color: var(--text-light); border-bottom: 2px solid transparent; margin-bottom: -2px; }
+        .tab.active { color: var(--primary); border-bottom-color: var(--primary); }
+        .tab:hover { color: var(--primary); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        footer { background: var(--primary-dark); color: white; text-align: center; padding: 40px 24px; margin-top: 80px; }
+        footer a { color: var(--accent); }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="../../index.html" class="logo">
+                <div class="logo-icon">C</div>
+                <span>Cule OS</span>
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Documentation</a></li>
+                    <li><a href="../installation/jetson-setup.html">Installation</a></li>
+                    <li><a href="wiring-diagrams.html">Hardware</a></li>
+                    <li><a href="../configuration/ardupilot-config.html">Configuration</a></li>
+                    <li><a href="../api/api-documentation.html">API</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="breadcrumbs">
+        <div class="breadcrumbs-content">
+            <a href="../../index.html">Home</a> / <a href="../index.html">Documentation</a> / <a href="wiring-diagrams.html">Hardware</a> / Camera Setup
+        </div>
+    </div>
+
+    <main class="content">
+        <h1>Camera Setup Guide</h1>
+        <p>Configure CSI, USB, GMSL, and IP cameras for computer vision and FPV applications.</p>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('csi')">CSI Cameras</button>
+            <button class="tab" onclick="showTab('usb')">USB Cameras</button>
+            <button class="tab" onclick="showTab('gmsl')">GMSL Cameras</button>
+            <button class="tab" onclick="showTab('ip')">IP Cameras</button>
+        </div>
+
+        <div id="csi" class="tab-content active">
+            <h2>CSI Camera Setup <span class="badge badge-csi">Jetson/Raspberry Pi</span></h2>
+            
+            <div class="notice">
+                <strong>Note:</strong> CSI cameras provide the best performance with lowest latency. Recommended for primary navigation cameras.
+            </div>
+
+            <h3>Supported CSI Cameras</h3>
+            <table class="camera-table">
+                <tr><th>Camera</th><th>Resolution</th><th>Platform</th><th>Use Case</th></tr>
+                <tr><td>Raspberry Pi Camera V3</td><td>12MP</td><td>Raspberry Pi</td><td>General vision</td></tr>
+                <tr><td>Raspberry Pi Camera V2</td><td>8MP</td><td>Raspberry Pi</td><td>General vision</td></tr>
+                <tr><td>IMX477 (HQ Camera)</td><td>12MP</td><td>Both</td><td>High quality imaging</td></tr>
+                <tr><td>IMX219</td><td>8MP</td><td>Both</td><td>Standard vision</td></tr>
+                <tr><td>IMX390</td><td>2.4MP</td><td>Jetson</td><td>Automotive HDR</td></tr>
+                <tr><td>OV9281</td><td>1MP</td><td>Both</td><td>Global shutter</td></tr>
+            </table>
+
+            <h3>Jetson CSI Connection</h3>
+            <pre># Check camera is detected
+ls /dev/video*
+
+# Install camera driver (if needed)
+sudo apt update
+sudo apt install nvidia-jetpack
+
+# Test camera with GStreamer
+gst-launch-1.0 nvarguscamerasrc ! 'video/x-raw(memory:NVMM),width=1920,height=1080' ! nvvidconv ! xvimagesink</pre>
+
+            <h3>Raspberry Pi CSI Connection</h3>
+            <pre># Enable camera interface
+sudo raspi-config
+# Interface Options > Camera > Enable
+
+# Verify camera
+vcgencmd get_camera
+# Should show: supported=1 detected=1
+
+# Test camera
+libcamera-hello
+
+# Capture image
+libcamera-jpeg -o test.jpg</pre>
+
+            <h3>Cule OS Configuration</h3>
+            <pre># Configure CSI camera in Cule OS
+sudo cule-config --camera csi --resolution 1920x1080 --fps 30
+
+# Verify configuration
+cule-camera-status</pre>
+        </div>
+
+        <div id="usb" class="tab-content">
+            <h2>USB Camera Setup <span class="badge badge-usb">Universal</span></h2>
+            
+            <div class="notice">
+                <strong>Note:</strong> USB cameras work on all platforms and are easiest to set up. Slightly higher latency than CSI.
+            </div>
+
+            <h3>Recommended USB Cameras</h3>
+            <table class="camera-table">
+                <tr><th>Camera</th><th>Resolution</th><th>FPS</th><th>Features</th></tr>
+                <tr><td>Logitech C920</td><td>1080p</td><td>30</td><td>H.264 onboard</td></tr>
+                <tr><td>Logitech C930e</td><td>1080p</td><td>30</td><td>Wide angle, H.264</td></tr>
+                <tr><td>ELP USB Camera</td><td>1080p</td><td>30</td><td>Low cost</td></tr>
+                <tr><td>Intel RealSense D435</td><td>1280x720</td><td>30</td><td>Depth + RGB</td></tr>
+                <tr><td>Intel RealSense D455</td><td>1280x720</td><td>30</td><td>Longer range depth</td></tr>
+            </table>
+
+            <h3>USB Camera Detection</h3>
+            <pre># List USB devices
+lsusb
+
+# List video devices
+ls /dev/video*
+
+# Get camera info
+v4l2-ctl --list-devices
+
+# List supported formats
+v4l2-ctl --list-formats-ext -d /dev/video0</pre>
+
+            <h3>Testing USB Camera</h3>
+            <pre># Install v4l2 tools
+sudo apt install v4l-utils
+
+# Capture test image
+v4l2-ctl --device=/dev/video0 --stream-mmap --stream-to=test.raw --stream-count=1
+
+# GStreamer test
+gst-launch-1.0 v4l2src device=/dev/video0 ! xvimagesink</pre>
+
+            <h3>Cule OS Configuration</h3>
+            <pre># Configure USB camera
+sudo cule-config --camera usb --device /dev/video0 --resolution 1920x1080
+
+# For multiple cameras
+sudo cule-config --camera usb --device /dev/video0 --name front
+cule-config --camera usb --device /dev/video1 --name down</pre>
+        </div>
+
+        <div id="gmsl" class="tab-content">
+            <h2>GMSL Camera Setup <span class="badge badge-gmsl">Jetson AGX Only</span></h2>
+            
+            <div class="notice warning">
+                <strong>Warning:</strong> GMSL cameras require Jetson AGX platform with appropriate deserializer board.
+            </div>
+
+            <h3>Supported GMSL Cameras</h3>
+            <table class="camera-table">
+                <tr><th>Camera</th><th>Resolution</th><th>Features</th><th>Use Case</th></tr>
+                <tr><td>Sekonix SF3324</td><td>1920x1200</td><td>120fps, HDR</td><td>Automotive</td></tr>
+                <tr><td>Sekonix SF3325</td><td>1920x1200</td><td>60fps, HDR</td><td>General</td></tr>
+                <tr><td>Entron S001</td><td>1920x1200</td><td>Fisheye</td><td>Surround view</td></tr>
+                <tr><td>IMX390 GMSL</td><td>1920x1080</td><td>Automotive HDR</td><td>ADAS</td></tr>
+            </table>
+
+            <h3>Hardware Requirements</h3>
+            <ul>
+                <li>Jetson AGX Orin / Xavier</li>
+                <li>GMSL deserializer board (e.g., Leopard Imaging)</li>
+                <li>Compatible GMSL cable</li>
+            </ul>
+
+            <h3>Configuration</h3>
+            <pre># Install GMSL drivers (platform specific)
+sudo apt install nvidia-gmsl-drivers
+
+# Configure GMSL camera
+sudo cule-config --camera gmsl --port ab --resolution 1920x1080 --fps 60
+
+# Verify with GStreamer
+gst-launch-1.0 nvarguscamerasrc sensor-id=0 ! nvvidconv ! xvimagesink</pre>
+        </div>
+
+        <div id="ip" class="tab-content">
+            <h2>IP Camera Setup <span class="badge badge-ip">Network</span></h2>
+            
+            <div class="notice">
+                <strong>Note:</strong> IP cameras work over Ethernet/WiFi. Useful for ground stations and secondary views.
+            </div>
+
+            <h3>Supported IP Cameras</h3>
+            <table class="camera-table">
+                <tr><th>Camera</th><th>Protocol</th><th>Latency</th><th>Use Case</th></tr>
+                <tr><td>Axis Cameras</td><td>RTSP</td><td>High</td><td>Surveillance</td></tr>
+                <tr><td>Hikvision</td><td>RTSP/ONVIF</td><td>High</td><td>Security</td></tr>
+                <tr><td>Raspberry Pi + GStreamer</td><td>UDP/RTP</td><td>Medium</td><td>DIY streaming</td></tr>
+                <tr><td>Wifibot</td><td>HTTP/MJPEG</td><td>Medium</td><td>Low cost</td></tr>
+            </table>
+
+            <h3>RTSP Configuration</h3>
+            <pre># Test RTSP stream
+gst-launch-1.0 rtspsrc location=rtsp://admin:password@192.168.1.100:554/stream1 ! decodebin ! xvimagesink
+
+# Cule OS configuration
+sudo cule-config --camera ip --url rtsp://192.168.1.100:554/stream1 --latency 200</pre>
+
+            <h3>Raspberry Pi as IP Camera</h3>
+            <pre># On Raspberry Pi (camera source)
+gst-launch-1.0 libcamerasrc ! video/x-raw,width=1280,height=720 ! x264enc ! rtph264pay ! udpsink host=192.168.1.50 port=5000
+
+# On companion computer (receiver)
+gst-launch-1.0 udpsrc port=5000 caps="application/x-rtp" ! rtph264depay ! decodebin ! xvimagesink</pre>
+        </div>
+
+        <h2>GStreamer Pipeline Reference</h2>
+        <table class="camera-table">
+            <tr><th>Platform</th><th>Source Element</th><th>Hardware Decode</th></tr>
+            <tr><td>Jetson</td><td><code>nvarguscamerasrc</code> / <code>v4l2src</code></td><td><code>nvvidconv</code></td></tr>
+            <tr><td>Raspberry Pi</td><td><code>libcamerasrc</code> / <code>v4l2src</code></td><td><code>v4l2h264dec</code></td></tr>
+            <tr><td>x86/Linux</td><td><code>v4l2src</code></td><td><code>vaapih264dec</code> / <code>nvdec</code></td></tr>
+        </table>
+    </main>
+
+    <footer>
+        <p>© 2026 Cule OS Documentation</p>
+        <p><a href="https://sanjaysparker27.github.io/sanjay-sparker-portfolio" target="_blank">Created by Sanjay</a></p>
+    </footer>
+
+    <script>
+        function showTab(tabId) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+    </script>
+</body>
+</html>

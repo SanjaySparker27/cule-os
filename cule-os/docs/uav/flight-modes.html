@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quick Start - Cule OS UAV</title>
+    <title>Flight Modes - Cule OS UAV</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
@@ -27,8 +27,6 @@
             color: var(--text);
             line-height: 1.7;
         }
-        
-        /* Header */
         header {
             background: var(--primary);
             padding: 16px 24px;
@@ -73,8 +71,6 @@
             font-weight: 500;
         }
         nav a:hover { color: white; }
-        
-        /* Mobile Menu Toggle */
         .menu-toggle {
             display: none;
             background: none;
@@ -83,8 +79,6 @@
             font-size: 24px;
             cursor: pointer;
         }
-        
-        /* Sidebar */
         .sidebar {
             position: fixed;
             left: 0;
@@ -131,8 +125,6 @@
             color: var(--primary);
             font-weight: 500;
         }
-        
-        /* Main Content */
         .main-wrapper {
             margin-left: 280px;
             padding-top: 68px;
@@ -142,8 +134,6 @@
             padding: 40px;
             max-width: 900px;
         }
-        
-        /* Breadcrumbs */
         .breadcrumbs {
             display: flex;
             align-items: center;
@@ -156,26 +146,15 @@
             color: var(--primary-light);
             text-decoration: none;
         }
-        .breadcrumbs a:hover {
-            text-decoration: underline;
-        }
-        .breadcrumbs .separator {
-            color: var(--border);
-        }
-        .breadcrumbs .current {
-            color: var(--text);
-            font-weight: 500;
-        }
-        
-        /* Typography */
+        .breadcrumbs a:hover { text-decoration: underline; }
+        .breadcrumbs .separator { color: var(--border); }
+        .breadcrumbs .current { color: var(--text); font-weight: 500; }
         h1 { font-size: 36px; color: var(--primary); margin-bottom: 16px; }
         h2 { font-size: 28px; color: var(--primary); margin: 40px 0 20px; border-bottom: 2px solid var(--border); padding-bottom: 12px; }
         h3 { font-size: 22px; color: var(--primary); margin: 32px 0 16px; }
         h4 { font-size: 18px; color: var(--text); margin: 24px 0 12px; }
         p { margin-bottom: 16px; }
         a { color: var(--primary-light); }
-        
-        /* Anchor Links */
         .anchor-link {
             margin-left: 8px;
             opacity: 0;
@@ -183,14 +162,7 @@
             font-size: 0.8em;
             transition: opacity 0.2s;
         }
-        h1:hover .anchor-link,
-        h2:hover .anchor-link,
-        h3:hover .anchor-link,
-        h4:hover .anchor-link {
-            opacity: 1;
-        }
-        
-        /* Tables */
+        h1:hover .anchor-link, h2:hover .anchor-link, h3:hover .anchor-link, h4:hover .anchor-link { opacity: 1; }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -207,11 +179,7 @@
             font-weight: 600;
             color: var(--primary);
         }
-        tr:hover td {
-            background: var(--bg-gray);
-        }
-        
-        /* Code Blocks with Copy Button */
+        tr:hover td { background: var(--bg-gray); }
         .code-block-wrapper {
             position: relative;
             margin: 20px 0;
@@ -233,12 +201,8 @@
             align-items: center;
             gap: 6px;
         }
-        .code-block-wrapper:hover .copy-button {
-            opacity: 1;
-        }
-        .copy-button:hover {
-            background: rgba(255,255,255,0.2);
-        }
+        .code-block-wrapper:hover .copy-button { opacity: 1; }
+        .copy-button:hover { background: rgba(255,255,255,0.2); }
         .copy-button.copied {
             background: var(--success);
             border-color: var(--success);
@@ -263,12 +227,8 @@
             font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
             font-size: 14px;
         }
-        
-        /* Lists */
         ul, ol { margin: 16px 0 16px 24px; }
         li { margin: 8px 0; }
-        
-        /* Notices */
         .notice {
             background: #e0f2fe;
             border-left: 4px solid var(--primary-light);
@@ -288,9 +248,7 @@
             background: #dcfce7;
             border-left-color: var(--success);
         }
-        
-        /* Step Cards */
-        .step {
+        .mode-card {
             background: white;
             border: 1px solid var(--border);
             border-radius: 12px;
@@ -298,114 +256,39 @@
             margin: 24px 0;
             transition: box-shadow 0.2s;
         }
-        .step:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
-        .step h3 {
+        .mode-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .mode-card h3 {
             margin-top: 0;
-            color: var(--primary);
-        }
-        
-        /* Progress Bar */
-        .progress-bar {
             display: flex;
-            justify-content: space-between;
-            margin: 32px 0;
-            padding: 0;
-            list-style: none;
+            align-items: center;
+            gap: 12px;
         }
-        .progress-bar li {
-            flex: 1;
-            text-align: center;
-            position: relative;
-            padding-top: 20px;
+        .mode-tag {
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 500;
         }
-        .progress-bar li::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--border);
-        }
-        .progress-bar li::after {
-            content: '';
-            position: absolute;
-            top: 5px;
-            left: 50%;
-            width: 100%;
-            height: 2px;
-            background: var(--border);
-            z-index: -1;
-        }
-        .progress-bar li:last-child::after {
-            display: none;
-        }
-        .progress-bar li.completed::before {
-            background: var(--success);
-        }
-        .progress-bar li.active::before {
-            background: var(--primary);
-        }
-        
-        /* Mobile Responsive */
+        .mode-tag.manual { background: #fee2e2; color: #991b1b; }
+        .mode-tag.semi { background: #fef3c7; color: #92400e; }
+        .mode-tag.auto { background: #dcfce7; color: #166534; }
         @media (max-width: 1024px) {
-            .menu-toggle {
-                display: block;
-            }
-            nav {
-                display: none;
-            }
-            .sidebar {
-                transform: translateX(-100%);
-            }
-            .sidebar.open {
-                transform: translateX(0);
-            }
-            .sidebar-overlay.show {
-                display: block;
-            }
-            .main-wrapper {
-                margin-left: 0;
-            }
-            .content {
-                padding: 24px;
-            }
-            .progress-bar {
-                flex-wrap: wrap;
-                gap: 10px;
-            }
-            .progress-bar li {
-                flex: none;
-                width: 45%;
-            }
-            .progress-bar li::after {
-                display: none;
-            }
+            .menu-toggle { display: block; }
+            nav { display: none; }
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .sidebar-overlay.show { display: block; }
+            .main-wrapper { margin-left: 0; }
+            .content { padding: 24px; }
         }
-        
         @media (max-width: 640px) {
             h1 { font-size: 28px; }
             h2 { font-size: 24px; }
             h3 { font-size: 20px; }
-            .content {
-                padding: 16px;
-            }
-            .copy-button {
-                opacity: 1;
-            }
-            .step {
-                padding: 16px;
-            }
-            .progress-bar li {
-                width: 100%;
-            }
+            .content { padding: 16px; }
+            .copy-button { opacity: 1; }
+            .mode-card { padding: 16px; }
         }
-        
-        /* Footer */
         footer {
             margin-top: 60px;
             padding: 40px;
@@ -414,9 +297,7 @@
             color: var(--text-light);
             font-size: 14px;
         }
-        footer a {
-            color: var(--primary);
-        }
+        footer a { color: var(--primary); }
     </style>
 </head>
 <body>
@@ -438,17 +319,15 @@
     <aside class="sidebar" id="sidebar">
         <h3>UAV Documentation</h3>
         <a href="index.html">Overview</a>
-        <a href="quickstart.html" class="active">Quick Start</a>
-        <a href="flight-modes.html">Flight Modes</a>
+        <a href="quickstart.html">Quick Start</a>
+        <a href="flight-modes.html" class="active">Flight Modes</a>
         <a href="missions.html">Mission Planning</a>
         <a href="safety.html">Safety Procedures</a>
         <a href="troubleshooting.html">Troubleshooting</a>
-        
         <h3>Other Editions</h3>
         <a href="../ugv/index.html">Terra UGV</a>
         <a href="../usv/index.html">Aqua USV</a>
         <a href="../core/index.html">Core Dev</a>
-        
         <h3>Resources</h3>
         <a href="../hardware/index.html">Hardware</a>
         <a href="../api/index.html">API Reference</a>
@@ -463,193 +342,186 @@
                 <span class="separator">/</span>
                 <a href="../uav/index.html">UAV</a>
                 <span class="separator">/</span>
-                <span class="current">Quick Start</span>
+                <span class="current">Flight Modes</span>
             </nav>
 
-            <h1>Cule OS UAV - Quick Start Guide</h1>
-            <p><strong>Get your drone flying autonomously in 30 minutes</strong></p>
-            
-            <ol class="progress-bar">
-                <li class="completed">Download</li>
-                <li class="completed">Assemble</li>
-                <li class="active">Configure</li>
-                <li>Calibrate</li>
-                <li>Fly</li>
-            </ol>
-            
-            <h2 id="prerequisites">Prerequisites<a href="#prerequisites" class="anchor-link">#</a></h2>
-            
-            <h3 id="required-hardware">Required Hardware<a href="#required-hardware" class="anchor-link">#</a></h3>
+            <h1>Flight Modes</h1>
+            <p>Complete guide to all flight modes in Cule OS UAV Edition</p>
+
+            <h2 id="overview">Overview<a href="#overview" class="anchor-link">#</a></h2>
+            <p>Cule OS supports multiple flight modes that provide varying levels of automation. Choose the right mode based on your mission requirements and pilot skill level.</p>
+
             <table>
                 <thead>
                     <tr>
-                        <th>Component</th>
-                        <th>Recommended</th>
-                        <th>Alternative</th>
+                        <th>Mode</th>
+                        <th>Type</th>
+                        <th>Best For</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Flight Controller</td>
-                        <td>Pixhawk 6X</td>
-                        <td>Pixhawk 4, Cube Orange</td>
+                        <td><strong>MANUAL</strong></td>
+                        <td>Manual</td>
+                        <td>Emergency situations</td>
                     </tr>
                     <tr>
-                        <td>Companion Computer</td>
-                        <td>NVIDIA Jetson Orin Nano</td>
-                        <td>Raspberry Pi 5</td>
+                        <td><strong>STABILIZE</strong></td>
+                        <td>Semi-Auto</td>
+                        <td>Learning, manual flight</td>
                     </tr>
                     <tr>
-                        <td>GPS</td>
-                        <td>u-blox NEO-M9N</td>
-                        <td>u-blox NEO-M8N</td>
+                        <td><strong>ALT_HOLD</strong></td>
+                        <td>Semi-Auto</td>
+                        <td>Photography, inspection</td>
                     </tr>
                     <tr>
-                        <td>Telemetry</td>
-                        <td>Holybro SiK 915MHz</td>
-                        <td>RFD900x</td>
+                        <td><strong>LOITER</strong></td>
+                        <td>Semi-Auto</td>
+                        <td>Waiting, observation</td>
                     </tr>
                     <tr>
-                        <td>Camera</td>
-                        <td>Raspberry Pi Camera v3</td>
-                        <td>USB Webcam</td>
+                        <td><strong>AUTO</strong></td>
+                        <td>Autonomous</td>
+                        <td>Missions, waypoints</td>
+                    </tr>
+                    <tr>
+                        <td><strong>RTL</strong></td>
+                        <td>Autonomous</td>
+                        <td>Emergency return</td>
+                    </tr>
+                    <tr>
+                        <td><strong>GUIDED</strong></td>
+                        <td>Autonomous</td>
+                        <td>Ground control</td>
                     </tr>
                 </tbody>
             </table>
-            
-            <div class="notice warning">
-                <strong>⚠️ Safety Notice:</strong> Always remove propellers before calibration and initial setup. Have a safety pilot ready for first flights.
-            </div>
-            
-            <div class="step" id="step1">
-                <h3>Step 1: Flash Cule OS (5 minutes)<a href="#step1" class="anchor-link">#</a></h3>
-                <div class="code-block-wrapper">
-                    <button class="copy-button" onclick="copyCode(this)">
-                        <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M4 1.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 .5.5v1h.5a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h.5v-1zM5 2v1h6V2H5z"/></svg>
-                        Copy
-                    </button>
-                    <pre><code class="language-bash"># Download latest release
-wget https://sanjaysparker27.github.io/cule-os/releases/cule-os-axon-v1.0.img.xz
 
-# Identify your SD card (be careful!)
-lsblk
+            <h2 id="manual-modes">Manual Modes<a href="#manual-modes" class="anchor-link">#</a></h2>
 
-# Flash to SD card (replace sdX with your device)
-sudo xzcat cule-os-axon-jetson-v1.0.img.xz | sudo dd of=/dev/sdX bs=4M status=progress
-
-# Sync and eject
-sync
-sudo eject /dev/sdX</code></pre>
-                </div>
-            </div>
-            
-            <div class="step" id="step2">
-                <h3>Step 2: Hardware Assembly (10 minutes)<a href="#step2" class="anchor-link">#</a></h3>
-                <p><strong>Wiring Steps:</strong></p>
-                <ol>
-                    <li><strong>Connect Flight Controller to Jetson</strong> - USB-C to USB-A cable</li>
-                    <li><strong>Connect GPS Module</strong> → Pixhawk GPS1 port</li>
-                    <li><strong>Connect Telemetry Radio</strong> → Pixhawk TELEM1 port</li>
-                    <li><strong>Connect Camera</strong> - CSI ribbon cable to Jetson</li>
-                </ol>
-            </div>
-            
-            <div class="step" id="step3">
-                <h3>Step 3: First Boot & Configuration (10 minutes)<a href="#step3" class="anchor-link">#</a></h3>
-                <p>1. Insert SD card into Jetson</p>
-                <p>2. Connect flight controller USB</p>
-                <p>3. Power on (12V-5V buck converter recommended)</p>
-                <p>4. Wait 2-3 minutes for first boot</p>
-                <p>5. Connect to WiFi network <code>Cule-OS-Setup</code></p>
-                
-                <div class="code-block-wrapper">
-                    <button class="copy-button" onclick="copyCode(this)">
-                        <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M4 1.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 .5.5v1h.5a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h.5v-1zM5 2v1h6V2H5z"/></svg>
-                        Copy
-                    </button>
-                    <pre><code class="language-bash"># SSH into Cule OS
-ssh cule@192.168.4.1
-# Password: culeos
-
-# Run configuration wizard
-sudo cule-config</code></pre>
-                </div>
-            </div>
-            
-            <div class="step" id="step4">
-                <h3>Step 4: Sensor Calibration (10 minutes)<a href="#step4" class="anchor-link">#</a></h3>
-                
-                <div class="notice danger">
-                    <strong>⚠️ REMOVE PROPELLERS BEFORE CALIBRATION</strong>
-                </div>
-                
-                <div class="code-block-wrapper">
-                    <button class="copy-button" onclick="copyCode(this)">
-                        <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M4 1.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 .5.5v1h.5a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h.5v-1zM5 2v1h6V2H5z"/></svg>
-                        Copy
-                    </button>
-                    <pre><code class="language-bash"># Compass Calibration
-sudo cule-calibrate compass
-
-# Follow prompts:
-# 1. Hold drone level, rotate 360°
-# 2. Tilt nose down, rotate 360°
-# 3. Tilt left side down, rotate 360°
-# 4. Hold nose up, rotate 360°
-
-# Accelerometer Calibration
-sudo cule-calibrate accel
-
-# Place drone in each position as prompted</code></pre>
-                </div>
-            </div>
-            
-            <div class="step" id="step5">
-                <h3>Step 5: First Flight Test<a href="#step5" class="anchor-link">#</a></h3>
-                
-                <p><strong>Pre-Flight Checklist:</strong></p>
+            <div class="mode-card" id="manual">
+                <h3>MANUAL <span class="mode-tag manual">Manual</span><a href="#manual" class="anchor-link">#</a></h3>
+                <p>Direct RC control with no stabilization. The flight controller passes through RC signals directly to motors/servos.</p>
+                <p><strong>Use When:</strong></p>
                 <ul>
-                    <li>Props securely attached (check rotation direction!)</li>
-                    <li>Battery fully charged (16.8V for 4S)</li>
-                    <li>GPS lock (3D fix, HDOP &lt; 2.0)</li>
-                    <li>Safety pilot ready with RC transmitter</li>
-                    <li>Flight area clear of people/obstacles</li>
+                    <li>Emergency situations requiring direct control</li>
+                    <li>Testing hardware without flight controller assistance</li>
                 </ul>
-                
+                <p><strong>Requirements:</strong> RC transmitter properly configured</p>
+            </div>
+
+            <h2 id="semi-auto-modes">Semi-Automatic Modes<a href="#semi-auto-modes" class="anchor-link">#</a></h2>
+
+            <div class="mode-card" id="stabilize">
+                <h3>STABILIZE <span class="mode-tag semi">Semi-Auto</span><a href="#stabilize" class="anchor-link">#</a></h3>
+                <p>Self-leveling flight mode. The flight controller actively corrects to level when you release the sticks, but throttle is manual.</p>
+                <p><strong>Use When:</strong></p>
+                <ul>
+                    <li>Learning to fly</li>
+                    <li>Manual flight with stability assistance</li>
+                </ul>
                 <div class="code-block-wrapper">
                     <button class="copy-button" onclick="copyCode(this)">
                         <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M4 1.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 .5.5v1h.5a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h.5v-1zM5 2v1h6V2H5z"/></svg>
                         Copy
                     </button>
-                    <pre><code class="language-bash"># ARM in STABILIZE mode
-cule-arm --mode stabilize
-
-# Test Altitude Hold
-cule-mode alt_hold
-
-# Test Loiter
-cule-mode loiter
-
-# Return to Launch
-cule-mode rtl
-
-# Land
-cule-land
-cule-disarm</code></pre>
+                    <pre><code class="language-bash">cule-mode stabilize</code></pre>
                 </div>
             </div>
-            
-            <h2 id="next-steps">Next Steps<a href="#next-steps" class="anchor-link">#</a></h2>
-            
-            <ul>
-                <li><a href="flight-modes.html">Learn Flight Modes</a> - Master all flight modes</li>
-                <li><a href="missions.html">Plan Missions</a> - Create autonomous missions</li>
-                <li><a href="safety.html">Safety Procedures</a> - Critical safety information</li>
-                <li><a href="troubleshooting.html">Troubleshooting</a> - Fix common issues</li>
-            </ul>
-            
-            <div class="notice success">
-                <strong>🎉 Congratulations!</strong> Your drone is now ready for autonomous flight. Check the other guides to unlock advanced features.
+
+            <div class="mode-card" id="alt-hold">
+                <h3>ALT_HOLD <span class="mode-tag semi">Semi-Auto</span><a href="#alt-hold" class="anchor-link">#</a></h3>
+                <p>Maintains altitude automatically using barometer. You control pitch, roll, and yaw while the flight controller manages throttle to maintain altitude.</p>
+                <p><strong>Use When:</strong></p>
+                <ul>
+                    <li>Aerial photography</li>
+                    <li>Inspection missions</li>
+                    <li>Smooth video capture</li>
+                </ul>
+                <p><strong>Requirements:</strong> Barometer calibrated, GPS lock recommended</p>
+            </div>
+
+            <div class="mode-card" id="loiter">
+                <h3>LOITER <span class="mode-tag semi">Semi-Auto</span><a href="#loiter" class="anchor-link">#</a></h3>
+                <p>Holds position and altitude using GPS. The drone maintains its current location and altitude automatically.</p>
+                <p><strong>Use When:</strong></p>
+                <ul>
+                    <li>Waiting for commands</li>
+                    <li>Observation</li>
+                    <li>Setting up for next action</li>
+                </ul>
+                <p><strong>Requirements:</strong> 3D GPS lock (HDOP &lt; 2.0)</p>
+            </div>
+
+            <h2 id="autonomous-modes">Autonomous Modes<a href="#autonomous-modes" class="anchor-link">#</a></h2>
+
+            <div class="mode-card" id="auto">
+                <h3>AUTO <span class="mode-tag auto">Autonomous</span><a href="#auto" class="anchor-link">#</a></h3>
+                <p>Executes pre-programmed mission waypoints. The drone flies autonomously following the loaded mission.</p>
+                <p><strong>Use When:</strong></p>
+                <ul>
+                    <li>Survey missions</li>
+                    <li>Mapping</li>
+                    <li>Delivery routes</li>
+                </ul>
+                <div class="code-block-wrapper">
+                    <button class="copy-button" onclick="copyCode(this)">
+                        <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M4 1.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 .5.5v1h.5a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h.5v-1zM5 2v1h6V2H5z"/></svg>
+                        Copy
+                    </button>
+                    <pre><code class="language-bash"># Load and execute mission
+cule-mission load survey.plan
+cule-arm --mode auto
+
+# Monitor mission progress
+cule-status mission</code></pre>
+                </div>
+            </div>
+
+            <div class="mode-card" id="rtl">
+                <h3>RTL (Return to Launch) <span class="mode-tag auto">Autonomous</span><a href="#rtl" class="anchor-link">#</a></h3>
+                <p>Returns to the takeoff location and lands automatically. Used for failsafe scenarios.</p>
+                <p><strong>Use When:</strong></p>
+                <ul>
+                    <li>Low battery</li>
+                    <li>Signal loss (failsafe)</li>
+                    <li>End of mission</li>
+                </ul>
+                <div class="notice warning">
+                    <strong>⚠️ Important:</strong> RTL altitude must be set higher than any obstacles between current position and home.
+                </div>
+            </div>
+
+            <div class="mode-card" id="guided">
+                <h3>GUIDED <span class="mode-tag auto">Autonomous</span><a href="#guided" class="anchor-link">#</a></h3>
+                <p>Ground station controlled mode. Accepts position and velocity commands from companion computer or ground station.</p>
+                <p><strong>Use When:</strong></p>
+                <ul>
+                    <li>Follow-me mode</li>
+                    <li>Point-and-click navigation</li>
+                    <li>Computer vision guidance</li>
+                </ul>
+            </div>
+
+            <h2 id="failsafe">Failsafe Behavior<a href="#failsafe" class="anchor-link">#</a></h2>
+            <p>When failsafe triggers (RC loss, low battery, etc.), the drone automatically switches to RTL mode. Configure in <code>/etc/cule/failsafe.conf</code>:</p>
+
+            <div class="code-block-wrapper">
+                <button class="copy-button" onclick="copyCode(this)">
+                    <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M4 1.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 .5.5v1h.5a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h.5v-1zM5 2v1h6V2H5z"/></svg>
+                    Copy
+                </button>
+                <pre><code class="language-bash"># /etc/cule/failsafe.conf
+FS_THR_ENABLE=1          # Enable throttle failsafe
+FS_BATT_ENABLE=1         # Enable battery failsafe
+FS_GCS_ENABLE=1          # Enable GCS failsafe
+RTL_ALT=3000             # RTL altitude in cm (30m)
+LAND_SPEED=50            # Landing speed cm/s</code></pre>
+            </div>
+
+            <div class="notice">
+                <strong>Learn More:</strong> See <a href="missions.html">Mission Planning</a> for creating autonomous flight plans.
             </div>
         </main>
         
@@ -662,24 +534,19 @@ cule-disarm</code></pre>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
     <script>
-        // Mobile sidebar toggle
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.querySelector('.sidebar-overlay');
             sidebar.classList.toggle('open');
             overlay.classList.toggle('show');
         }
-        
-        // Copy to clipboard functionality
         function copyCode(button) {
             const codeBlock = button.nextElementSibling.querySelector('code');
             const text = codeBlock.textContent;
-            
             navigator.clipboard.writeText(text).then(() => {
                 const originalText = button.innerHTML;
                 button.innerHTML = '<svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg> Copied!';
                 button.classList.add('copied');
-                
                 setTimeout(() => {
                     button.innerHTML = originalText;
                     button.classList.remove('copied');
@@ -689,8 +556,6 @@ cule-disarm</code></pre>
                 button.textContent = 'Failed';
             });
         }
-        
-        // Close sidebar on window resize if open
         window.addEventListener('resize', () => {
             if (window.innerWidth > 1024) {
                 document.getElementById('sidebar').classList.remove('open');

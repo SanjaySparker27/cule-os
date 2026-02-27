@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Companion Computers - Cule OS Documentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #294172;
+            --primary-dark: #1a2a4a;
+            --primary-light: #3c6eb4;
+            --accent: #e59728;
+            --text: #333;
+            --text-light: #666;
+            --bg: #fff;
+            --bg-gray: #f6f6f6;
+            --border: #e0e0e0;
+            --success: #22c55e;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Open Sans', sans-serif; color: var(--text); line-height: 1.6; }
+        .header { background: var(--primary); padding: 16px 24px; }
+        .header-content { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: white; font-weight: 700; font-size: 20px; }
+        .logo-icon { width: 40px; height: 40px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+        .nav-links { display: flex; gap: 32px; list-style: none; }
+        .nav-links a { color: rgba(255,255,255,0.9); text-decoration: none; font-size: 14px; font-weight: 600; }
+        .nav-links a:hover { color: var(--accent); }
+        .breadcrumbs { background: var(--bg-gray); padding: 16px 24px; border-bottom: 1px solid var(--border); }
+        .breadcrumbs-content { max-width: 1400px; margin: 0 auto; }
+        .breadcrumbs a { color: var(--primary-light); text-decoration: none; }
+        .content { max-width: 1000px; margin: 0 auto; padding: 40px 24px; }
+        h1 { font-size: 36px; color: var(--primary); margin-bottom: 24px; }
+        h2 { font-size: 28px; color: var(--primary); margin: 40px 0 20px; border-bottom: 2px solid var(--border); padding-bottom: 12px; }
+        h3 { font-size: 22px; color: var(--primary); margin: 32px 0 16px; }
+        p { margin-bottom: 16px; color: var(--text-light); }
+        .specs-table { width: 100%; border-collapse: collapse; margin: 24px 0; }
+        .specs-table th, .specs-table td { padding: 16px; text-align: left; border-bottom: 1px solid var(--border); }
+        .specs-table th { background: var(--bg-gray); font-weight: 600; color: var(--primary); }
+        .specs-table tr:hover { background: var(--bg-gray); }
+        .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+        .badge-recommended { background: #dcfce7; color: #166534; }
+        .badge-high { background: #dbeafe; color: #1e40af; }
+        .badge-mid { background: #fef3c7; color: #92400e; }
+        .badge-budget { background: #f3f4f6; color: #4b5563; }
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin: 32px 0; }
+        .card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+        .card h4 { font-size: 18px; color: var(--primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .card ul { list-style: none; margin: 0; }
+        .card li { padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
+        .card li:last-child { border-bottom: none; }
+        .notice { background: #e0f2fe; border-left: 4px solid var(--primary-light); padding: 16px 20px; margin: 24px 0; border-radius: 0 8px 8px 0; }
+        .comparison { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin: 24px 0; }
+        .comparison-item { background: var(--bg-gray); padding: 20px; border-radius: 8px; }
+        .comparison-item h4 { color: var(--primary); margin-bottom: 12px; font-size: 16px; }
+        footer { background: var(--primary-dark); color: white; text-align: center; padding: 40px 24px; margin-top: 80px; }
+        footer a { color: var(--accent); }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="../../index.html" class="logo">
+                <div class="logo-icon">C</div>
+                <span>Cule OS</span>
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Documentation</a></li>
+                    <li><a href="../installation/jetson-setup.html">Installation</a></li>
+                    <li><a href="wiring-diagrams.html">Hardware</a></li>
+                    <li><a href="../configuration/ardupilot-config.html">Configuration</a></li>
+                    <li><a href="../api/api-documentation.html">API</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="breadcrumbs">
+        <div class="breadcrumbs-content">
+            <a href="../../index.html">Home</a> / <a href="../index.html">Documentation</a> / <a href="wiring-diagrams.html">Hardware</a> / Companion Computers
+        </div>
+    </div>
+
+    <main class="content">
+        <h1>Companion Computer Guide</h1>
+        <p>Selecting and configuring the right companion computer for your Cule OS deployment.</p>
+
+        <h2>Recommended Hardware</h2>
+        
+        <table class="specs-table">
+            <tr>
+                <th>Platform</th>
+                <th>Performance</th>
+                <th>AI Acceleration</th>
+                <th>Power</th>
+                <th>Best For</th>
+            </tr>
+            <tr>
+                <td><strong>NVIDIA Jetson AGX Orin</strong> <span class="badge badge-recommended">Recommended</span></td>
+                <td>275 TOPS</td>
+                <td>Tensor cores</td>
+                <td>15-60W</td>
+                <td>Research, heavy AI</td>
+            </tr>
+            <tr>
+                <td><strong>NVIDIA Jetson Orin NX</strong> <span class="badge badge-high">High</span></td>
+                <td>100 TOPS</td>
+                <td>Tensor cores</td>
+                <td>10-25W</td>
+                <td>Professional UAVs</td>
+            </tr>
+            <tr>
+                <td><strong>NVIDIA Jetson Xavier NX</strong> <span class="badge badge-high">High</span></td>
+                <td>21 TOPS</td>
+                <td>Tensor cores</td>
+                <td>10-20W</td>
+                <td>Production UAVs</td>
+            </tr>
+            <tr>
+                <td><strong>NVIDIA Jetson Nano</strong> <span class="badge badge-mid">Mid</span></td>
+                <td>0.5 TFLOPS</td>
+                <td>128 CUDA cores</td>
+                <td>5-10W</td>
+                <td>Budget builds</td>
+            </tr>
+            <tr>
+                <td><strong>Raspberry Pi 5</strong> <span class="badge badge-mid">Mid</span></td>
+                <td>CPU-based</td>
+                <td>None</td>
+                <td>5-8W</td>
+                <td>Simple autonomy</td>
+            </tr>
+            <tr>
+                <td><strong>Raspberry Pi 4</strong> <span class="badge badge-budget">Budget</span></td>
+                <td>CPU-based</td>
+                <td>None</td>
+                <td>3-7W</td>
+                <td>Basic telemetry</td>
+            </tr>
+        </table>
+
+        <h2>Performance Comparison</h2>
+        
+        <div class="comparison">
+            <div class="comparison-item">
+                <h4>🎯 Object Detection (YOLOv8)</h4>
+                <ul>
+                    <li>Jetson AGX Orin: 120 FPS @ 640x640</li>
+                    <li>Jetson Orin NX: 90 FPS @ 640x640</li>
+                    <li>Jetson Xavier NX: 45 FPS @ 640x640</li>
+                    <li>Jetson Nano: 15 FPS @ 416x416</li>
+                    <li>Raspberry Pi 5: 3 FPS @ 320x320</li>
+                </ul>
+            </div>
+            <div class="comparison-item">
+                <h4>🧠 SLAM Performance</h4>
+                <ul>
+                    <li>Jetson AGX Orin: Real-time dense</li>
+                    <li>Jetson Orin NX: Real-time dense</li>
+                    <li>Jetson Xavier NX: Real-time sparse</li>
+                    <li>Jetson Nano: 5Hz sparse</li>
+                    <li>Raspberry Pi 5: 2Hz sparse</li>
+                </ul>
+            </div>
+            <div class="comparison-item">
+                <h4>🔋 Power Efficiency</h4>
+                <ul>
+                    <li>Jetson AGX Orin: 4.6 TOPS/W</li>
+                    <li>Jetson Orin NX: 4.0 TOPS/W</li>
+                    <li>Jetson Xavier NX: 2.1 TOPS/W</li>
+                    <li>Jetson Nano: 0.1 TFLOPS/W</li>
+                    <li>Raspberry Pi 5: N/A</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2>Platform Details</h2>
+
+        <h3>NVIDIA Jetson Platforms</h3>
+        
+        <div class="card-grid">
+            <div class="card">
+                <h4>🚀 Jetson AGX Orin</h4>
+                <ul>
+                    <li><strong>GPU:</strong> 2048-core Ampere</li>
+                    <li><strong>CPU:</strong> 12-core Arm Cortex-A78AE</li>
+                    <li><strong>Memory:</strong> 32/64 GB LPDDR5</li>
+                    <li><strong>Storage:</strong> 64GB eMMC + NVMe</li>
+                    <li><strong>AI:</strong> 275 TOPS INT8</li>
+                    <li><strong>Best for:</strong> Heavy AI, multiple cameras</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h4>⚡ Jetson Orin NX</h4>
+                <ul>
+                    <li><strong>GPU:</strong> 1024-core Ampere</li>
+                    <li><strong>CPU:</strong> 8-core Arm Cortex-A78AE</li>
+                    <li><strong>Memory:</strong> 8/16 GB LPDDR5</li>
+                    <li><strong>Storage:</strong> NVMe SSD</li>
+                    <li><strong>AI:</strong> 100 TOPS INT8</li>
+                    <li><strong>Best for:</strong> Professional UAVs</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h4>💎 Jetson Xavier NX</h4>
+                <ul>
+                    <li><strong>GPU:</strong> 384-core Volta</li>
+                    <li><strong>CPU:</strong> 6-core Arm Carmel</li>
+                    <li><strong>Memory:</strong> 8 GB LPDDR4x</li>
+                    <li><strong>Storage:</strong> 16GB eMMC + NVMe</li>
+                    <li><strong>AI:</strong> 21 TOPS INT8</li>
+                    <li><strong>Best for:</strong> Production deployment</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h4>💻 Jetson Nano</h4>
+                <ul>
+                    <li><strong>GPU:</strong> 128-core Maxwell</li>
+                    <li><strong>CPU:</strong> 4-core Arm A57</li>
+                    <li><strong>Memory:</strong> 4 GB LPDDR4</li>
+                    <li><strong>Storage:</strong> microSD</li>
+                    <li><strong>AI:</strong> 0.5 TFLOPS FP16</li>
+                    <li><strong>Best for:</strong> Learning, prototypes</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3>Raspberry Pi Platforms</h3>
+        
+        <div class="notice">
+            <strong>Note:</strong> Raspberry Pi platforms do not have dedicated AI acceleration. They are suitable for telemetry, basic autonomy, and ground station applications.
+        </div>
+
+        <div class="card-grid">
+            <div class="card">
+                <h4>🥧 Raspberry Pi 5</h4>
+                <ul>
+                    <li><strong>CPU:</strong> 4-core Arm A76 @ 2.4GHz</li>
+                    <li><strong>Memory:</strong> 4/8 GB LPDDR4X</li>
+                    <li><strong>Storage:</strong> microSD / NVMe (via HAT)</li>
+                    <li><strong>Peripherals:</strong> PCIe 2.0 x1</li>
+                    <li><strong>Best for:</strong> Simple autonomy, telemetry</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h4>🥧 Raspberry Pi 4</h4>
+                <ul>
+                    <li><strong>CPU:</strong> 4-core Arm A72 @ 1.8GHz</li>
+                    <li><strong>Memory:</strong> 2/4/8 GB LPDDR4</li>
+                    <li><strong>Storage:</strong> microSD / USB SSD</li>
+                    <li><strong>Peripherals:</strong> USB 3.0</li>
+                    <li><strong>Best for:</strong> Ground station, basic telemetry</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2>Selection Guide</h2>
+        
+        <table class="specs-table">
+            <tr>
+                <th>Use Case</th>
+                <th>Recommended</th>
+                <th>Minimum</th>
+                <th>Notes</th>
+            </tr>
+            <tr>
+                <td>Research & Development</td>
+                <td>Jetson AGX Orin</td>
+                <td>Jetson Orin NX</td>
+                <td>Maximum flexibility for experimentation</td>
+            </tr>
+            <tr>
+                <td>Commercial UAV</td>
+                <td>Jetson Orin NX</td>
+                <td>Jetson Xavier NX</td>
+                <td>Balance of performance and power</td>
+            </tr>
+            <tr>
+                <td>Racing Drone</td>
+                <td>Jetson Xavier NX</td>
+                <td>Jetson Nano</td>
+                <td>Weight and power constrained</td>
+            </tr>
+            <tr>
+                <td>Ground Station</td>
+                <td>Raspberry Pi 5</td>
+                <td>Raspberry Pi 4</td>
+                <td>No AI compute needed</td>
+            </tr>
+            <tr>
+                <td>Educational</td>
+                <td>Jetson Nano</td>
+                <td>Raspberry Pi 4</td>
+                <td>Low cost, good community</td>
+            </tr>
+            <tr>
+                <td>Maritime USV</td>
+                <td>Jetson AGX Orin</td>
+                <td>Jetson Xavier NX</td>
+                <td>Power available, harsh environment</td>
+            </tr>
+        </table>
+
+        <h2>Installation Links</h2>
+        <ul>
+            <li><a href="../installation/jetson-setup.html">Jetson Setup Guide</a> - Complete NVIDIA Jetson installation</li>
+            <li><a href="../installation/raspberry-pi.html">Raspberry Pi Setup</a> - Raspberry Pi 4/5 installation</li>
+            <li><a href="wiring-diagrams.html">Wiring Diagrams</a> - Physical connections</li>
+        </ul>
+    </main>
+
+    <footer>
+        <p>© 2026 Cule OS Documentation</p>
+        <p><a href="https://sanjaysparker27.github.io/sanjay-sparker-portfolio" target="_blank">Created by Sanjay</a></p>
+    </footer>
+</body>
+</html>

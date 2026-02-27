@@ -1,239 +1,80 @@
-# Cule OS - UAV Edition (Axon)
+# UAV Documentation
 
-The leading autonomous aerial platform for multirotor, fixed-wing, and VTOL vehicles.
+Welcome to the comprehensive UAV (Unmanned Aerial Vehicle) documentation for Cule-OS. This guide covers everything needed to build, configure, and operate professional-grade drones using Cule-OS.
 
-## Overview
+## Table of Contents
 
-Axon UAV Edition provides a complete autonomous flight stack for drones, featuring:
+1. [Flight Controllers](./flight-controllers/)
+   - [Pixhawk Series](./flight-controllers/pixhawk.md)
+   - [Cube Orange](./flight-controllers/cube-orange.md)
+   - [Hardware Selection Guide](./flight-controllers/selection-guide.md)
 
-- **Precision Landing**: Computer vision-based landing with 5cm accuracy
-- **Obstacle Avoidance**: Real-time LiDAR and camera-based collision avoidance
-- **Swarm Coordination**: Multi-drone coordination for coordinated missions
-- **GPS-Denied Navigation**: Visual SLAM for indoor and denied environments
-- **Mission Planning**: Autonomous waypoint navigation with failsafes
+2. [Sensors](./sensors/)
+   - [GPS/GNSS](./sensors/gps.md)
+   - [IMU](./sensors/imu.md)
+   - [Compass](./sensors/compass.md)
+   - [Barometer](./sensors/barometer.md)
+   - [LIDAR & Rangefinders](./sensors/rangefinder.md)
 
-## Supported Airframes
+3. [Calibration](./calibration/)
+   - [Sensor Calibration](./calibration/sensor-calibration.md)
+   - [Radio Calibration](./calibration/radio-calibration.md)
+   - [ESC Calibration](./calibration/esc-calibration.md)
 
-### Multirotor
-- **Quadcopters** (X, H, + configurations)
-- **Hexacopters** (6 motors)
-- **Octocopters** (8 motors)
-- **Tricopters** (3 motors + servo)
+4. [Checklists](./checklists/)
+   - [Pre-flight Checklist](./checklists/pre-flight.md)
+   - [Post-flight Checklist](./checklists/post-flight.md)
 
-### Fixed-Wing
-- **Standard Planes** (Aileron, Elevator, Rudder)
-- **Flying Wings** (Elevons)
-- **VTOL Tailsitters**
-- **VTOL Tiltrotors**
+5. [Emergency Procedures](./emergency/)
+   - [Emergency Procedures](./emergency/emergency-procedures.md)
+   - [Failsafe Configuration](./emergency/failsafe.md)
+
+6. [MAVLink Integration](./mavlink/)
+   - [MAVLink Protocol](./mavlink/protocol.md)
+   - [Message Reference](./mavlink/messages.md)
+
+7. [QGroundControl](./qgc/)
+   - [Setup Guide](./qgc/setup.md)
+   - [Configuration](./qgc/configuration.md)
+
+8. [Tuning Guides](./tuning/)
+   - [PID Tuning](./tuning/pid-tuning.md)
+   - [Filter Configuration](./tuning/filters.md)
 
 ## Quick Start
 
-### 1. Install Cule OS UAV Edition
+New to Cule-OS UAV? Start here:
 
-```bash
-# Download UAV edition image
-wget https://sanjaysparker27.github.io/cule-os/releases/cule-os-axon-v1.0.img.xz
+1. [Hardware Selection Guide](./flight-controllers/selection-guide.md) - Choose the right flight controller
+2. [QGroundControl Setup](./qgc/setup.md) - Install and configure ground control software
+3. [Sensor Calibration](./calibration/sensor-calibration.md) - Calibrate your drone's sensors
+4. [Pre-flight Checklist](./checklists/pre-flight.md) - Essential pre-flight checks
+5. [PID Tuning Basics](./tuning/pid-tuning.md) - Optimize flight performance
 
-# Flash to SD card
-xzcat cule-os-axon-v1.0.img.xz | sudo dd of=/dev/sdX bs=4M status=progress
-```
+## Supported Hardware
 
-### 2. Initial Configuration
+### Flight Controllers
+- Pixhawk 4 / 4 Mini
+- Pixhawk 6X / 6C
+- Cube Orange / Orange+
+- Cube Blue H7
+- DAKE FPV H743 Pro
+- Custom H743-based boards
 
-```bash
-# Connect via SSH
-ssh cule@cule-os.local
+### Sensors
+- u-blox NEO-M8N, NEO-M9N, ZED-F9P
+- RM3100, IST8310, AK09918 compasses
+- BMP280, BMP388, DPS310 barometers
+- ICM-20689, ICM-42688-P, BMI088 IMUs
+- TFmini, LW20, VL53L0X rangefinders
 
-# Run UAV configuration wizard
-sudo cule-config-uav
+## Getting Help
 
-# Select your airframe type
-1. Quadcopter X
-2. Quadcopter +
-3. Hexacopter
-4. Fixed-wing
-5. VTOL
-```
+- [Cule-OS GitHub Issues](https://github.com/cule-os/issues)
+- [MAVLink Documentation](https://mavlink.io)
+- [PX4 User Guide](https://docs.px4.io)
+- [ArduPilot Wiki](https://ardupilot.org)
 
-### 3. Hardware Connections
+## Safety Notice
 
-**Minimum Required:**
-- Flight Controller (Pixhawk 4/5/6) → USB to Jetson/RPi
-- GPS Module → UART on Pixhawk
-- Telemetry Radio → Telem1 on Pixhawk
-- RC Receiver → RC IN on Pixhawk
-- Camera → CSI/USB to Jetson/RPi
-
-### 4. First Flight Checklist
-
-Before first flight:
-- [ ] Compass calibration complete
-- [ ] Accelerometer calibration complete
-- [ ] Radio calibration complete
-- [ ] ESC calibration complete
-- [ ] GPS lock (3D fix minimum)
-- [ ] Battery voltage verified
-- [ ] Props secured (remove before calibration!)
-- [ ] Safety pilot ready
-
-## Flight Modes
-
-| Mode | Description | Use Case |
-|------|-------------|----------|
-| **MANUAL** | Direct RC control, no stabilization | Testing, emergencies |
-| **STABILIZE** | Self-leveling but manual throttle | Learning, manual flight |
-| **ALT_HOLD** | Maintains altitude automatically | Photography, inspection |
-| **LOITER** | Holds position and altitude | Waiting, observation |
-| **AUTO** | Executes pre-programmed mission | Survey, mapping, delivery |
-| **RTL** | Return to launch point | Low battery, signal loss |
-| **LAND** | Controlled landing | End of mission |
-| **GUIDED** | Ground station control | Follow-me, point-and-click |
-| **CIRCLE** | Orbits a point of interest | Inspection, filming |
-
-## Safety Features
-
-### Failsafes
-- **Radio Failsafe**: RTL on signal loss
-- **Battery Failsafe**: RTL at low voltage
-- **Geofence**: Virtual boundaries
-- **Crash Detection**: Auto-disarm on impact
-- **Parachute Support**: Automatic deployment
-
-### Pre-arm Checks
-- INS calibration status
-- Compass health
-- GPS lock quality
-- Battery voltage
-- RC signal strength
-- Airspeed (for planes)
-
-## Mission Planning
-
-### Using QGroundControl
-
-1. Connect to Cule OS via telemetry
-2. Plan → Survey → Create grid
-3. Set altitude and speed
-4. Upload to vehicle
-5. Arm and switch to AUTO
-
-### Using Cule CLI
-
-```bash
-# Create waypoint mission
-cule-mission create --name survey --altitude 50 --speed 10
-
-# Add waypoints
-cule-mission add-waypoint --lat 37.7749 --lon -122.4194 --alt 50
-cule-mission add-waypoint --lat 37.7750 --lon -122.4195 --alt 50
-
-# Upload and execute
-cule-mission upload
-cule-mission start
-```
-
-## Swarm Operations
-
-### Setup Swarm
-
-```bash
-# On ground station
-cule-swarm init --count 4
-
-# Assign drones
-cule-swarm add --id 1 --ip 192.168.1.101
-cule-swarm add --id 2 --ip 192.168.1.102
-```
-
-### Formation Flight
-
-```bash
-# Grid formation
-cule-swarm formation --type grid --spacing 5
-
-# Circle formation
-cule-swarm formation --type circle --radius 10
-
-# Execute mission with swarm
-cule-swarm mission --file survey.plan
-```
-
-## Troubleshooting
-
-### Common Issues
-
-**GPS Not Locking:**
-- Check antenna placement (clear view of sky)
-- Wait 5-10 minutes for cold start
-- Verify baud rate (typically 115200)
-
-**Compass Errors:**
-- Calibrate away from metal objects
-- Check for magnetic interference
-- Verify compass orientation
-
-**Vibration Issues:**
-- Balance propellers
-- Check motor mount tightness
-- Use vibration dampening
-
-**Camera Not Detected:**
-- Check CSI cable connection
-- Verify `nvargus-daemon` is running
-- Test with `gst-launch-1.0 nvarguscamerasrc`
-
-## API Reference
-
-### Python API
-
-```python
-from cule import UAV
-
-# Connect to vehicle
-drone = UAV.connect('/dev/ttyUSB0')
-
-# Arm and takeoff
-drone.arm()
-drone.takeoff(altitude=10)
-
-# Navigate to waypoint
-drone.goto(lat=37.7749, lon=-122.4194, alt=20)
-
-# Return to launch
-drone.rtl()
-
-# Land
-drone.land()
-```
-
-### ROS2 Topics
-
-| Topic | Type | Description |
-|-------|------|-------------|
-| `/cule/uav/telemetry` | `nav_msgs/Odometry` | Position and velocity |
-| `/cule/uav/cmd_vel` | `geometry_msgs/Twist` | Velocity commands |
-| `/cule/uav/mission` | `cule_msgs/Mission` | Mission status |
-| `/cule/camera/image` | `sensor_msgs/Image` | Camera feed |
-
-## Specifications
-
-- **Update Rate**: 400Hz control loop
-- **Latency**: <10ms sensor to actuator
-- **Position Accuracy**: ±0.3m (GPS), ±0.05m (RTK)
-- **Altitude Accuracy**: ±0.1m (baro), ±0.02m (LiDAR)
-- **Communication Range**: 1km (915MHz), 10km (long-range)
-- **Battery Life**: 20-45 minutes (depending on configuration)
-
-## Next Steps
-
-- [Quick Start Guide](./quickstart.md) - Get flying in 30 minutes
-- [Flight Modes](./flight-modes.md) - Detailed mode documentation
-- [Mission Planning](./missions.md) - Create autonomous missions
-- [Safety Procedures](./safety.md) - Critical safety information
-- [Troubleshooting](./troubleshooting.md) - Fix common issues
-
-## Support
-
-- **Documentation**: https://sanjaysparker27.github.io/cule-os/docs/uav
-- **Forum**: https://discussion.cule-os.io
-- **GitHub Issues**: https://github.com/SanjaySparker27/cule-os/issues
+⚠️ **Always follow local regulations and safety guidelines when operating UAVs. Maintain visual line of sight, respect no-fly zones, and ensure proper insurance coverage.**

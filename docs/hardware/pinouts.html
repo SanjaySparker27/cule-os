@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Controller Pinouts - Cule OS Documentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #294172;
+            --primary-dark: #1a2a4a;
+            --primary-light: #3c6eb4;
+            --accent: #e59728;
+            --text: #333;
+            --text-light: #666;
+            --bg: #fff;
+            --bg-gray: #f6f6f6;
+            --border: #e0e0e0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Open Sans', sans-serif; color: var(--text); line-height: 1.6; }
+        .header { background: var(--primary); padding: 16px 24px; }
+        .header-content { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: white; font-weight: 700; font-size: 20px; }
+        .logo-icon { width: 40px; height: 40px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+        .nav-links { display: flex; gap: 32px; list-style: none; }
+        .nav-links a { color: rgba(255,255,255,0.9); text-decoration: none; font-size: 14px; font-weight: 600; }
+        .nav-links a:hover { color: var(--accent); }
+        .breadcrumbs { background: var(--bg-gray); padding: 16px 24px; border-bottom: 1px solid var(--border); }
+        .breadcrumbs-content { max-width: 1400px; margin: 0 auto; }
+        .breadcrumbs a { color: var(--primary-light); text-decoration: none; }
+        .content { max-width: 1000px; margin: 0 auto; padding: 40px 24px; }
+        h1 { font-size: 36px; color: var(--primary); margin-bottom: 24px; }
+        h2 { font-size: 28px; color: var(--primary); margin: 40px 0 20px; border-bottom: 2px solid var(--border); padding-bottom: 12px; }
+        h3 { font-size: 22px; color: var(--primary); margin: 32px 0 16px; }
+        p { margin-bottom: 16px; color: var(--text-light); }
+        .pinout-table { width: 100%; border-collapse: collapse; margin: 24px 0; }
+        .pinout-table th, .pinout-table td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border); }
+        .pinout-table th { background: var(--bg-gray); font-weight: 600; color: var(--primary); }
+        .pinout-table tr:hover { background: var(--bg-gray); }
+        .pin-label { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+        .pin-pwm { background: #dbeafe; color: #1e40af; }
+        .pin-uart { background: #dcfce7; color: #166534; }
+        .pin-i2c { background: #fef3c7; color: #92400e; }
+        .pin-can { background: #f3e8ff; color: #7c3aed; }
+        .pin-power { background: #fee2e2; color: #991b1b; }
+        .pin-gpio { background: #e0e7ff; color: #3730a3; }
+        .notice { background: #e0f2fe; border-left: 4px solid var(--primary-light); padding: 16px 20px; margin: 24px 0; border-radius: 0 8px 8px 0; }
+        .notice.warning { background: #fef3c7; border-left-color: var(--accent); }
+        .tabs { display: flex; gap: 8px; margin-bottom: 24px; border-bottom: 2px solid var(--border); }
+        .tab { padding: 12px 24px; background: none; border: none; cursor: pointer; font-size: 14px; font-weight: 600; color: var(--text-light); border-bottom: 2px solid transparent; margin-bottom: -2px; }
+        .tab.active { color: var(--primary); border-bottom-color: var(--primary); }
+        .tab:hover { color: var(--primary); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        footer { background: var(--primary-dark); color: white; text-align: center; padding: 40px 24px; margin-top: 80px; }
+        footer a { color: var(--accent); }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="../../index.html" class="logo">
+                <div class="logo-icon">C</div>
+                <span>Cule OS</span>
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Documentation</a></li>
+                    <li><a href="../installation/jetson-setup.html">Installation</a></li>
+                    <li><a href="wiring-diagrams.html">Hardware</a></li>
+                    <li><a href="../configuration/ardupilot-config.html">Configuration</a></li>
+                    <li><a href="../api/api-documentation.html">API</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="breadcrumbs">
+        <div class="breadcrumbs-content">
+            <a href="../../index.html">Home</a> / <a href="../index.html">Documentation</a> / <a href="wiring-diagrams.html">Hardware</a> / Pinout Reference
+        </div>
+    </div>
+
+    <main class="content">
+        <h1>Flight Controller Pinout Reference</h1>
+        <p>Complete pinout diagrams and connection reference for supported flight controllers.</p>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('athena')">ATHENA H743 PRO</button>
+            <button class="tab" onclick="showTab('pixhawk6x')">Pixhawk 6X</button>
+            <button class="tab" onclick="showTab('pixhawk6c')">Pixhawk 6C</button>
+        </div>
+
+        <div id="athena" class="tab-content active">
+            <h2>ZEX ATHENA H743 PRO Pinout</h2>
+            
+            <div class="notice">
+                <strong>Note:</strong> The ATHENA H743 PRO uses the H743 MCU with 480MHz clock. All outputs are DShot-capable.
+            </div>
+
+            <h3>Main Outputs (Motor/Servo)</h3>
+            <table class="pinout-table">
+                <tr><th>Pin</th><th>Function</th><th>Type</th><th>Description</th></tr>
+                <tr><td>Output 1</td><td>Motor 1 / ESC 1</td><td><span class="pin-label pin-pwm">PWM/DShot</span></td><td>Main motor 1 (CCW)</td></tr>
+                <tr><td>Output 2</td><td>Motor 2 / ESC 2</td><td><span class="pin-label pin-pwm">PWM/DShot</span></td><td>Main motor 2 (CW)</td></tr>
+                <tr><td>Output 3</td><td>Motor 3 / ESC 3</td><td><span class="pin-label pin-pwm">PWM/DShot</span></td><td>Main motor 3 (CCW)</td></tr>
+                <tr><td>Output 4</td><td>Motor 4 / ESC 4</td><td><span class="pin-label pin-pwm">PWM/DShot</span></td><td>Main motor 4 (CW)</td></tr>
+                <tr><td>Output 5</td><td>Motor 5 / Servo 1</td><td><span class="pin-label pin-pwm">PWM/DShot</span></td><td>Additional motor or servo</td></tr>
+                <tr><td>Output 6</td><td>Motor 6 / Servo 2</td><td><span class="pin-label pin-pwm">PWM/DShot</span></td><td>Additional motor or servo</td></tr>
+                <tr><td>Output 7</td><td>Servo 3 / Pusher</td><td><span class="pin-label pin-pwm">PWM/DShot</span></td><td>Pusher motor or servo</td></tr>
+                <tr><td>Output 8</td><td>Servo 4</td><td><span class="pin-label pin-pwm">PWM</span></td><td>Servo output</td></tr>
+            </table>
+
+            <h3>UART Ports</h3>
+            <table class="pinout-table">
+                <tr><th>Port</th><th>RX</th><th>TX</th><th>Type</th><th>Default Use</th></tr>
+                <tr><td>Telem1</td><td>RX1</td><td>TX1</td><td><span class="pin-label pin-uart">USART1</span></td><td>Telemetry radio</td></tr>
+                <tr><td>Telem2</td><td>RX2</td><td>TX2</td><td><span class="pin-label pin-uart">USART2</span></td><td>Companion computer</td></tr>
+                <tr><td>GPS</td><td>RX3</td><td>TX3</td><td><span class="pin-label pin-uart">USART3</span></td><td>GPS module</td></tr>
+                <tr><td>UART4</td><td>RX4</td><td>TX4</td><td><span class="pin-label pin-uart">UART4</span></td><td>Peripheral</td></tr>
+                <tr><td>UART5</td><td>RX5</td><td>TX5</td><td><span class="pin-label pin-uart">UART5</span></td><td>Debug/Peripheral</td></tr>
+                <tr><td>UART6</td><td>RX6</td><td>TX6</td><td><span class="pin-label pin-uart">USART6</span></td><td>RC receiver</td></tr>
+            </table>
+
+            <h3>I2C Ports</h3>
+            <table class="pinout-table">
+                <tr><th>Port</th><th>SCL</th><th>SDA</th><th>Type</th><th>Default Use</th></tr>
+                <tr><td>I2C1</td><td>SCL1</td><td>SDA1</td><td><span class="pin-label pin-i2c">I2C1</span></td><td>External compass</td></tr>
+                <tr><td>I2C2</td><td>SCL2</td><td>SDA2</td><td><span class="pin-label pin-i2c">I2C2</span></td><td>Internal sensors</td></tr>
+                <tr><td>I2C4</td><td>SCL4</td><td>SDA4</td><td><span class="pin-label pin-i2c">I2C4</span></td><td>Display/OLED</td></tr>
+            </table>
+
+            <h3>CAN Bus</h3>
+            <table class="pinout-table">
+                <tr><th>Port</th><th>CAN_H</th><th>CAN_L</th><th>Type</th><th>Default Use</th></tr>
+                <tr><td>CAN1</td><td>CAN1_H</td><td>CAN1_L</td><td><span class="pin-label pin-can">CAN1</span></td><td>CAN peripherals</td></tr>
+                <tr><td>CAN2</td><td>CAN2_H</td><td>CAN2_L</td><td><span class="pin-label pin-can">CAN2</span></td><td>CAN peripherals</td></tr>
+            </table>
+
+            <h3>Power Connections</h3>
+            <table class="pinout-table">
+                <tr><th>Port</th><th>VCC</th><th>GND</th><th>Type</th><th>Description</th></tr>
+                <tr><td>Power 1</td><td>5V</td><td>GND</td><td><span class="pin-label pin-power">POWER</span></td><td>Main power input (BEC)</td></tr>
+                <tr><td>Power 2</td><td>5V</td><td>GND</td><td><span class="pin-label pin-power">POWER</span></td><td>Redundant power</td></tr>
+                <tr><td>Analog</td><td>V Sense</td><td>I Sense</td><td><span class="pin-label pin-power">ANALOG</span></td><td>Battery monitoring</td></tr>
+            </table>
+
+            <h3>USB and Debug</h3>
+            <table class="pinout-table">
+                <tr><th>Port</th><th>Function</th><th>Type</th><th>Description</th></tr>
+                <tr><td>USB-C</td><td>USB 2.0</td><td><span class="pin-label pin-gpio">USB</span></td><td>Main USB connection</td></tr>
+                <tr><td>SWD</td><td>SWDIO/SWCLK</td><td><span class="pin-label pin-gpio">DEBUG</span></td><td>STM32 debugging</td></tr>
+                <tr><td>DSM/SBUS</td><td>RC Input</td><td><span class="pin-label pin-gpio">RC</span></td><td>Spektrum/SBUS input</td></tr>
+                <tr><td>PPM</td><td>PPM Input</td><td><span class="pin-label pin-gpio">RC</span></td><td>PPM sum input</td></tr>
+            </table>
+        </div>
+
+        <div id="pixhawk6x" class="tab-content">
+            <h2>Pixhawk 6X Pinout</h2>
+            <p>Pixhawk 6X is the latest FMUv6X standard flight controller.</p>
+            
+            <div class="notice warning">
+                <strong>Note:</strong> Documentation for Pixhawk 6X is being expanded. For now, refer to the <a href="https://docs.px4.io/main/en/flight_controller/pixhawk6x.html" target="_blank">official Pixhawk 6X documentation</a>.
+            </div>
+
+            <h3>Key Differences from ATHENA H743</h3>
+            <ul>
+                <li>Dual IMU redundancy (ICM-42688-P + ICM-20649)</li>
+                <li>Triple barometer redundancy</li>
+                <li>FMUv6X standard pinout</li>
+                <li>Ethernet support on some variants</li>
+            </ul>
+        </div>
+
+        <div id="pixhawk6c" class="tab-content">
+            <h2>Pixhawk 6C Pinout</h2>
+            <p>Pixhawk 6C is the cost-optimized FMUv6C standard flight controller.</p>
+            
+            <div class="notice warning">
+                <strong>Note:</strong> Documentation for Pixhawk 6C is being expanded. For now, refer to the <a href="https://docs.px4.io/main/en/flight_controller/pixhawk6c.html" target="_blank">official Pixhawk 6C documentation</a>.
+            </div>
+
+            <h3>Key Features</h3>
+            <ul>
+                <li>Single IMU (ICM-42688-P)</li>
+                <li>FMUv6C standard pinout</li>
+                <li>Cost-optimized design</li>
+                <li>Compatible with most Pixhawk accessories</li>
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2026 Cule OS Documentation</p>
+        <p><a href="https://sanjaysparker27.github.io/sanjay-sparker-portfolio" target="_blank">Created by Sanjay</a></p>
+    </footer>
+
+    <script>
+        function showTab(tabId) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+    </script>
+</body>
+</html>

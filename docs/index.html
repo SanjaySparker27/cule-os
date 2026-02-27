@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Complete Cule OS documentation for autonomous UAVs, UGVs, USVs - installation, configuration, API reference, and tutorials.">
+    <title>Cule OS Documentation - Autonomous Vehicle Operating System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #294172;
+            --primary-dark: #1a2a4a;
+            --primary-light: #3c6eb4;
+            --accent: #e59728;
+            --accent-hover: #d48920;
+            --text: #333;
+            --text-light: #666;
+            --text-muted: #888;
+            --bg: #fff;
+            --bg-gray: #f6f6f6;
+            --bg-dark: #1e1e1e;
+            --border: #e0e0e0;
+            --border-dark: #333;
+            --shadow: 0 4px 20px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 40px rgba(0,0,0,0.15);
+            --code-bg: #f4f4f4;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #3b82f6;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            background: var(--bg);
+        }
+        
+        /* Header */
+        .header {
+            background: var(--primary);
+            padding: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 20px;
+        }
+        
+        .logo-text {
+            font-size: 20px;
+            font-weight: 700;
+        }
+        
+        .logo-text span {
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent);
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .search-box {
+            position: relative;
+        }
+        
+        .search-input {
+            width: 280px;
+            padding: 10px 16px 10px 40px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s;
+        }
+        
+        .search-input::placeholder {
+            color: rgba(255,255,255,0.5);
+        }
+        
+        .search-input:focus {
+            background: rgba(255,255,255,0.15);
+            border-color: var(--accent);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255,255,255,0.5);
+            font-size: 16px;
+        }
+        
+        .github-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        
+        .github-link:hover {
+            color: white;
+        }
+        
+        /* Mobile menu */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+        }
+        
+        .mobile-menu-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: white;
+            transition: all 0.3s;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 140px 24px 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(229,151,40,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .hero-badge {
+            display: inline-block;
+            background: rgba(229,151,40,0.2);
+            color: var(--accent);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid rgba(229,151,40,0.3);
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            color: rgba(255,255,255,0.85);
+            max-width: 700px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            border: 2px solid var(--accent);
+        }
+        
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            border-color: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(229,151,40,0.3);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255,255,255,0.4);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: white;
+        }
+        
+        /* Search Results Panel */
+        .search-results {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow-lg);
+            margin-top: 8px;
+            max-height: 400px;
+            overflow-y: auto;
+            z-index: 1001;
+        }
+        
+        .search-results.active {
+            display: block;
+        }
+        
+        .search-result-item {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .search-result-item:hover {
+            background: var(--bg-gray);
+        }
+        
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+        
+        .search-result-title {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+        
+        .search-result-desc {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+        
+        .search-result-category {
+            font-size: 11px;
+            color: var(--accent);
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        /* Main Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 80px 24px;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+        
+        .section-subtitle {
+            color: var(--text-light);
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Edition Cards */
+        .editions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 80px;
+        }
+        
+        .edition-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 32px;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .edition-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+            border-color: var(--primary-light);
+        }
+        
+        .edition-card.featured::before {
+            content: 'POPULAR';
+            position: absolute;
+            top: 16px;
+            right: -30px;
+            background: var(--accent);
+            color: white;
+            padding: 4px 40px;
+            font-size: 11px;
+            font-weight: 700;
+            transform: rotate(45deg);
+        }
+        
+        .edition-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .edition-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+        
+        .edition-icon.uav {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+        }
+        
+        .edition-icon.ugv {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white;
+        }
+        
+        .edition-icon.usv {
+            background: linear-gradient(135deg, #06b6d4, #0891b2);
+            color: white;
+        }
+        
+        .edition-icon.core {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: white;
+        }
+        
+        .edition-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .edition-subtitle {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+        
+        .edition-desc {
+            color: var(--text-light);
+            margin-bottom: 24px;
+            line-height: 1.7;
+            flex-grow: 1;
+        }
+        
+        .edition-features {
+            list-style: none;
+            margin-bottom: 24px;
+        }
+        
+        .edition-features li {
+            padding: 6px 0;
+            color: var(--text);
+            font-size: 14px;
+            padding-left: 24px;
+            position: relative;
+        }
+        
+        .edition-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: 700;
+        }
+        
+        .edition-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: auto;
+        }
+        
+        .edition-actions a {
+            flex: 1;
+            text-align: center;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .btn-docs {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-docs:hover {
+            background: var(--primary-dark);
+        }
+        
+        .btn-quick {
+            background: var(--bg-gray);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        
+        .btn-quick:hover {
+            background: var(--border);
+        }
+        
+        /* Documentation Categories */
+        .docs-section {
+            margin-bottom: 80px;
+        }
+        
+        .docs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        
+        .doc-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px;
+            transition: all 0.3s;
+        }
+        
+        .doc-card:hover {
+            box-shadow: var(--shadow);
+            border-color: var(--primary-light);
+        }
+        
+        .doc-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--bg-gray);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+        
+        .doc-card h3 {
+            font-size: 18px;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        
+        .doc-card p {
+            color: var(--text-light);
+            font-size: 14px;
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+        
+        .doc-links {
+            list-style: none;
+        }
+        
+        .doc-links li {
+            margin-bottom: 6px;
+        }
+        
+        .doc-links a {
+            color: var(--primary-light);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .doc-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .doc-links a::after {
+            content: '→';
+            opacity: 0;
+            transition: all 0.2s;
+        }
+        
+        .doc-links a:hover::after {
+            opacity: 1;
+            transform: translateX(4px);
+        }
+        
+        /* Quick Links Bar */
+        .quick-links {
+            background: var(--bg-gray);
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .quick-links-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .quick-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        .quick-link:hover {
+            color: var(--primary);
+        }
+        
+        .quick-link-icon {
+            width: 32px;
+            height: 32px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        /* Architecture Section */
+        .architecture-section {
+            background: var(--bg-gray);
+            padding: 80px 24px;
+            margin: 0 -24px;
+        }
+        
+        .architecture-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .architecture-diagram {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            margin-top: 40px;
+            box-shadow: var(--shadow);
+            overflow-x: auto;
+        }
+        
+        .arch-layer {
+            background: var(--bg-gray);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 16px;
+            border: 2px solid var(--border);
+        }
+        
+        .arch-layer:last-child {
+            margin-bottom: 0;
+        }
+        
+        .arch-layer-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+        
+        .arch-components {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        
+        .arch-component {
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            font-size: 14px;
+            text-align: center;
+        }
+        
+        .arch-component strong {
+            display: block;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+        
+        .arch-component span {
+            color: var(--text-light);
+            font-size: 12px;
+        }
+        
+        /* API Preview Section */
+        .api-preview {
+            background: var(--bg-dark);
+            color: white;
+            padding: 80px 24px;
+            margin: 0 -24px;
+        }
+        
+        .api-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .api-section-title {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        
+        .api-section-subtitle {
+            text-align: center;
+            color: rgba(255,255,255,0.7);
+            font-size: 18px;
+            margin-bottom: 40px;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+        
+        .code-header {
+            background: #1e1e1e;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .code-dots {
+            display: flex;
+            gap: 6px;
+        }
+        
+        .code-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .code-dot.red { background: #ff5f56; }
+        .code-dot.yellow { background: #ffbd2e; }
+        .code-dot.green { background: #27c93f; }
+        
+        .code-title {
+            color: rgba(255,255,255,0.7);
+            font-size: 13px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .code-content {
+            padding: 24px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            line-height: 1.8;
+            overflow-x: auto;
+        }
+        
+        .code-content .comment { color: #6a9955; }
+        .code-content .keyword { color: #569cd6; }
+        .code-content .string { color: #ce9178; }
+        .code-content .function { color: #dcdcaa; }
+        .code-content .number { color: #b5cea8; }
+        
+        /* Footer */
+        footer {
+            background: var(--primary-dark);
+            color: white;
+            padding: 64px 24px 32px;
+        }
+        
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 48px;
+        }
+        
+        .footer-column h4 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-column a {
+            color: rgba(255,255,255,0.75);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+        
+        .footer-column a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 48px auto 0;
+            padding-top: 32px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+        }
+        
+        .footer-bottom a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        
+        /* Breadcrumbs */
+        .breadcrumbs {
+            background: var(--bg-gray);
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .breadcrumbs-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+        }
+        
+        .breadcrumbs a {
+            color: var(--primary-light);
+            text-decoration: none;
+        }
+        
+        .breadcrumbs a:hover {
+            text-decoration: underline;
+        }
+        
+        .breadcrumbs span {
+            color: var(--text-light);
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .search-box { display: none; }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-menu-toggle { display: flex; }
+            .hero h1 { font-size: 36px; }
+            .section-title { font-size: 28px; }
+            .quick-links-content { gap: 20px; }
+            .edition-actions { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">C</div>
+                <span class="logo-text">Cule <span>OS</span></span>
+            </a>
+            
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html" class="active">Documentation</a></li>
+                    <li><a href="installation/jetson-setup.html">Installation</a></li>
+                    <li><a href="hardware/wiring-diagrams.html">Hardware</a></li>
+                    <li><a href="configuration/ardupilot-config.html">Configuration</a></li>
+                    <li><a href="api/api-documentation.html">API</a></li>
+                </ul>
+            </nav>
+            
+            <div class="header-actions">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" placeholder="Search documentation..." id="searchInput">
+                    <div class="search-results" id="searchResults"></div>
+                </div>
+                <a href="https://github.com/sanjaysparker27/cule-os" class="github-link" target="_blank">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                    </svg>
+                </a>
+                <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="breadcrumbs">
+        <div class="breadcrumbs-content">
+            <a href="../index.html">Home</a>
+            <span>/</span>
+            <span>Documentation</span>
+        </div>
+    </div>
+
+    <section class="hero">
+        <div class="hero-badge">Complete Documentation Portal</div>
+        <h1>Cule OS Documentation</h1>
+        <p>Everything you need to build, configure, and operate autonomous vehicles with Cule OS — from first-time setup to advanced API integration.</p>
+        <div class="hero-buttons">
+            <a href="../cule-os/docs/uav/quickstart.html" class="btn btn-primary">🚀 Quick Start Guide</a>
+            <a href="#editions" class="btn btn-secondary">📚 Browse by Edition</a>
+        </div>
+    </section>
+
+    <div class="quick-links">
+        <div class="quick-links-content">
+            <a href="installation/jetson-setup.html" class="quick-link">
+                <span class="quick-link-icon">💻</span>
+                <span>Installation</span>
+            </a>
+            <a href="hardware/wiring-diagrams.html" class="quick-link">
+                <span class="quick-link-icon">🔌</span>
+                <span>Wiring Guide</span>
+            </a>
+            <a href="calibration/calibration-procedures.html" class="quick-link">
+                <span class="quick-link-icon">⚙️</span>
+                <span>Calibration</span>
+            </a>
+            <a href="operations/first-flight-checklist.html" class="quick-link">
+                <span class="quick-link-icon">✅</span>
+                <span>Flight Checklist</span>
+            </a>
+            <a href="troubleshooting/troubleshooting-guide.html" class="quick-link">
+                <span class="quick-link-icon">🔧</span>
+                <span>Troubleshooting</span>
+            </a>
+            <a href="api/api-documentation.html" class="quick-link">
+                <span class="quick-link-icon">📡</span>
+                <span>API Reference</span>
+            </a>
+        </div>
+    </div>
+
+    <main class="main-content">
+        <section class="docs-section" id="editions">
+            <div class="section-header">
+                <h2 class="section-title">Choose Your Edition</h2>
+                <p class="section-subtitle">Documentation organized by vehicle type and use case</p>
+            </div>
+            
+            <div class="editions-grid">
+                <div class="edition-card featured">
+                    <div class="edition-header">
+                        <div class="edition-icon uav">✈</div>
+                        <div>
+                            <div class="edition-title">Axon UAV</div>
+                            <div class="edition-subtitle">Aerial Vehicles</div>
+                        </div>
+                    </div>
+                    <p class="edition-desc">Complete documentation for drones, multirotors, fixed-wing aircraft, and VTOL vehicles. Includes flight modes, mission planning, and autonomy features.</p>
+                    <ul class="edition-features">
+                        <li>Multirotor, fixed-wing & VTOL support</li>
+                        <li>Flight modes & mission planning</li>
+                        <li>Precision landing & obstacle avoidance</li>
+                        <li>Swarm coordination</li>
+                        <li>AI-powered autonomy</li>
+                    </ul>
+                    <div class="edition-actions">
+                        <a href="../cule-os/docs/uav/index.html" class="btn-docs">Documentation</a>
+                        <a href="../cule-os/docs/uav/quickstart.html" class="btn-quick">Quick Start</a>
+                    </div>
+                </div>
+                
+                <div class="edition-card">
+                    <div class="edition-header">
+                        <div class="edition-icon ugv">◈</div>
+                        <div>
+                            <div class="edition-title">Terra UGV</div>
+                            <div class="edition-subtitle">Ground Vehicles</div>
+                        </div>
+                    </div>
+                    <p class="edition-desc">Documentation for rovers, autonomous ground vehicles, and mobile robots. Covers navigation, SLAM, and terrain adaptation.</p>
+                    <ul class="edition-features">
+                        <li>Wheeled & tracked vehicles</li>
+                        <li>GPS-denied navigation</li>
+                        <li>Path planning & SLAM</li>
+                        <li>Long-endurance patrol</li>
+                    </ul>
+                    <div class="edition-actions">
+                        <a href="#" class="btn-quick" style="flex:1; text-align:center; opacity:0.6; cursor:not-allowed;" onclick="alert('Terra UGV documentation coming soon!'); return false;">Coming Soon</a>
+                    </div>
+                </div>
+                
+                <div class="edition-card">
+                    <div class="edition-header">
+                        <div class="edition-icon usv">✧</div>
+                        <div>
+                            <div class="edition-title">Aqua USV</div>
+                            <div class="edition-subtitle">Maritime Vehicles</div>
+                        </div>
+                    </div>
+                    <p class="edition-desc">Documentation for autonomous boats, surface vessels, and maritime platforms. Features wave compensation and COLREG compliance.</p>
+                    <ul class="edition-features">
+                        <li>Surface & submersible vessels</li>
+                        <li>Wave compensation</li>
+                        <li>COLREG compliance</li>
+                        <li>Autonomous docking</li>
+                    </ul>
+                    <div class="edition-actions">
+                        <a href="#" class="btn-quick" style="flex:1; text-align:center; opacity:0.6; cursor:not-allowed;" onclick="alert('Aqua USV documentation coming soon!'); return false;">Coming Soon</a>
+                    </div>
+                </div>
+                
+                <div class="edition-card">
+                    <div class="edition-header">
+                        <div class="edition-icon core">⚡</div>
+                        <div>
+                            <div class="edition-title">Core Development</div>
+                            <div class="edition-subtitle">Research & Development</div>
+                        </div>
+                    </div>
+                    <p class="edition-desc">Kernel documentation, agent framework, and developer resources for researchers building custom autonomous systems.</p>
+                    <ul class="edition-features">
+                        <li>RT scheduler & IPC system</li>
+                        <li>Multi-agent framework</li>
+                        <li>Kernel modules</li>
+                        <li>Research APIs</li>
+                    </ul>
+                    <div class="edition-actions">
+                        <a href="#" class="btn-quick" style="flex:1; text-align:center; opacity:0.6; cursor:not-allowed;" onclick="alert('Core documentation coming soon!'); return false;">Coming Soon</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="docs-section">
+            <div class="section-header">
+                <h2 class="section-title">Hardware Documentation</h2>
+                <p class="section-subtitle">Flight controllers, sensors, companion computers, and wiring guides</p>
+            </div>
+            
+            <div class="docs-grid">
+                <div class="doc-card">
+                    <div class="doc-icon">🎛️</div>
+                    <h3>Flight Controllers</h3>
+                    <p>Pixhawk, ZEX ATHENA H743 PRO, and other supported flight controllers with pinouts and configuration.</p>
+                    <ul class="doc-links">
+                        <li><a href="hardware/wiring-diagrams.html">Wiring Diagrams</a></li>
+                        <li><a href="configuration/ardupilot-config.html">ArduPilot Config</a></li>
+                        <li><a href="hardware/pinouts.html">Pinout Reference</a></li>
+                    </ul>
+                </div>
+                
+                <div class="doc-card">
+                    <div class="doc-icon">💻</div>
+                    <h3>Companion Computers</h3>
+                    <p>NVIDIA Jetson, Raspberry Pi setup and configuration for running Cule OS.</p>
+                    <ul class="doc-links">
+                        <li><a href="installation/jetson-setup.html">Jetson Setup</a></li>
+                        <li><a href="installation/raspberry-pi.html">Raspberry Pi</a></li>
+                        <li><a href="hardware/companion-computers.html">Performance Guide</a></li>
+                    </ul>
+                </div>
+                
+                <div class="doc-card">
+                    <div class="doc-icon">📡</div>
+                    <h3>Sensors & Telemetry</h3>
+                    <p>GPS, IMU, compass, barometer, LiDAR, and telemetry radio setup.</p>
+                    <ul class="doc-links">
+                        <li><a href="calibration/calibration-procedures.html">Calibration</a></li>
+                        <li><a href="hardware/sensors.html">Sensor Guide</a></li>
+                        <li><a href="hardware/telemetry.html">Telemetry Setup</a></li>
+                    </ul>
+                </div>
+                
+                <div class="doc-card">
+                    <div class="doc-icon">📷</div>
+                    <h3>Cameras & Vision</h3>
+                    <p>Camera configuration, gstreamer pipelines, and computer vision setup.</p>
+                    <ul class="doc-links">
+                        <li><a href="hardware/cameras.html">Camera Setup</a></li>
+                        <li><a href="hardware/gstreamer.html">Video Pipeline</a></li>
+                        <li><a href="hardware/vision.html">Computer Vision</a></li>
+                    </ul>
+                </div>
+                
+                <div class="doc-card">
+                    <div class="doc-icon">🔋</div>
+                    <h3>Power Systems</h3>
+                    <p>Battery configuration, power distribution, and voltage monitoring.</p>
+                    <ul class="doc-links">
+                        <li><a href="hardware/power.html">Power Setup</a></li>
+                        <li><a href="hardware/battery.html">Battery Guide</a></li>
+                        <li><a href="hardware/pdb.html">Power Distribution</a></li>
+                    </ul>
+                </div>
+                
+                <div class="doc-card">
+                    <div class="doc-icon">📻</div>
+                    <h3>Radio & Control</h3>
+                    <p>RC transmitter setup, radio calibration, and control link configuration.</p>
+                    <ul class="doc-links">
+                        <li><a href="hardware/radio.html">Radio Setup</a></li>
+                        <li><a href="calibration/radio-calibration.html">Calibration</a></li>
+                        <li><a href="hardware/rc-channels.html">Channel Mapping</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="docs-section">
+            <div class="section-header">
+                <h2 class="section-title">Software & API</h2>
+                <p class="section-subtitle">Programming interfaces, configuration, and integration guides</p>
+            </div>
+            
+            <div class="docs-grid">
+                <div class="doc-card">
+                    <div class="doc-icon">🐍</div>
+                    <h3>Python API</h3>
+                    <p>Complete Python SDK for vehicle control, mission planning, and sensor integration.</p>
+                    <ul class="doc-links">
+                        <li><a href="api/python-api.html">Python Reference</a></li>
+                        <li><a href="api/quickstart-python.html">Quick Start</a></li>
+                        <li><a href="api/examples.html">Code Examples</a></li>
+                    </ul>
+                </div>
+                
+                <div class="doc-card">
+                    <div class="doc-icon">📡</div>
+                    <h3>MAVLink Interface</h3>
+                    <p>MAVLink protocol documentation for communication with flight controllers.</p>
+                    <ul class="doc-links">
+                        <li><a href="api/mavlink.html">MAVLink Guide</a></li>
+                        <li><a href="api/messages.html">Message Reference</a></li>
+                        <li><a href="api/telemetry.html">Telemetry Streaming</a></li>
+                    </ul>
+                </div>
+                
+                <div class="doc-card">
+                    <div class="doc-icon">🤖</div>
+                    <h3>ROS2 Integration</h3>
+                    <p>ROS2 topics, nodes, and integration for robotic applications.</p>
+                    <ul class="doc-links">
+                        <li><a href="api/ros2.html">ROS2 Setup</a></li>
+                        <li><a href="api/topics.html">Topic Reference</a></li>
+                        <li><a href="api/nodes.html">Node Documentation</a></li>
+                    </ul>
+                </div>
+                
+                <div class="doc-card">
+                    <div class="doc-icon">🖥️</div>
+                    <h3>CLI Commands</h3>
+                    <p>Command-line interface for configuration, control, and diagnostics.</p>
+                    <ul class="doc-links">
+                        <li><a href="api/cli.html">CLI Reference</a></li>
+                        <li><a href="api/commands.html">Command List</a></li>
+                        <li><a href="api/scripts.html">Automation</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <section class="architecture-section">
+        <div class="architecture-content">
+            <div class="section-header">
+                <h2 class="section-title">System Architecture</h2>
+                <p class="section-subtitle">Understanding how Cule OS components work together</p>
+            </div>
+            
+            <div class="architecture-diagram">
+                <div class="arch-layer">
+                    <div class="arch-layer-title">Application Layer</div>
+                    <div class="arch-components">
+                        <div class="arch-component">
+                            <strong>Mission Planning</strong>
+                            <span>Waypoint navigation</span>
+                        </div>
+                        <div class="arch-component">
+                            <strong>Swarm Coord</strong>
+                            <span>Multi-vehicle</span>
+                        </div>
+                        <div class="arch-component">
+                            <strong>Vision Processing</strong>
+                            <span>Object detection</span>
+                        </div>
+                        <div class="arch-component">
+                            <strong>Cloud Connect</strong>
+                            <span>Fleet management</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="arch-layer">
+                    <div class="arch-layer-title">Mally Agent System</div>
+                    <div class="arch-components">
+                        <div class="arch-component">
+                            <strong>Perception Agent</strong>
+                            <span>Sensor fusion</span>
+                        </div>
+                        <div class="arch-component">
+                            <strong>Planning Agent</strong>
+                            <span>Path planning</span>
+                        </div>
+                        <div class="arch-component">
+                            <strong>Control Agent</strong>
+                            <span>Vehicle control</span>
+                        </div>
+                        <div class="arch-component">
+                            <strong>Comm Agent</strong>
+                            <span>Telemetry</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="arch-layer">
+                    <div class="arch-layer-title">Cule Core Kernel</div>
+                    <div class="arch-components">
+                        <div class="arch-component">
+                            <strong>RT Scheduler</strong>
+                            <span>1kHz control loop</span>
+                        </div>
+                        <div class="arch-component">
+                            <strong>IPC System</strong>
+                            <span>Inter-process</span>
+                        </div>
+                        <div class="arch-component">
+                            <strong>Memory Manager</strong>
+                            <span>Real-time alloc</span>
+                        </div>
+                        <div class="arch-component">
+                            <strong>Device Drivers</strong>
+                            <span>Hardware abstraction</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="arch-layer">
+                    <div class="arch-layer-title">Hardware Abstraction</div>
+                    <div class="arch-components">
+                        <div class="arch-component">
+                            <strong>Pixhawk Driver</strong>
+                            <span>FC interface</span>
+                        </div>
+                        <div class="arch-component">
+                            <strong>Camera Driver</strong>
+                            <span>CSI/USB/GMSL</span>
+                        </div>
+                        <div class="arch-component">
+                            <strong>Sensor Driver</strong>
+                            <span>GPS/IMU/LiDAR</span>
+                        </div>
+                        <div class="arch-component">
+                            <strong>Telemetry Driver</strong>
+                            <span>Radio link</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="api-preview">
+        <div class="api-content">
+            <h2 class="api-section-title">Quick Start Example</h2>
+            <p class="api-section-subtitle">Get a drone flying autonomously in minutes</p>
+            
+            <div class="code-block">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span class="code-dot red"></span>
+                        <span class="code-dot yellow"></span>
+                        <span class="code-dot green"></span>
+                    </div>
+                    <span class="code-title">mission.py</span>
+                </div>
+                <div class="code-content">
+<span class="keyword">from</span> cule <span class="keyword">import</span> UAV
+
+<span class="comment"># Connect to vehicle</span>
+drone = UAV.connect(<span class="string">'/dev/ttyUSB0'</span>)
+
+<span class="comment"># Arm and takeoff</span>
+drone.arm()
+drone.takeoff(altitude=<span class="number">10</span>)
+
+<span class="comment"># Navigate to waypoint</span>
+drone.goto(lat=<span class="number">37.7749</span>, lon=<span class="number">-122.4194</span>, alt=<span class="number">20</span>)
+
+<span class="comment"># Return and land</span>
+drone.rtl()
+drone.land()
+drone.disarm()
+                </div>
+            </div>
+            
+            <div class="hero-buttons">
+                <a href="api/api-documentation.html" class="btn btn-primary">View Full API Docs</a>
+                <a href="../cule-os/examples/README.md" class="btn btn-secondary">More Examples</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h4>Editions</h4>
+                <ul>
+                    <li><a href="../cule-os/docs/uav/index.html">Axon UAV</a></li>
+                    <li><a href="#">Terra UGV</a></li>
+                    <li><a href="#">Aqua USV</a></li>
+                    <li><a href="#">Core Dev</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Documentation</h4>
+                <ul>
+                    <li><a href="installation/jetson-setup.html">Installation</a></li>
+                    <li><a href="hardware/wiring-diagrams.html">Hardware</a></li>
+                    <li><a href="configuration/ardupilot-config.html">Configuration</a></li>
+                    <li><a href="api/api-documentation.html">API Reference</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Operations</h4>
+                <ul>
+                    <li><a href="../cule-os/docs/uav/quickstart.html">First Flight</a></li>
+                    <li><a href="calibration/calibration-procedures.html">Calibration</a></li>
+                    <li><a href="troubleshooting/troubleshooting-guide.html">Troubleshooting</a></li>
+                    <li><a href="operations/first-flight-checklist.html">Checklists</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Community</h4>
+                <ul>
+                    <li><a href="https://github.com/sanjaysparker27/cule-os" target="_blank">GitHub</a></li>
+                    <li><a href="https://github.com/sanjaysparker27/cule-os/discussions" target="_blank">Discussions</a></li>
+                    <li><a href="https://sanjaysparker27.github.io/sanjay-sparker-portfolio" target="_blank">Developer</a></li>
+                    <li><a href="mailto:sanjay.sparker27@gmail.com">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Cule OS. Built for autonomous vehicles. Created by <a href="https://sanjaysparker27.github.io/sanjay-sparker-portfolio" target="_blank">Sanjay</a>.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Search functionality
+        const searchData = [
+            { title: "Quick Start Guide", url: "../cule-os/docs/uav/quickstart.html", desc: "Get flying in 30 minutes", category: "UAV" },
+            { title: "Installation Guide", url: "installation/jetson-setup.html", desc: "Jetson and Raspberry Pi setup", category: "Installation" },
+            { title: "Wiring Diagrams", url: "hardware/wiring-diagrams.html", desc: "Complete hardware connections", category: "Hardware" },
+            { title: "ArduPilot Configuration", url: "configuration/ardupilot-config.html", desc: "Flight controller parameters", category: "Configuration" },
+            { title: "Calibration Procedures", url: "calibration/calibration-procedures.html", desc: "ESC, IMU, compass calibration", category: "Calibration" },
+            { title: "First Flight Checklist", url: "operations/first-flight-checklist.html", desc: "Pre-flight safety checks", category: "Operations" },
+            { title: "Troubleshooting", url: "troubleshooting/troubleshooting-guide.html", desc: "Common issues and solutions", category: "Support" },
+            { title: "API Documentation", url: "api/api-documentation.html", desc: "Python, ROS2, MAVLink APIs", category: "API" },
+            { title: "Flight Modes", url: "../cule-os/docs/uav/flight-modes.html", desc: "All flight modes explained", category: "UAV" },
+            { title: "Mission Planning", url: "../cule-os/docs/uav/missions.html", desc: "Autonomous waypoint missions", category: "UAV" },
+            { title: "Safety Procedures", url: "../cule-os/docs/uav/safety.html", desc: "Critical safety information", category: "UAV" },
+            { title: "Camera Setup", url: "hardware/cameras.html", desc: "Camera configuration guide", category: "Hardware" },
+            { title: "Sensor Guide", url: "hardware/sensors.html", desc: "GPS, IMU, LiDAR setup", category: "Hardware" },
+            { title: "Power Systems", url: "hardware/power.html", desc: "Battery and power distribution", category: "Hardware" },
+            { title: "Radio Setup", url: "hardware/radio.html", desc: "RC transmitter configuration", category: "Hardware" },
+            { title: "Python API", url: "api/python-api.html", desc: "Python SDK reference", category: "API" },
+            { title: "ROS2 Topics", url: "api/ros2.html", desc: "ROS2 integration guide", category: "API" },
+            { title: "MAVLink Guide", url: "api/mavlink.html", desc: "MAVLink protocol docs", category: "API" },
+            { title: "CLI Reference", url: "api/cli.html", desc: "Command-line interface", category: "API" }
+        ];
+
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+
+        searchInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+            if (query.length < 2) {
+                searchResults.classList.remove('active');
+                return;
+            }
+
+            const results = searchData.filter(item => 
+                item.title.toLowerCase().includes(query) || 
+                item.desc.toLowerCase().includes(query) ||
+                item.category.toLowerCase().includes(query)
+            );
+
+            if (results.length > 0) {
+                searchResults.innerHTML = results.map(item => `
+                    <div class="search-result-item" onclick="window.location.href='${item.url}'">
+                        <div class="search-result-category">${item.category}</div>
+                        <div class="search-result-title">${item.title}</div>
+                        <div class="search-result-desc">${item.desc}</div>
+                    </div>
+                `).join('');
+                searchResults.classList.add('active');
+            } else {
+                searchResults.innerHTML = '<div class="search-result-item"><div class="search-result-desc">No results found</div></div>';
+                searchResults.classList.add('active');
+            }
+        });
+
+        // Close search when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.search-box')) {
+                searchResults.classList.remove('active');
+            }
+        });
+
+        // Keyboard shortcut for search
+        document.addEventListener('keydown', function(e) {
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                e.preventDefault();
+                searchInput.focus();
+            }
+        });
+    </script>
+</body>
+</html>
