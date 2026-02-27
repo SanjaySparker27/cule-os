@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python API Reference - Cule OS Documentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #294172;
+            --primary-dark: #1a2a4a;
+            --primary-light: #3c6eb4;
+            --accent: #e59728;
+            --text: #333;
+            --text-light: #666;
+            --bg: #fff;
+            --bg-gray: #f6f6f6;
+            --border: #e0e0e0;
+            --code-bg: #1e1e1e;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Open Sans', sans-serif; color: var(--text); line-height: 1.6; }
+        .header { background: var(--primary); padding: 16px 24px; }
+        .header-content { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: white; font-weight: 700; font-size: 20px; }
+        .logo-icon { width: 40px; height: 40px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+        .nav-links { display: flex; gap: 32px; list-style: none; }
+        .nav-links a { color: rgba(255,255,255,0.9); text-decoration: none; font-size: 14px; font-weight: 600; }
+        .nav-links a:hover { color: var(--accent); }
+        .breadcrumbs { background: var(--bg-gray); padding: 16px 24px; border-bottom: 1px solid var(--border); }
+        .breadcrumbs-content { max-width: 1400px; margin: 0 auto; }
+        .breadcrumbs a { color: var(--primary-light); text-decoration: none; }
+        .content { max-width: 1000px; margin: 0 auto; padding: 40px 24px; }
+        h1 { font-size: 36px; color: var(--primary); margin-bottom: 24px; }
+        h2 { font-size: 28px; color: var(--primary); margin: 40px 0 20px; border-bottom: 2px solid var(--border); padding-bottom: 12px; }
+        h3 { font-size: 22px; color: var(--primary); margin: 32px 0 16px; }
+        h4 { font-size: 18px; color: var(--primary); margin: 24px 0 12px; }
+        p { margin-bottom: 16px; color: var(--text-light); }
+        pre { background: var(--code-bg); color: #d4d4d4; padding: 20px; border-radius: 8px; overflow-x: auto; font-family: 'JetBrains Mono', monospace; font-size: 14px; margin: 20px 0; }
+        code { background: var(--bg-gray); padding: 2px 6px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 14px; }
+        pre code { background: none; padding: 0; }
+        .method { background: var(--bg-gray); border-left: 4px solid var(--accent); padding: 20px; margin: 24px 0; border-radius: 0 8px 8px 0; }
+        .method-sig { font-family: 'JetBrains Mono', monospace; font-size: 16px; color: var(--primary); margin-bottom: 12px; }
+        .param { margin: 8px 0; padding-left: 20px; }
+        .param-name { font-weight: 600; color: var(--primary); }
+        .param-type { color: var(--text-light); font-style: italic; }
+        .sidebar { position: fixed; left: 0; top: 64px; bottom: 0; width: 260px; background: var(--bg-gray); border-right: 1px solid var(--border); overflow-y: auto; padding: 24px; }
+        .sidebar h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-light); margin: 20px 0 12px; }
+        .sidebar a { display: block; padding: 8px 12px; color: var(--text); text-decoration: none; border-radius: 6px; font-size: 14px; }
+        .sidebar a:hover, .sidebar a.active { background: white; color: var(--primary); }
+        .main-with-sidebar { margin-left: 260px; }
+        .notice { background: #e0f2fe; border-left: 4px solid var(--primary-light); padding: 16px 20px; margin: 24px 0; border-radius: 0 8px 8px 0; }
+        footer { background: var(--primary-dark); color: white; text-align: center; padding: 40px 24px; margin-top: 80px; }
+        footer a { color: var(--accent); }
+        @media (max-width: 1024px) { .sidebar { display: none; } .main-with-sidebar { margin-left: 0; } }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="../../index.html" class="logo">
+                <div class="logo-icon">C</div>
+                <span>Cule OS</span>
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Documentation</a></li>
+                    <li><a href="../installation/jetson-setup.html">Installation</a></li>
+                    <li><a href="../hardware/wiring-diagrams.html">Hardware</a></li>
+                    <li><a href="../configuration/ardupilot-config.html">Configuration</a></li>
+                    <li><a href="api-documentation.html">API</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <aside class="sidebar">
+        <h4>API Reference</h4>
+        <a href="api-documentation.html">Overview</a>
+        <a href="python-api.html" class="active">Python API</a>
+        <a href="ros2.html">ROS2 Integration</a>
+        <a href="mavlink.html">MAVLink Guide</a>
+        <a href="cli.html">CLI Reference</a>
+        
+        <h4>Python SDK</h4>
+        <a href="#installation">Installation</a>
+        <a href="#connection">Connection</a>
+        <a href="#vehicle">Vehicle Control</a>
+        <a href="#mission">Mission Planning</a>
+        <a href="#sensors">Sensor Access</a>
+    </aside>
+
+    <div class="main-with-sidebar">
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-content">
+                <a href="../../index.html">Home</a> / <a href="../index.html">Documentation</a> / <a href="api-documentation.html">API</a> / Python API
+            </div>
+        </div>
+
+        <main class="content">
+            <h1>Python API Reference</h1>
+            <p>Complete Python SDK for controlling autonomous vehicles with Cule OS.</p>
+
+            <div class="notice">
+                <strong>Installation:</strong> <code>pip install cule-os</code>
+            </div>
+
+            <h2 id="installation">Installation</h2>
+            <pre># Install from PyPI
+pip install cule-os
+
+# Or install from source
+git clone https://github.com/sanjaysparker27/cule-os.git
+cd cule-os
+pip install -e .</pre>
+
+            <h2 id="connection">Connection</h2>
+            
+            <div class="method">
+                <div class="method-sig">UAV.connect(port, baud=115200, **kwargs)</div>
+                <p>Connect to a vehicle via serial port or network.</p>
+                <p><strong>Parameters:</strong></p>
+                <div class="param">
+                    <span class="param-name">port</span> <span class="param-type">str</span> - Serial port (e.g., '/dev/ttyUSB0') or IP:port for UDP
+                </div>
+                <div class="param">
+                    <span class="param-name">baud</span> <span class="param-type">int</span> - Baud rate for serial connection (default: 115200)
+                </div>
+                <div class="param">
+                    <span class="param-name">wait_ready</span> <span class="param-type">bool</span> - Wait for vehicle to be ready (default: True)
+                </div>
+            </div>
+
+            <h3>Connection Examples</h3>
+            <pre><span class="comment"># USB connection to flight controller</span>
+<span class="keyword">from</span> cule <span class="keyword">import</span> UAV
+
+drone = UAV.connect(<span class="string">'/dev/ttyUSB0'</span>, baud=<span class="number">921600</span>)
+
+<span class="comment"># Network connection (UDP)</span>
+drone = UAV.connect(<span class="string">'udp:192.168.1.10:14550'</span>)
+
+<span class="comment"># TCP connection to SITL simulator</span>
+drone = UAV.connect(<span class="string">'tcp:127.0.0.1:5760'</span>)</pre>
+
+            <h2 id="vehicle">Vehicle Control</h2>
+            
+            <h3>Arming and Disarming</h3>
+            <div class="method">
+                <div class="method-sig">drone.arm(check=True)</div>
+                <p>Arm the vehicle motors.</p>
+            </div>
+            
+            <div class="method">
+                <div class="method-sig">drone.disarm()</div>
+                <p>Disarm the vehicle motors.</p>
+            </div>
+
+            <h3>Flight Modes</h3>
+            <div class="method">
+                <div class="method-sig">drone.mode = mode_name</div>
+                <p>Set the flight mode. Common modes: 'STABILIZE', 'ALT_HOLD', 'LOITER', 'AUTO', 'RTL', 'LAND', 'GUIDED'</p>
+            </div>
+
+            <pre><span class="comment"># Set flight mode</span>
+drone.mode = <span class="string">'LOITER'</span>
+
+<span class="comment"># Check current mode</span>
+<span class="keyword">print</span>(drone.mode)  <span class="comment"># 'LOITER'</span></pre>
+
+            <h3>Takeoff and Landing</h3>
+            <div class="method">
+                <div class="method-sig">drone.takeoff(altitude, wait=True)</div>
+                <p>Take off to specified altitude (meters).</p>
+            </div>
+
+            <div class="method">
+                <div class="method-sig">drone.land(wait=True)</div>
+                <p>Land at current position.</p>
+            </div>
+
+            <div class="method">
+                <div class="method-sig">drone.rtl()</div>
+                <p>Return to launch point and land.</p>
+            </div>
+
+            <pre><span class="comment"># Simple takeoff sequence</span>
+drone.arm()
+drone.takeoff(altitude=<span class="number">10</span>)  <span class="comment"># 10 meters</span>
+drone.mode = <span class="string">'LOITER'</span>
+
+<span class="comment"># Return and land</span>
+drone.rtl()</pre>
+
+            <h2 id="mission">Mission Planning</h2>
+            
+            <h3>Waypoint Navigation</h3>
+            <div class="method">
+                <div class="method-sig">drone.goto(lat, lon, alt, groundspeed=None)</div>
+                <p>Navigate to a GPS coordinate.</p>
+            </div>
+
+            <pre><span class="comment"># Navigate to waypoint</span>
+drone.goto(
+    lat=<span class="number">37.7749</span>,
+    lon=<span class="number">-122.4194</span>,
+    alt=<span class="number">50</span>,  <span class="comment"># meters</span>
+    groundspeed=<span class="number">10</span>  <span class="comment"># m/s</span>
+)</pre>
+
+            <h3>Mission Upload</h3>
+            <div class="method">
+                <div class="method-sig">drone.upload_mission(waypoints)</div>
+                <p>Upload a mission to the vehicle.</p>
+            </div>
+
+            <pre><span class="comment"># Create and upload mission</span>
+mission = [
+    (<span class="number">37.7749</span>, <span class="number">-122.4194</span>, <span class="number">30</span>),   <span class="comment"># WP 1: Takeoff area</span>
+    (<span class="number">37.7759</span>, <span class="number">-122.4184</span>, <span class="number">50</span>),   <span class="comment"># WP 2</span>
+    (<span class="number">37.7769</span>, <span class="number">-122.4174</span>, <span class="number">50</span>),   <span class="comment"># WP 3</span>
+    (<span class="number">37.7749</span>, <span class="number">-122.4194</span>, <span class="number">30</span>),   <span class="comment"># WP 4: Return</span>
+]
+
+drone.upload_mission(mission)
+drone.mode = <span class="string">'AUTO'</span>  <span class="comment"># Start mission</span></pre>
+
+            <h2 id="sensors">Sensor Access</h2>
+            
+            <h3>Telemetry Data</h3>
+            <div class="method">
+                <div class="method-sig">drone.telemetry</div>
+                <p>Access current telemetry data.</p>
+            </div>
+
+            <pre><span class="comment"># Get telemetry</span>
+telem = drone.telemetry
+<span class="keyword">print</span>(<span class="string">f"Position: </span>{telem.lat}<span class="string">, </span>{telem.lon}<span class="string">, </span>{telem.alt}<span class="string">"</span>)
+<span class="keyword">print</span>(<span class="string">f"Attitude: roll=</span>{telem.roll}<span class="string">, pitch=</span>{telem.pitch}<span class="string">, yaw=</span>{telem.yaw}<span class="string">"</span>)
+<span class="keyword">print</span>(<span class="string">f"Battery: </span>{telem.battery_voltage}<span class="string">V, </span>{telem.battery_percent}<span class="string">%"</span>)
+<span class="keyword">print</span>(<span class="string">f"GPS: </span>{telem.gps_sats}<span class="string"> sats, fix=</span>{telem.gps_fix_type}<span class="string">"</span>)</pre>
+
+            <h3>Attitude and Position</h3>
+            <div class="method">
+                <div class="method-sig">drone.attitude</div>
+                <p>Current roll, pitch, yaw in degrees.</p>
+            </div>
+
+            <div class="method">
+                <div class="method-sig">drone.location</div>
+                <p>Current lat, lon, alt, relative_alt.</p>
+            </div>
+
+            <h2>Complete Example</h2>
+            <pre><span class="keyword">from</span> cule <span class="keyword">import</span> UAV
+<span class="keyword">import</span> time
+
+<span class="comment"># Connect to vehicle</span>
+<span class="keyword">print</span>(<span class="string">"Connecting..."</span>)
+drone = UAV.connect(<span class="string">'/dev/ttyUSB0'</span>)
+<span class="keyword">print</span>(<span class="string">"Connected!"</span>)
+
+<span class="comment"># Arm and takeoff</span>
+<span class="keyword">print</span>(<span class="string">"Arming..."</span>)
+drone.arm()
+<span class="keyword">print</span>(<span class="string">"Taking off..."</span>)
+drone.takeoff(altitude=<span class="number">10</span>)
+
+<span class="comment"># Wait for stable hover</span>
+time.sleep(<span class="number">5</span>)
+
+<span class="comment"># Navigate to waypoint</span>
+<span class="keyword">print</span>(<span class="string">"Going to waypoint..."</span>)
+drone.goto(lat=<span class="number">37.7749</span>, lon=<span class="number">-122.4194</span>, alt=<span class="number">20</span>)
+
+<span class="comment"># Wait for arrival</span>
+<span class="keyword">while</span> drone.location.distance_to(<span class="number">37.7749</span>, <span class="number">-122.4194</span>) > <span class="number">1</span>:
+    time.sleep(<span class="number">0.5</span>)
+
+<span class="keyword">print</span>(<span class="string">"At waypoint!"</span>)
+
+<span class="comment"># Return and land</span>
+<span class="keyword">print</span>(<span class="string">"Returning to launch..."</span>)
+drone.rtl()
+
+<span class="comment"># Wait for landing</span>
+<span class="keyword">while</span> drone.telemetry.is_armed:
+    time.sleep(<span class="number">1</span>)
+
+<span class="keyword">print</span>(<span class="string">"Mission complete!"</span>)</pre>
+
+            <h2>Error Handling</h2>
+            <pre><span class="keyword">from</span> cule <span class="keyword">import</span> UAV, CuleError
+
+<span class="keyword">try</span>:
+    drone = UAV.connect(<span class="string">'/dev/ttyUSB0'</span>)
+    drone.arm()
+<span class="keyword">except</span> CuleError.TimeoutError:
+    <span class="keyword">print</span>(<span class="string">"Connection timeout - check cable"</span>)
+<span class="keyword">except</span> CuleError.ArmError <span class="keyword">as</span> e:
+    <span class="keyword">print</span>(<span class="string">f"Cannot arm: </span>{e.message}<span class="string">"</span>)
+<span class="keyword">finally</span>:
+    drone.close()</pre>
+        </main>
+    </div>
+
+    <footer>
+        <p>© 2026 Cule OS Documentation</p>
+        <p><a href="https://sanjaysparker27.github.io/sanjay-sparker-portfolio" target="_blank">Created by Sanjay</a></p>
+    </footer>
+</body>
+</html>

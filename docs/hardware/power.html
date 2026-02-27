@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power Systems - Cule OS Documentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #294172;
+            --primary-dark: #1a2a4a;
+            --primary-light: #3c6eb4;
+            --accent: #e59728;
+            --text: #333;
+            --text-light: #666;
+            --bg: #fff;
+            --bg-gray: #f6f6f6;
+            --border: #e0e0e0;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Open Sans', sans-serif; color: var(--text); line-height: 1.6; }
+        .header { background: var(--primary); padding: 16px 24px; }
+        .header-content { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: white; font-weight: 700; font-size: 20px; }
+        .logo-icon { width: 40px; height: 40px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+        .nav-links { display: flex; gap: 32px; list-style: none; }
+        .nav-links a { color: rgba(255,255,255,0.9); text-decoration: none; font-size: 14px; font-weight: 600; }
+        .nav-links a:hover { color: var(--accent); }
+        .breadcrumbs { background: var(--bg-gray); padding: 16px 24px; border-bottom: 1px solid var(--border); }
+        .breadcrumbs-content { max-width: 1400px; margin: 0 auto; }
+        .breadcrumbs a { color: var(--primary-light); text-decoration: none; }
+        .content { max-width: 1000px; margin: 0 auto; padding: 40px 24px; }
+        h1 { font-size: 36px; color: var(--primary); margin-bottom: 24px; }
+        h2 { font-size: 28px; color: var(--primary); margin: 40px 0 20px; border-bottom: 2px solid var(--border); padding-bottom: 12px; }
+        h3 { font-size: 22px; color: var(--primary); margin: 32px 0 16px; }
+        p { margin-bottom: 16px; color: var(--text-light); }
+        .danger-box { background: #fee2e2; border-left: 4px solid var(--danger); padding: 16px 20px; margin: 24px 0; border-radius: 0 8px 8px 0; }
+        .warning-box { background: #fef3c7; border-left: 4px solid var(--warning); padding: 16px 20px; margin: 24px 0; border-radius: 0 8px 8px 0; }
+        .notice { background: #e0f2fe; border-left: 4px solid var(--primary-light); padding: 16px 20px; margin: 24px 0; border-radius: 0 8px 8px 0; }
+        .power-table { width: 100%; border-collapse: collapse; margin: 24px 0; }
+        .power-table th, .power-table td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border); }
+        .power-table th { background: var(--bg-gray); font-weight: 600; color: var(--primary); }
+        footer { background: var(--primary-dark); color: white; text-align: center; padding: 40px 24px; margin-top: 80px; }
+        footer a { color: var(--accent); }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="../../index.html" class="logo">
+                <div class="logo-icon">C</div>
+                <span>Cule OS</span>
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Documentation</a></li>
+                    <li><a href="../installation/jetson-setup.html">Installation</a></li>
+                    <li><a href="wiring-diagrams.html">Hardware</a></li>
+                    <li><a href="../configuration/ardupilot-config.html">Configuration</a></li>
+                    <li><a href="../api/api-documentation.html">API</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="breadcrumbs">
+        <div class="breadcrumbs-content">
+            <a href="../../index.html">Home</a> / <a href="../index.html">Documentation</a> / <a href="wiring-diagrams.html">Hardware</a> / Power Systems
+        </div>
+    </div>
+
+    <main class="content">
+        <h1>Power Systems Guide</h1>
+        <p>Proper power system design is critical for safe and reliable operation of autonomous vehicles.</p>
+
+        <div class="danger-box">
+            <strong>⚠️ Safety Warning:</strong> LiPo batteries can be dangerous if mishandled. Always follow proper charging, storage, and disposal procedures. Never leave charging batteries unattended.
+        </div>
+
+        <h2>Battery Selection</h2>
+        
+        <h3>LiPo Battery Specifications</h3>
+        <table class="power-table">
+            <tr><th>Parameter</th><th>Description</th><th>Typical Range</th></tr>
+            <tr><td>Cell Count (S)</td><td>Number of cells in series</td><td>3S (11.1V) to 12S (44.4V)</td></tr>
+            <tr><td>Capacity (mAh)</td><td>Energy storage capacity</td><td>1000mAh to 30000mAh</td></tr>
+            <tr><td>C Rating</td><td>Maximum discharge rate</td><td>25C to 100C+</td></tr>
+            <tr><td>Weight</td><td>Battery mass</td><td>~150g to 5kg+</td></tr>
+        </table>
+
+        <h3>Recommended Batteries by Vehicle Type</h3>
+        <table class="power-table">
+            <tr><th>Vehicle</th><th>Size</th><th>Recommended</th><th>Flight Time</th></tr>
+            <tr><td>Mini Quad</td><td>3-5 inch</td><td>4S 1500-2200mAh 75C</td><td>4-7 min</td></tr>
+            <tr><td>Racing Drone</td><td>5-7 inch</td><td>6S 1300-1800mAh 100C</td><td>3-5 min</td></tr>
+            <tr><td>Cinematic</td><td>7-10 inch</td><td>6S 3000-5000mAh 50C</td><td>10-15 min</td></tr>
+            <tr><td>Mapping UAV</td><td>500mm+</td><td>6S 8000-12000mAh 25C</td><td>25-40 min</td></tr>
+            <tr><td>Heavy Lift</td><td>Heavy payload</td><td>12S 22000mAh+ 25C</td><td>15-25 min</td></tr>
+        </table>
+
+        <h2>Power Distribution</h2>
+        
+        <h3>Power Distribution Board (PDB)</h3>
+        <p>A PDB distributes power from the battery to ESCs, flight controller, and peripherals:</p>
+        <ul>
+            <li><strong>ESC Power:</strong> High current paths to motor ESCs</li>
+            <li><strong>5V BEC:</strong> Powers flight controller, receiver, GPS (typically 3-5A)</li>
+            <li><strong>12V BEC:</strong> Powers FPV camera, video transmitter (if applicable)</li>
+        </ul>
+
+        <h3>ATHENA H743 BEC Capabilities</h3>
+        <table class="power-table">
+            <tr><th>Rail</th><th>Voltage</th><th>Current</th><th>Usage</th></tr>
+            <tr><td>5V</td><td>5.0V</td><td>3A</td><td>Flight controller, peripherals</td></tr>
+            <tr><td>12V</td><td>12.0V</td><td>3A</td><td>Camera, VTX</td></tr>
+            <tr><td>3.3V</td><td>3.3V</td><td>0.5A</td><td>Sensors, logic</td></tr>
+        </table>
+
+        <h2>Companion Computer Power</h2>
+        
+        <h3>Jetson Power Requirements</h3>
+        <table class="power-table">
+            <tr><th>Platform</th><th>Input Voltage</th><th>Max Power</th><th>Typical</th></tr>
+            <tr><td>Jetson AGX Orin</td><td>7V - 20V</td><td>60W</td><td>15-30W</td></tr>
+            <tr><td>Jetson Orin NX</td><td>7V - 20V</td><td>25W</td><td>10-15W</td></tr>
+            <tr><td>Jetson Xavier NX</td><td>9V - 20V</td><td>20W</td><td>10-15W</td></tr>
+            <tr><td>Jetson Nano</td><td>5V (barrel or USB)</td><td>10W</td><td>5-8W</td></tr>
+        </table>
+
+        <h3>Powering from Main Battery</h3>
+        <div class="warning-box">
+            <strong>Important:</strong> Most flight controller BECs cannot power a Jetson. Use a separate high-current BEC or DC-DC converter.
+        </div>
+
+        <p>Recommended DC-DC converters for Jetson:</p>
+        <ul>
+            <li>Pololu 5V 9A Step-Down (for 4S-6S batteries)</li>
+            <li>Matek 5V 10A BEC (with voltage display)</li>
+            <li>Castle Creations CC BEC Pro (adjustable 4.8-12V)</li>
+        </ul>
+
+        <h2>Wiring Best Practices</h2>
+        
+        <h3>Wire Gauge Selection</h3>
+        <table class="power-table">
+            <tr><th>Application</th><th>Wire Gauge</th><th>Max Current</th></tr>
+            <tr><td>Battery to PDB</td><td>10-12 AWG</td><td>50-80A</td></tr>
+            <tr><td>PDB to ESC</td><td>14-16 AWG</td><td>20-40A</td></tr>
+            <tr><td>5V/12V BEC output</td><td>18-20 AWG</td><td>5-10A</td></tr>
+            <tr><td>Signal wires</td><td>22-26 AWG</td><td>< 1A</td></tr>
+        </table>
+
+        <h3>Power Wiring Checklist</h3>
+        <ul>
+            <li>Use appropriate wire gauge for current requirements</li>
+            <li>Keep power wires as short as possible</li>
+            <li>Use proper connectors (XT60, XT90, AS150)</li>
+            <li>Add ferrite rings on long power wires to reduce EMI</li>
+            <li>Secure all connections with heat shrink</li>
+            <li>Include a power switch or removable link for safety</li>
+        </ul>
+
+        <h2>Battery Monitoring</h2>
+        
+        <div class="notice">
+            <strong>Tip:</strong> Always use a current/voltage sensor to monitor battery status. This enables automatic failsafe actions when battery is low.
+        </div>
+
+        <p>See <a href="sensors.html">Sensors Guide</a> for current/voltage sensor configuration.</p>
+
+        <h2>Safety Systems</h2>
+        
+        <h3>Required Safety Features</h3>
+        <ul>
+            <li><strong>Power Switch:</strong> Easy way to disconnect power</li>
+            <li><strong>Fuse:</strong> Protect against short circuits</li>
+            <li><strong>Smoke Stopper:</strong> Use when testing new builds</li>
+            <li><strong>Low Voltage Alarm:</strong> Audible warning for low battery</li>
+            <li><strong>Battery Bag:</strong> Fireproof storage for LiPos</li>
+        </ul>
+
+        <h3>ArduPilot Battery Failsafe</h3>
+        <pre>BATT_MONITOR = 4       # Enable voltage and current monitoring
+BATT_LOW_VOLT = 14.0   # Low voltage threshold (4S)
+BATT_CRT_VOLT = 13.2   # Critical voltage (4S)
+BATT_FS_LOW_ACT = 2    # RTL on low battery
+BATT_FS_CRT_ACT = 1    # Land on critical</pre>
+    </main>
+
+    <footer>
+        <p>© 2026 Cule OS Documentation</p>
+        <p><a href="https://sanjaysparker27.github.io/sanjay-sparker-portfolio" target="_blank">Created by Sanjay</a></p>
+    </footer>
+</body>
+</html>

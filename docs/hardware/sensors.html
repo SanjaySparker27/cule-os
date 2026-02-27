@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sensors Guide - Cule OS Documentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #294172;
+            --primary-dark: #1a2a4a;
+            --primary-light: #3c6eb4;
+            --accent: #e59728;
+            --text: #333;
+            --text-light: #666;
+            --bg: #fff;
+            --bg-gray: #f6f6f6;
+            --border: #e0e0e0;
+            --code-bg: #f4f4f4;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Open Sans', sans-serif; color: var(--text); line-height: 1.6; }
+        .header { background: var(--primary); padding: 16px 24px; }
+        .header-content { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: white; font-weight: 700; font-size: 20px; }
+        .logo-icon { width: 40px; height: 40px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+        .nav-links { display: flex; gap: 32px; list-style: none; }
+        .nav-links a { color: rgba(255,255,255,0.9); text-decoration: none; font-size: 14px; font-weight: 600; }
+        .nav-links a:hover { color: var(--accent); }
+        .breadcrumbs { background: var(--bg-gray); padding: 16px 24px; border-bottom: 1px solid var(--border); }
+        .breadcrumbs-content { max-width: 1400px; margin: 0 auto; }
+        .breadcrumbs a { color: var(--primary-light); text-decoration: none; }
+        .content { max-width: 1000px; margin: 0 auto; padding: 40px 24px; }
+        h1 { font-size: 36px; color: var(--primary); margin-bottom: 24px; }
+        h2 { font-size: 28px; color: var(--primary); margin: 40px 0 20px; border-bottom: 2px solid var(--border); padding-bottom: 12px; }
+        h3 { font-size: 22px; color: var(--primary); margin: 32px 0 16px; }
+        p { margin-bottom: 16px; color: var(--text-light); }
+        pre { background: var(--code-bg); padding: 20px; border-radius: 8px; overflow-x: auto; font-family: 'Consolas', monospace; font-size: 14px; margin: 20px 0; }
+        code { background: var(--code-bg); padding: 2px 6px; border-radius: 4px; font-family: 'Consolas', monospace; font-size: 14px; }
+        .sensor-table { width: 100%; border-collapse: collapse; margin: 24px 0; }
+        .sensor-table th, .sensor-table td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border); }
+        .sensor-table th { background: var(--bg-gray); font-weight: 600; color: var(--primary); }
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin: 32px 0; }
+        .card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+        .card h4 { font-size: 18px; color: var(--primary); margin-bottom: 12px; }
+        .card ul { margin-left: 20px; }
+        .card li { margin: 8px 0; }
+        .notice { background: #e0f2fe; border-left: 4px solid var(--primary-light); padding: 16px 20px; margin: 24px 0; border-radius: 0 8px 8px 0; }
+        .notice.warning { background: #fef3c7; border-left-color: var(--accent); }
+        footer { background: var(--primary-dark); color: white; text-align: center; padding: 40px 24px; margin-top: 80px; }
+        footer a { color: var(--accent); }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="../../index.html" class="logo">
+                <div class="logo-icon">C</div>
+                <span>Cule OS</span>
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Documentation</a></li>
+                    <li><a href="../installation/jetson-setup.html">Installation</a></li>
+                    <li><a href="wiring-diagrams.html">Hardware</a></li>
+                    <li><a href="../configuration/ardupilot-config.html">Configuration</a></li>
+                    <li><a href="../api/api-documentation.html">API</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="breadcrumbs">
+        <div class="breadcrumbs-content">
+            <a href="../../index.html">Home</a> / <a href="../index.html">Documentation</a> / <a href="wiring-diagrams.html">Hardware</a> / Sensors
+        </div>
+    </div>
+
+    <main class="content">
+        <h1>Sensors Guide</h1>
+        <p>Complete guide to GPS, IMU, compass, barometer, LiDAR, and other sensors for autonomous vehicles.</p>
+
+        <h2>GPS Modules</h2>
+        <table class="sensor-table">
+            <tr><th>Module</th><th>Constellations</th><th>Accuracy</th><th>Update Rate</th><th>Features</th></tr>
+            <tr><td>u-blox NEO-M8N</td><td>GPS, GLONASS</td><td>2.5m</td><td>10Hz</td><td>Basic, reliable</td></tr>
+            <tr><td>u-blox NEO-M9N</td><td>GPS, GLONASS, Galileo, BeiDou</td><td>2.0m</td><td>25Hz</td><td>Multi-band</td></tr>
+            <tr><td>u-blox ZED-F9P</td><td>All + L1/L2</td><td>0.01m (RTK)</td><td>20Hz</td><td>RTK capable</td></tr>
+            <tr><td>Here3 CAN GPS</td><td>GPS, GLONASS, BeiDou</td><td>2.5m</td><td>10Hz</td><td>CAN bus, compass</td></tr>
+        </table>
+
+        <h3>GPS Configuration</h3>
+        <pre># Connect GPS to UART port
+# Default GPS port on ATHENA H743: UART3
+
+# In ArduPilot parameters:
+GPS_TYPE = 1  # Auto detect
+GPS_TYPE2 = 0  # Disable second GPS (or set to 1 if dual)
+SERIAL3_PROTOCOL = 5  # GPS
+SERIAL3_BAUD = 38  # 38400
+
+# For u-blox M9N (higher baud recommended):
+SERIAL3_BAUD = 115  # 115200
+
+# Enable SBAS for better accuracy
+GPS_SBAS_MODE = 2  # Enable + auto</pre>
+
+        <h2>IMU (Inertial Measurement Unit)</h2>
+        
+        <div class="card-grid">
+            <div class="card">
+                <h4>🎯 Internal IMU</h4>
+                <p>Most flight controllers include built-in IMUs:</p>
+                <ul>
+                    <li>ICM-42688-P (ATHENA H743)</li>
+                    <li>ICM-20689 (Pixhawk 4)</li>
+                    <li>ADIS-16448 (Industrial)</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h4>📡 External IMU</h4>
+                <p>For vibration isolation or redundancy:</p>
+                <ul>
+                    <li>Here3 (GPS + IMU)</li>
+                    <li>VectorNav VN-100</li>
+                    <li>MicroStrain 3DM-GX5</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3>IMU Configuration</h3>
+        <pre># IMU parameters in ArduPilot
+INS_GYRO_FILTER = 40  # Gyro filter frequency (Hz)
+INS_ACCEL_FILTER = 20  # Accel filter frequency (Hz)
+INS_HNTCH_ENABLE = 1  # Enable harmonic notch filter
+INS_HNTCH_FREQ = 80  # Notch filter frequency (motor freq)</pre>
+
+        <h2>Compass (Magnetometer)</h2>
+        
+        <div class="notice warning">
+            <strong>Important:</strong> Compass calibration is critical for stable flight. Perform calibration away from metal objects and interference sources.
+        </div>
+
+        <table class="sensor-table">
+            <tr><th>Sensor</th><th>Interface</th><th>Field Strength</th><th>Notes</th></tr>
+            <tr><td>IST8310</td><td>I2C</td><td>4800 uT</td><td>Common on flight controllers</td></tr>
+            <tr><td>QMC5883L</td><td>I2C</td><td>8000 uT</td><td>Low cost alternative</td></tr>
+            <tr><td>HMC5883L</td><td>I2C</td><td>8100 uT</td><td>Older design</td></tr>
+            <tr><td>RM3100</td><td>I2C/SPI</td><td>80000 uT</td><td>High sensitivity</td></tr>
+        </table>
+
+        <h3>Compass Configuration</h3>
+        <pre># In ArduPilot parameters:
+COMPASS_USE = 1  # Enable compass
+COMPASS_USE2 = 1  # Enable external compass (if available)
+COMPASS_USE3 = 0  # Disable third compass
+
+# Orientation (if mounted differently than flight controller)
+COMPASS_ORIENT = 0  # No rotation (default)
+
+# Declination (auto-set by GPS, or manual)
+COMPASS_DEC = 0  # Auto from GPS
+
+# Learn offsets automatically
+COMPASS_LEARN = 3  # In-flight learning</pre>
+
+        <h2>Barometer</h2>
+        <p>Used for altitude hold and terrain following:</p>
+        <ul>
+            <li><strong>SPL06-007</strong> - Default on ATHENA H743 (high precision)</li>
+            <li><strong>MS5611</strong> - Common on Pixhawk boards</li>
+            <li><strong>BMP280</strong> - Budget option</li>
+        </ul>
+
+        <h2>LiDAR & Distance Sensors</h2>
+        
+        <table class="sensor-table">
+            <tr><th>Sensor</th><th>Range</th><th>Interface</th><th>Use Case</th></tr>
+            <tr><td>Garmin LidarLite v3</td><td>40m</td><td>I2C/PWM</td><td>Precision landing</td></tr>
+            <tr><td>TF-Luna</td><td>8m</td><td>I2C/UART</td><td>Low cost avoidance</td></tr>
+            <tr><td>TFmini Plus</td><td>12m</td><td>I2C/UART</td><td>Obstacle avoidance</td></tr>
+            <tr><td>SJ-PM-TF02-Pro</td><td>40m</td><td>I2C/UART</td><td>Altitude hold</td></tr>
+            <tr><td>LightWare SF11/C</td><td>120m</td><td>I2C/UART</td><td>Long range</td></tr>
+            <tr><td>Livox Mid-360</td><td>100m</td><td>Ethernet</td><td>3D LiDAR SLAM</td></tr>
+            <tr><td>Ouster OS1</td><td>120m</td><td>Ethernet</td><td>High-res 3D LiDAR</td></tr>
+        </table>
+
+        <h3>LiDAR Configuration</h3>
+        <pre># For TFmini Plus on UART4:
+SERIAL4_PROTOCOL = 9  # Lidar
+SERIAL4_BAUD = 115  # 115200
+RNGFND1_TYPE = 20  # Benewake TFmini
+RNGFND1_MIN_CM = 10
+RNGFND1_MAX_CM = 1200
+RNGFND1_GNDCLEAR = 15  # Distance from ground at landing (cm)
+
+# For 3D LiDAR (Livox/Ouster):
+# Use ROS2 drivers and Cule OS integration
+sudo cule-config --lidar livox --ip 192.168.1.100</pre>
+
+        <h2>Optical Flow</h2>
+        <p>GPS-denied navigation for indoor flight:</p>
+        
+        <table class="sensor-table">
+            <tr><th>Sensor</th><th>Resolution</th><th>Interface</th><th>Max Height</th></tr>
+            <tr><td>PixArt PMW3901</td><td>35x35px</td><td>SPI</td><td>8m</td></tr>
+            <tr><td>HereFlow</td><td>+ Lidar</td><td>CAN</td><td>8m</td></tr>
+            <tr><td>ARK Flow</td><td>+ Lidar</td><td>CAN</td><td>30m</td></tr>
+        </table>
+
+        <h3>Optical Flow Configuration</h3>
+        <pre># Enable optical flow
+FLOW_TYPE = 1  # PX4Flow or compatible
+FLOW_ADDR = 0x42  # I2C address (default)
+
+# Position estimation
+EK3_SRC1_POSXY = 3  # GPS (default)
+EK3_SRC2_POSXY = 0  # Optical flow as backup
+EK3_SRC2_VELXY = 5  # Optical flow velocity</pre>
+
+        <h2>Current & Voltage Sensors</h2>
+        
+        <table class="sensor-table">
+            <tr><th>Sensor</th><th>Current Range</th><th>Voltage</th><th>Interface</th></tr>
+            <tr><td>AttoPilot 180A</td><td>±180A</td><td>3-60V</td><td>Analog</td></tr>
+            <tr><td>Mauch HS-100-LV</td><td>±100A</td><td>3-26V</td><td>Analog</td></tr>
+            <tr><td>Cube Power Module</td><td>±90A</td><td>3-14S</td><td>Analog</td></tr>
+            <tr><td>INA226</td><td>Programmable</td><td>0-36V</td><td>I2C</td></tr>
+        </table>
+
+        <h3>Power Sensor Configuration</h3>
+        <pre># Enable battery monitoring
+BATT_MONITOR = 4  # Analog voltage and current
+
+# Calibration (example for 4S LiPo):
+BATT_VOLT_PIN = 0  # Analog pin
+BATT_CURR_PIN = 1  # Analog pin
+BATT_VOLT_MULT = 10.1  # Voltage divider
+BATT_AMP_PERVLT = 39.877  # Amps per volt
+
+# Low battery failsafe
+BATT_LOW_VOLT = 14.0  # 4S warning (3.5V/cell)
+BATT_CRT_VOLT = 13.2  # 4S critical (3.3V/cell)
+BATT_FS_LOW_ACT = 2  # RTL on low battery
+BATT_FS_CRT_ACT = 1  # Land on critical</pre>
+
+        <h2>Sensor Calibration</h2>
+        <p>All sensors require proper calibration for accurate operation. See <a href="../calibration/calibration-procedures.html">Calibration Procedures</a> for detailed steps.</p>
+        
+        <pre># Quick calibration commands via MAVProxy
+accelcal  # Accelerometer
+depscal   # Compass
+radcal    # RC radio
+esc_cal   # ESCs</pre>
+    </main>
+
+    <footer>
+        <p>© 2026 Cule OS Documentation</p>
+        <p><a href="https://sanjaysparker27.github.io/sanjay-sparker-portfolio" target="_blank">Created by Sanjay</a></p>
+    </footer>
+</body>
+</html>
