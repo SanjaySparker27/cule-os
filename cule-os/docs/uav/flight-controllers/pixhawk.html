@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixhawk Flight Controllers - Cule OS Documentation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #294172;
+            --primary-dark: #1a2a4a;
+            --primary-light: #3c6eb4;
+            --accent: #76b900;
+            --text: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --border: #30363d;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+        }
+        
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--accent);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 24px;
+            display: grid;
+            grid-template-columns: 260px 1fr 260px;
+            gap: 40px;
+        }
+        
+        @media (max-width: 1024px) {
+            .container { grid-template-columns: 1fr; }
+            .sidebar-left, .sidebar-right { display: none; }
+        }
+        
+        .sidebar-left, .sidebar-right {
+            position: sticky;
+            top: 80px;
+            height: fit-content;
+        }
+        
+        .sidebar-title {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+        }
+        
+        .sidebar-item {
+            margin-bottom: 4px;
+        }
+        
+        .sidebar-link {
+            display: block;
+            padding: 8px 12px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        
+        .sidebar-link:hover, .sidebar-link.active {
+            color: var(--accent);
+            background: var(--bg-tertiary);
+        }
+        
+        .main-content {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 48px;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 24px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .breadcrumb a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        
+        h1 {
+            font-size: 42px;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, var(--text) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        h2 {
+            font-size: 28px;
+            margin: 48px 0 20px;
+            color: var(--accent);
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        h3 {
+            font-size: 22px;
+            margin: 32px 0 16px;
+        }
+        
+        p {
+            margin-bottom: 16px;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+        
+        p strong {
+            color: var(--text);
+        }
+        
+        code {
+            background: var(--bg-tertiary);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: var(--accent);
+        }
+        
+        pre {
+            background: var(--bg-tertiary);
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            border: 1px solid var(--border);
+        }
+        
+        pre code {
+            background: none;
+            padding: 0;
+            color: var(--text);
+        }
+        
+        ul, ol {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+        
+        li strong {
+            color: var(--text);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 14px;
+        }
+        
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
+            background: var(--bg-tertiary);
+            font-weight: 600;
+            color: var(--text);
+        }
+        
+        td {
+            color: var(--text-secondary);
+        }
+        
+        tr:hover td {
+            background: var(--bg-tertiary);
+        }
+        
+        .warning-box {
+            background: rgba(255, 193, 7, 0.1);
+            border-left: 4px solid #ffc107;
+            padding: 16px 20px;
+            margin: 24px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .warning-box strong {
+            color: #ffc107;
+        }
+        
+        .info-box {
+            background: rgba(88, 166, 255, 0.1);
+            border-left: 4px solid var(--info);
+            padding: 16px 20px;
+            margin: 24px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .on-this-page {
+            list-style: none;
+        }
+        
+        .on-this-page li {
+            margin-bottom: 8px;
+        }
+        
+        .on-this-page a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            display: block;
+            padding: 4px 0;
+            border-left: 2px solid transparent;
+            padding-left: 12px;
+            transition: all 0.2s;
+        }
+        
+        .on-this-page a:hover, .on-this-page a.active {
+            color: var(--accent);
+            border-left-color: var(--accent);
+        }
+        
+        footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            padding: 40px 24px;
+            text-align: center;
+            color: var(--text-secondary);
+            margin-top: 80px;
+        }
+        
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="../../../../index.html" class="logo">
+                <div class="logo-icon">C</div>
+                <span>Cule OS</span>
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="../../../../index.html">Home</a></li>
+                    <li><a href="../../index.html">Documentation</a></li>
+                    <li><a href="../../../../download.html">Download</a></li>
+                    <li><a href="https://github.com/sanjaysparker27/cule-os" target="_blank">GitHub</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar-left">
+            <div class="sidebar-title">Documentation</div>
+            <ul class="sidebar-menu">
+                <li class="sidebar-item"><a href="../../index.html" class="sidebar-link">← Back to UAV Docs</a></li>
+                <li class="sidebar-item"><a href="../../index.html" class="sidebar-link">Overview</a></li>
+            </ul>
+            
+            <div class="sidebar-title" style="margin-top: 24px;">Flight Controllers</div>
+            <ul class="sidebar-menu">
+                <li class="sidebar-item"><a href="pixhawk.html" class="sidebar-link active">Pixhawk Series</a></li>
+                <li class="sidebar-item"><a href="cube-orange.html" class="sidebar-link">Cube Orange</a></li>
+                <li class="sidebar-item"><a href="selection-guide.html" class="sidebar-link">Selection Guide</a></li>
+            </ul>
+            
+            <div class="sidebar-title" style="margin-top: 24px;">Sensors</div>
+            <ul class="sidebar-menu">
+                <li class="sidebar-item"><a href="../sensors/gps.html" class="sidebar-link">GPS/GNSS</a></li>
+                <li class="sidebar-item"><a href="../sensors/imu.html" class="sidebar-link">IMU</a></li>
+                <li class="sidebar-item"><a href="../sensors/compass.html" class="sidebar-link">Compass</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <nav class="breadcrumb">
+                <a href="../../../../index.html">Home</a>
+                <span>/</span>
+                <a href="../../index.html">Documentation</a>
+                <span>/</span>
+                <a href="../../index.html">UAV</a>
+                <span>/</span>
+                <span>Flight Controllers</span>
+            </nav>
+
+            <h1>Pixhawk Flight Controllers</h1>
+            
+            <p>The Pixhawk series represents the industry standard for open-source autopilot hardware. Cule-OS provides full support for Pixhawk 4, 4 Mini, 6X, and 6C flight controllers with optimized drivers and configurations.</p>
+
+            <h2>Pixhawk 4 / 4 Mini</h2>
+            
+            <h3>Specifications</h3>
+            <table>
+                <tr>
+                    <th>Feature</th>
+                    <th>Pixhawk 4</th>
+                    <th>Pixhawk 4 Mini</th>
+                </tr>
+                <tr>
+                    <td>Processor</td>
+                    <td>FMUv5 (STM32F765)</td>
+                    <td>FMUv5 (STM32F765)</td>
+                </tr>
+                <tr>
+                    <td>Clock Speed</td>
+                    <td>216 MHz</td>
+                    <td>216 MHz</td>
+                </tr>
+                <tr>
+                    <td>RAM</td>
+                    <td>512 KB</td>
+                    <td>512 KB</td>
+                </tr>
+                <tr>
+                    <td>Flash</td>
+                    <td>2 MB</td>
+                    <td>2 MB</td>
+                </tr>
+                <tr>
+                    <td>IMU Redundancy</td>
+                    <td>Triple</td>
+                    <td>Dual</td>
+                </tr>
+                <tr>
+                    <td>UART Ports</td>
+                    <td>5</td>
+                    <td>4</td>
+                </tr>
+                <tr>
+                    <td>CAN Bus</td>
+                    <td>2</td>
+                    <td>1</td>
+                </tr>
+            </table>
+
+            <h3>Main PWM Outputs (8 channels)</h3>
+            <pre><code>Pin  Signal    Voltage    Description
+---  ------    ---------  -----------
+1    PWM1      3.3V       Motor 1 / Aileron
+2    PWM2      3.3V       Motor 2 / Elevator
+3    PWM3      3.3V       Motor 3 / Throttle
+4    PWM4      3.3V       Motor 4 / Rudder
+5    PWM5      3.3V       Aux / Gear
+6    PWM6      3.3V       Aux / Flaps
+7    PWM7      3.3V       Aux
+8    PWM8      3.3V       Aux</code></pre>
+
+            <h3>Building for Pixhawk</h3>
+            <pre><code># Pixhawk 4
+cd cule-os
+make clean
+make BOARD=px4_fmu-v5_default
+
+# Pixhawk 4 Mini
+make BOARD=px4_fmu-v5x_default
+
+# Pixhawk 6X
+make BOARD=px4_fmu-v6x_default
+
+# Pixhawk 6C
+make BOARD=px4_fmu-v6c_default</code></pre>
+
+            <h2>Pixhawk 6X / 6C</h2>
+            
+            <h3>Key Improvements over Pixhawk 4</h3>
+            <ul>
+                <li><strong>Triple Redundant IMU</strong> with isolated power domains (6X only)</li>
+                <li><strong>Dual Redundant Barometer</strong> for reliable altitude hold</li>
+                <li><strong>Ethernet connectivity</strong> for high-bandwidth applications (6X only)</li>
+                <li><strong>Triple CAN bus</strong> for complex CAN architectures</li>
+                <li><strong>H7 processor</strong> - 2.2x faster than F7</li>
+                <li><strong>Improved temperature stability</strong> with heating element</li>
+            </ul>
+
+            <h3>Parameter Configuration</h3>
+            <pre><code># Vehicle type
+SYS_AUTOSTART    4001    # Generic quadcopter
+
+# Sensor priorities (for triple IMU)
+SENS_IMU_MODE    1       # Auto-switch on failure
+EKF2_IMU_MASK    7       # Use IMU 0,1,2
+
+# RC configuration
+RC_MAP_THROTTLE  1
+RC_MAP_ROLL      2
+RC_MAP_PITCH     3
+RC_MAP_YAW       4
+RC_MAP_MODE_SW   5
+RC_MAP_KILL_SW   6
+
+# Safety
+COM_DISARM_LAND  2       # Auto-disarm after 2s on ground
+NAV_RCL_ACT      2       # Return to land on RC loss
+BAT_CRIT_THR     0.07    # Critical battery threshold</code></pre>
+
+            <h2>Troubleshooting</h2>
+            
+            <h3>No Power / LED Off</h3>
+            <ul>
+                <li>Check power module connection to Power1 port</li>
+                <li>Verify 5V on power port pins 1-2</li>
+                <li>Test with USB power only</li>
+            </ul>
+
+            <h3>Can't Connect via USB</h3>
+            <ul>
+                <li>Try different USB cable (data cable, not charge-only)</li>
+                <li>Check driver installation (Windows)</li>
+                <li>Verify port permissions (Linux): <code>sudo usermod -a -G dialout $USER</code></li>
+            </ul>
+
+            <div class="warning-box">
+                <strong>⚠️ Note:</strong> Always ensure proper grounding when connecting peripherals to avoid ESD damage to the flight controller.
+            </div>
+        </main>
+
+        <aside class="sidebar-right">
+            <div class="sidebar-title">On this page</div>
+            <ul class="on-this-page">
+                <li><a href="#pixhawk-4-4-mini">Pixhawk 4 / 4 Mini</a></li>
+                <li><a href="#specifications">Specifications</a></li>
+                <li><a href="#pinout">Pinout Reference</a></li>
+                <li><a href="#pixhawk-6x-6c">Pixhawk 6X / 6C</a></li>
+                <li><a href="#configuration">Configuration</a></li>
+                <li><a href="#troubleshooting">Troubleshooting</a></li>
+            </ul>
+        </aside>
+    </div>
+
+    <footer>
+        <p>© 2026 Cule OS. Built for autonomous vehicles. <a href="https://sanjaysparker27.github.io/sanjay-sparker-portfolio" target="_blank">Created by Sanjay</a></p>
+    </footer>
+
+    <script>
+        // Highlight active section in TOC
+        const sections = document.querySelectorAll('h2, h3');
+        const tocLinks = document.querySelectorAll('.on-this-page a');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

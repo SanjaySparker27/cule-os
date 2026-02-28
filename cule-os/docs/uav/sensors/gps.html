@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPS/GNSS Sensors - Cule OS Documentation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #294172;
+            --primary-dark: #1a2a4a;
+            --primary-light: #3c6eb4;
+            --accent: #76b900;
+            --text: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --border: #30363d;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+        .header { background: var(--bg); border-bottom: 1px solid var(--border); padding: 16px 24px; position: sticky; top: 0; z-index: 100; }
+        .header-content { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: white; font-weight: 700; font-size: 20px; }
+        .logo-icon { width: 36px; height: 36px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+        .nav-links { display: flex; gap: 32px; list-style: none; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 14px; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 24px; display: grid; grid-template-columns: 260px 1fr 260px; gap: 40px; }
+        @media (max-width: 1024px) { .container { grid-template-columns: 1fr; } .sidebar-left, .sidebar-right { display: none; } }
+        .sidebar-left, .sidebar-right { position: sticky; top: 80px; height: fit-content; }
+        .sidebar-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); margin-bottom: 16px; }
+        .sidebar-menu { list-style: none; }
+        .sidebar-item { margin-bottom: 4px; }
+        .sidebar-link { display: block; padding: 8px 12px; color: var(--text-secondary); text-decoration: none; font-size: 14px; border-radius: 6px; transition: all 0.2s; }
+        .sidebar-link:hover, .sidebar-link.active { color: var(--accent); background: var(--bg-tertiary); }
+        .main-content { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 12px; padding: 48px; }
+        .breadcrumb { display: flex; align-items: center; gap: 8px; margin-bottom: 24px; font-size: 14px; color: var(--text-secondary); }
+        .breadcrumb a { color: var(--accent); text-decoration: none; }
+        h1 { font-size: 42px; margin-bottom: 24px; background: linear-gradient(135deg, var(--text) 0%, var(--text-secondary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        h2 { font-size: 28px; margin: 48px 0 20px; color: var(--accent); padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+        h3 { font-size: 22px; margin: 32px 0 16px; }
+        p { margin-bottom: 16px; line-height: 1.8; color: var(--text-secondary); }
+        p strong { color: var(--text); }
+        code { background: var(--bg-tertiary); padding: 2px 8px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--accent); }
+        pre { background: var(--bg-tertiary); padding: 20px; border-radius: 8px; overflow-x: auto; margin: 20px 0; border: 1px solid var(--border); }
+        pre code { background: none; padding: 0; color: var(--text); }
+        ul, ol { margin: 16px 0; padding-left: 24px; }
+        li { margin-bottom: 8px; color: var(--text-secondary); }
+        li strong { color: var(--text); }
+        table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 14px; }
+        th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); }
+        th { background: var(--bg-tertiary); font-weight: 600; color: var(--text); }
+        td { color: var(--text-secondary); }
+        tr:hover td { background: var(--bg-tertiary); }
+        .on-this-page { list-style: none; }
+        .on-this-page li { margin-bottom: 8px; }
+        .on-this-page a { color: var(--text-secondary); text-decoration: none; font-size: 14px; display: block; padding: 4px 0; border-left: 2px solid transparent; padding-left: 12px; transition: all 0.2s; }
+        .on-this-page a:hover, .on-this-page a.active { color: var(--accent); border-left-color: var(--accent); }
+        footer { background: var(--bg-secondary); border-top: 1px solid var(--border); padding: 40px 24px; text-align: center; color: var(--text-secondary); margin-top: 80px; }
+        footer a { color: var(--accent); text-decoration: none; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="../../../../index.html" class="logo"><div class="logo-icon">C</div><span>Cule OS</span></a>
+            <nav><ul class="nav-links"><li><a href="../../../../index.html">Home</a></li><li><a href="../../index.html">Documentation</a></li><li><a href="../../../../download.html">Download</a></li><li><a href="https://github.com/sanjaysparker27/cule-os" target="_blank">GitHub</a></li></ul></nav>
+        </div>
+    </header>
+    <div class="container">
+        <aside class="sidebar-left">
+            <div class="sidebar-title">Documentation</div>
+            <ul class="sidebar-menu">
+                <li class="sidebar-item"><a href="../../index.html" class="sidebar-link">← Back to UAV Docs</a></li>
+                <li class="sidebar-item"><a href="../../index.html" class="sidebar-link">Overview</a></li>
+            </ul>
+            <div class="sidebar-title" style="margin-top: 24px;">Sensors</div>
+            <ul class="sidebar-menu">
+                <li class="sidebar-item"><a href="gps.html" class="sidebar-link active">GPS/GNSS</a></li>
+                <li class="sidebar-item"><a href="imu.html" class="sidebar-link">IMU</a></li>
+                <li class="sidebar-item"><a href="compass.html" class="sidebar-link">Compass</a></li>
+                <li class="sidebar-item"><a href="barometer.html" class="sidebar-link">Barometer</a></li>
+                <li class="sidebar-item"><a href="rangefinder.html" class="sidebar-link">Rangefinder</a></li>
+            </ul>
+        </aside>
+        <main class="main-content">
+            <nav class="breadcrumb"><a href="../../../../index.html">Home</a><span>/</span><a href="../../index.html">Documentation</a><span>/</span><a href="../../index.html">UAV</a><span>/</span><span>Sensors</span></nav>
+            <h1>GPS/GNSS Sensors</h1>
+            <p>GPS (Global Positioning System) and GNSS (Global Navigation Satellite System) sensors provide critical position, velocity, and timing data for UAV operations. Cule-OS supports a wide range of receivers from basic navigation to centimeter-accurate RTK systems.</p>
+            <h2>Supported GNSS Systems</h2>
+            <table><tr><th>System</th><th>Constellation</th><th>Coverage</th><th>Best For</th></tr><tr><td>GPS (USA)</td><td>31 satellites</td><td>Global</td><td>General use</td></tr><tr><td>GLONASS (Russia)</td><td>24 satellites</td><td>Global</td><td>High latitudes</td></tr><tr><td>Galileo (EU)</td><td>30 satellites</td><td>Global</td><td>Accuracy</td></tr><tr><td>BeiDou (China)</td><td>35 satellites</td><td>Asia-Pacific</td><td>Dense coverage</td></tr></table>
+            <h2>GPS Module Selection</h2>
+            <h3>Entry Level - u-blox NEO-M8N</h3>
+            <pre><code>Specifications:
+- Constellations: GPS, GLONASS, Galileo, BeiDou
+- Update rate: Up to 10Hz
+- Accuracy: 2.5m CEP
+- Cost: $15-25
+
+Cule-OS Parameters:
+GPS_TYPE     1      # Auto-detect (u-blox)
+GPS_RATE_MS  100    # 10Hz update</code></pre>
+            <h3>Professional RTK - u-blox ZED-F9P</h3>
+            <pre><code>Specifications:
+- Constellations: GPS, GLONASS, Galileo, BeiDou
+- RTK: L1/L2 bands, multi-band
+- Update rate: 20Hz RTK, 25Hz PVT
+- Accuracy: 10mm + 1ppm (RTK)
+- Cost: $150-250
+
+Cule-OS Parameters:
+GPS_TYPE          1      # u-blox
+GPS_RATE_MS       50     # 20Hz
+GPS_AUTO_CONFIG   1      # Auto-configure</code></pre>
+            <h2>Cule-OS Configuration</h2>
+            <h3>Basic Setup</h3>
+            <pre><code># GPS type selection
+GPS_TYPE     1      # Auto-detect
+GPS_RATE_MS  100    # Milliseconds (100 = 10Hz)
+
+# GNSS constellation selection
+GPS_GNSS_MODE 0     # Auto (module default)
+# Bitmask: 1=GPS, 4=GLONASS, 8=BeiDou, 16=Galileo</code></pre>
+            <h3>RTK Setup</h3>
+            <pre><code># RTK base settings
+GPS_INJECT_TO     127    # All GPS units
+GPS_RTCM_FROM     1      # MAVLink source</code></pre>
+            <h2>Troubleshooting</h2>
+            <h3>No GPS Fix</h3>
+            <ul><li><strong>Antenna not connected</strong> → Check antenna connector (u.fl or SMA)</li><li><strong>First boot (cold start)</strong> → Wait 5-15 minutes for almanac download</li><li><strong>Indoor operation</strong> → GPS requires outdoor sky view</li><li><strong>Configuration issue</strong> → Reset to defaults: gps reset cold</li></ul>
+        </main>
+        <aside class="sidebar-right">
+            <div class="sidebar-title">On this page</div>
+            <ul class="on-this-page"><li><a href="#supported-gnss">Supported GNSS</a></li><li><a href="#module-selection">Module Selection</a></li><li><a href="#configuration">Configuration</a></li><li><a href="#troubleshooting">Troubleshooting</a></li></ul>
+        </aside>
+    </div>
+    <footer><p>© 2026 Cule OS. Built for autonomous vehicles. <a href="https://sanjaysparker27.github.io/sanjay-sparker-portfolio" target="_blank">Created by Sanjay</a></p></footer>
+</body>
+</html>

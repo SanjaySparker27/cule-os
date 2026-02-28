@@ -5,32 +5,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Documentation - Cule OS</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --primary: #294172;
             --primary-dark: #1a2a4a;
             --primary-light: #3c6eb4;
-            --accent: #e59728;
-            --text: #333;
-            --text-light: #666;
-            --bg: #fff;
-            --bg-gray: #f6f6f6;
-            --border: #e0e0e0;
+            --accent: #76b900;
+            --accent-hover: #5a9100;
+            --text: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --border: #30363d;
+            --code-bg: #1e1e1e;
+            --success: #3fb950;
+            --warning: #d29922;
+            --error: #f85149;
+            --info: #58a6ff;
         }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Open Sans', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
             color: var(--text);
             line-height: 1.6;
+            overflow-x: hidden;
         }
-        header {
-            background: var(--primary);
-            padding: 16px 24px;
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-secondary);
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            z-index: 1000;
         }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
         .logo {
             display: flex;
             align-items: center;
@@ -40,313 +91,982 @@
             font-weight: 700;
             font-size: 20px;
         }
+
         .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--accent);
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 18px;
         }
-        nav a {
-            color: rgba(255,255,255,0.9);
-            text-decoration: none;
-            margin-left: 24px;
+
+        .search-box {
+            position: relative;
+            width: 400px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 16px 10px 40px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
             font-size: 14px;
+            transition: all 0.3s ease;
         }
-        nav a:hover { color: white; }
-        
-        .hero {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            padding: 100px 24px 60px;
-            text-align: center;
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: var(--bg-secondary);
         }
-        .hero h1 { font-size: 42px; margin-bottom: 16px; }
-        .hero p { font-size: 18px; opacity: 0.9; max-width: 600px; margin: 0 auto; }
-        
-        .content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 60px 24px;
+
+        .search-box::before {
+            content: "🔍";
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.5;
         }
-        
-        .docs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+
+        .nav-right {
+            display: flex;
+            align-items: center;
             gap: 24px;
-            margin-bottom: 48px;
         }
-        
-        .doc-card {
-            background: white;
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--text);
+        }
+
+        .version-selector {
+            padding: 8px 16px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text);
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .github-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .github-btn:hover {
+            background: var(--border);
+            border-color: var(--text-secondary);
+        }
+
+        /* Layout */
+        .main-container {
+            display: flex;
+            margin-top: 64px;
+            min-height: calc(100vh - 64px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 64px;
+            width: 280px;
+            height: calc(100vh - 64px);
+            background: var(--bg);
+            border-right: 1px solid var(--border);
+            overflow-y: auto;
+            padding: 24px 0;
+        }
+
+        .sidebar-section {
+            margin-bottom: 24px;
+        }
+
+        .sidebar-title {
+            padding: 0 24px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-item {
+            position: relative;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 24px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .sidebar-link:hover,
+        .sidebar-link.active {
+            color: var(--accent);
+            background: var(--bg-tertiary);
+        }
+
+        .sidebar-link.has-children::after {
+            content: "▸";
+            font-size: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-link.expanded::after {
+            transform: rotate(90deg);
+        }
+
+        .sidebar-submenu {
+            list-style: none;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .sidebar-submenu.expanded {
+            max-height: 500px;
+        }
+
+        .sidebar-submenu .sidebar-link {
+            padding-left: 48px;
+            font-size: 13px;
+        }
+
+        /* Content Area */
+        .content-wrapper {
+            flex: 1;
+            margin-left: 280px;
+            display: flex;
+        }
+
+        .content {
+            flex: 1;
+            max-width: 900px;
+            padding: 48px 64px;
+        }
+
+        /* Breadcrumbs */
+        .breadcrumbs {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 24px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .breadcrumbs a {
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+
+        .breadcrumbs a:hover {
+            color: var(--accent);
+        }
+
+        .breadcrumbs .separator {
+            opacity: 0.5;
+        }
+
+        /* Page Title */
+        .page-header {
+            margin-bottom: 48px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .page-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--text) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-description {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 700px;
+        }
+
+        /* Action Cards */
+        .action-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 64px;
+        }
+
+        .action-card {
+            background: var(--bg-secondary);
             border: 1px solid var(--border);
             border-radius: 12px;
             padding: 32px;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
-        .doc-card:hover {
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+
+        .action-card:hover {
+            border-color: var(--accent);
             transform: translateY(-4px);
-            border-color: var(--primary-light);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
-        .doc-icon {
+
+        .action-icon {
             width: 56px;
             height: 56px;
-            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 28px;
             margin-bottom: 20px;
-            color: white;
         }
-        .doc-card h3 {
+
+        .action-card h3 {
             font-size: 20px;
-            color: var(--primary);
             margin-bottom: 12px;
         }
-        .doc-card p {
-            color: var(--text-light);
+
+        .action-card p {
+            color: var(--text-secondary);
+            font-size: 14px;
             margin-bottom: 20px;
-            font-size: 15px;
         }
-        .doc-links {
-            list-style: none;
+
+        .action-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
         }
-        .doc-links li {
-            margin-bottom: 8px;
+
+        .action-link::after {
+            content: "→";
+            transition: transform 0.3s ease;
         }
-        .doc-links a {
-            color: var(--primary-light);
+
+        .action-card:hover .action-link::after {
+            transform: translateX(4px);
+        }
+
+        /* Documentation Sections */
+        .doc-section {
+            margin-bottom: 64px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .view-all {
+            color: var(--accent);
             text-decoration: none;
             font-size: 14px;
             font-weight: 500;
         }
-        .doc-links a:hover {
-            text-decoration: underline;
+
+        /* Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
         }
-        
-        .section-title {
-            font-size: 28px;
-            color: var(--primary);
-            margin-bottom: 24px;
-            padding-bottom: 12px;
-            border-bottom: 2px solid var(--border);
+
+        .feature-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 24px;
+            transition: all 0.3s ease;
         }
-        
-        footer {
-            background: var(--primary-dark);
-            color: white;
-            text-align: center;
-            padding: 40px 24px;
+
+        .feature-card:hover {
+            border-color: var(--accent);
         }
-        footer a { color: var(--accent); }
+
+        .feature-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+
+        .feature-card h4 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .feature-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .feature-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s ease;
+        }
+
+        .feature-link:hover {
+            color: var(--accent);
+        }
+
+        /* Table of Contents */
+        .toc-sidebar {
+            position: sticky;
+            top: 64px;
+            width: 240px;
+            height: calc(100vh - 64px);
+            padding: 48px 24px;
+            border-left: 1px solid var(--border);
+        }
+
+        .toc-title {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .toc-list {
+            list-style: none;
+        }
+
+        .toc-item {
+            margin-bottom: 8px;
+        }
+
+        .toc-link {
+            display: block;
+            padding: 6px 12px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 13px;
+            border-left: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .toc-link:hover,
+        .toc-link.active {
+            color: var(--accent);
+            border-left-color: var(--accent);
+        }
+
+        /* Footer */
+        .docs-footer {
+            margin-top: 96px;
+            padding: 48px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+
+        .footer-column h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* Code Preview */
+        .code-preview {
+            background: var(--code-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 24px 0;
+        }
+
+        .code-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .code-lang {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        .code-copy {
+            padding: 6px 12px;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text-secondary);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .code-copy:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .code-preview pre {
+            padding: 20px;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .toc-sidebar {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .search-box {
+                display: none;
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
+
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .content-wrapper {
+                margin-left: 0;
+            }
+
+            .content {
+                padding: 32px 24px;
+            }
+
+            .page-title {
+                font-size: 32px;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-cards {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
-    <header>
-        <a href="index.html" class="logo">
-            <div class="logo-icon">C</div>
-            <span>Cule OS</span>
-        </a>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="docs.html">Documentation</a>
-            <a href="download.html">Download</a>
-            <a href="https://github.com/sanjaysparker27/cule-os" target="_blank">GitHub</a>
-        </nav>
-    </header>
-
-    <section class="hero">
-        <h1>Cule OS Documentation</h1>
-        <p>Complete guides, references, and tutorials for building autonomous vehicles</p>
-    </section>
-
-    <div class="content">
-        <h2 class="section-title">🚁 UAV / Drone Documentation</h2>
-        <div class="docs-grid">
-            <div class="doc-card">
-                <div class="doc-icon">🚀</div>
-                <h3>Getting Started</h3>
-                <p>Get your drone flying autonomously in 30 minutes with our step-by-step quick start guide.</p>
-                <ul class="doc-links">
-                    <li><a href="docs/uav/quickstart.html">Quick Start Guide →</a></li>
-                    <li><a href="docs/uav/index.html">UAV Overview →</a></li>
-                    <li><a href="docs/GETTING_STARTED.md">Installation →</a></li>
-                </ul>
-            </div>
-            
-            <div class="doc-card">
-                <div class="doc-icon">🎮</div>
-                <h3>Flight Modes</h3>
-                <p>Master all flight modes from Manual to fully autonomous AUTO missions.</p>
-                <ul class="doc-links">
-                    <li><a href="docs/uav/flight-modes.html">Flight Modes Guide →</a></li>
-                    <li><a href="docs/uav/flight-modes.html#manual">Manual Modes →</a></li>
-                    <li><a href="docs/uav/flight-modes.html#autonomous">Autonomous Modes →</a></li>
-                </ul>
-            </div>
-            
-            <div class="doc-card">
-                <div class="doc-icon">🗺️</div>
-                <h3>Mission Planning</h3>
-                <p>Create autonomous waypoint missions for survey, mapping, and delivery.</p>
-                <ul class="doc-links">
-                    <li><a href="docs/uav/missions.html">Mission Planning →</a></li>
-                    <li><a href="docs/uav/missions.html#survey">Survey Patterns →</a></li>
-                    <li><a href="docs/uav/missions.html#api">Python API →</a></li>
-                </ul>
-            </div>
-            
-            <div class="doc-card">
-                <div class="doc-icon">⚠️</div>
-                <h3>Safety & Emergency</h3>
-                <p>Critical safety procedures, emergency protocols, and pre-flight checklists.</p>
-                <ul class="doc-links">
-                    <li><a href="docs/uav/safety.html">Safety Procedures →</a></li>
-                    <li><a href="docs/uav/safety.html#emergency">Emergency Protocols →</a></li>
-                    <li><a href="docs/uav/checklists/pre-flight.html">Pre-flight Checklist →</a></li>
-                </ul>
-            </div>
-            
-            <div class="doc-card">
-                <div class="doc-icon">🔧</div>
-                <h3>Troubleshooting</h3>
-                <p>Fix common issues with GPS, compass, camera, and flight controller connection.</p>
-                <ul class="doc-links">
-                    <li><a href="docs/uav/troubleshooting.html">Troubleshooting →</a></li>
-                    <li><a href="docs/uav/troubleshooting.html#hardware">Hardware Issues →</a></li>
-                    <li><a href="docs/uav/troubleshooting.html#flight">Flight Issues →</a></li>
-                </ul>
-            </div>
-            
-            <div class="doc-card">
-                <div class="doc-icon">💻</div>
-                <h3>API Reference</h3>
-                <p>Python API, ROS2 topics, CLI commands, and integration guides.</p>
-                <ul class="doc-links">
-                    <li><a href="docs/api/index.html">API Documentation →</a></li>
-                    <li><a href="docs/README.md">System Architecture →</a></li>
-                    <li><a href="examples/README.md">Code Examples →</a></li>
-                </ul>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-left">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">C</div>
+                <span>Cule OS</span>
+            </a>
+            <div class="search-box">
+                <input type="text" placeholder="Search documentation..." id="searchInput">
             </div>
         </div>
-
-        <h2 class="section-title">🔧 Hardware Setup</h2>
-        <div class="docs-grid">
-            <div class="doc-card">
-                <div class="doc-icon">🎛️</div>
-                <h3>Flight Controllers</h3>
-                <p>Pixhawk setup, configuration, and integration with companion computers.</p>
-                <ul class="doc-links">
-                    <li><a href="#">Pixhawk Setup →</a></li>
-                    <li><a href="#">Wiring Diagrams →</a></li>
-                    <li><a href="#">Parameter Tuning →</a></li>
-                </ul>
-            </div>
-            
-            <div class="doc-card">
-                <div class="doc-icon">📡</div>
-                <h3>Sensors & Telemetry</h3>
-                <p>GPS, IMU, compass, barometer, telemetry radio setup and calibration.</p>
-                <ul class="doc-links">
-                    <li><a href="#">GPS Configuration →</a></li>
-                    <li><a href="#">Sensor Calibration →</a></li>
-                    <li><a href="#">Telemetry Setup →</a></li>
-                </ul>
-            </div>
-            
-            <div class="doc-card">
-                <div class="doc-icon">📷</div>
-                <h3>Cameras & Vision</h3>
-                <p>Camera configuration, gstreamer pipelines, and computer vision setup.</p>
-                <ul class="doc-links">
-                    <li><a href="#">Camera Setup →</a></li>
-                    <li><a href="#">CSI/USB Cameras →</a></li>
-                    <li><a href="#">Vision Pipeline →</a></li>
-                </ul>
-            </div>
+        <div class="nav-right">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="download.html" class="nav-link">Download</a>
+            <select class="version-selector">
+                <option>v1.0 (Latest)</option>
+                <option>v0.9</option>
+                <option>v0.8</option>
+            </select>
+            <a href="https://github.com/sanjaysparker27/cule-os" class="github-btn" target="_blank">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                </svg>
+                GitHub
+            </a>
+            <button class="mobile-toggle" onclick="toggleSidebar()">☰</button>
         </div>
+    </nav>
 
-        <h2 class="section-title">🎓 Examples & Tutorials</h2>
-        <div class="docs-grid">
-            <div class="doc-card">
-                <div class="doc-icon">📁</div>
-                <h3>Code Examples</h3>
-                <p>Working Python examples for UAV missions, swarm coordination, and more.</p>
-                <ul class="doc-links">
-                    <li><a href="examples/README.md">Examples Overview →</a></li>
-                    <li><a href="#">Basic UAV Mission →</a></li>
-                    <li><a href="#">Swarm Formation →</a></li>
+    <div class="main-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">Getting Started</div>
+                <ul class="sidebar-menu">
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="docs/GETTING_STARTED.md">Quick Start</a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="docs/GETTING_STARTED.md">Installation</a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="cule-os/docs/uav/README.md">UAV Overview</a>
+                    </li>
                 </ul>
             </div>
-            
-            <div class="doc-card">
-                <div class="doc-icon">🎓</div>
-                <h3>Tutorials</h3>
-                <p>Step-by-step tutorials for common tasks and advanced features.</p>
-                <ul class="doc-links">
-                    <li><a href="#">First Flight Tutorial →</a></li>
-                    <li><a href="#">Mission Planning Tutorial →</a></li>
-                    <li><a href="#">Computer Vision Setup →</a></li>
-                </ul>
-            </div>
-            
-            <div class="doc-card">
-                <div class="doc-icon">🎮</div>
-                <h3>Simulation</h3>
-                <p>Gazebo and Ignition simulation setup for safe testing.</p>
-                <ul class="doc-links">
-                    <li><a href="#">Simulation Setup →</a></li>
-                    <li><a href="#">Gazebo Worlds →</a></li>
-                    <li><a href="#">HIL Testing →</a></li>
-                </ul>
-            </div>
-        </div>
 
-        <h2 class="section-title">💬 Community & Support</h2>
-        <div class="docs-grid">
-            <div class="doc-card">
-                <div class="doc-icon">💬</div>
-                <h3>Community Forum</h3>
-                <p>Join the discussion, share projects, and get help from the community.</p>
-                <ul class="doc-links">
-                    <li><a href="https://github.com/sanjaysparker27/cule-os/discussions" target="_blank">GitHub Discussions →</a></li>
-                    <li><a href="#">Matrix Chat →</a></li>
-                    <li><a href="#">Discord Server →</a></li>
+            <div class="sidebar-section">
+                <div class="sidebar-title">Flight Controllers</div>
+                <ul class="sidebar-menu">
+                    <li class="sidebar-item">
+                        <a class="sidebar-link has-children" onclick="toggleSubmenu(this)">Pixhawk Series</a>
+                        <ul class="sidebar-submenu">
+                            <li><a class="sidebar-link" href="cule-os/docs/uav/flight-controllers/pixhawk.md">Pixhawk 4/6X</a></li>
+                            <li><a class="sidebar-link" href="cule-os/docs/uav/flight-controllers/pixhawk.md">Configuration</a></li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link has-children" onclick="toggleSubmenu(this)">Cube Orange</a>
+                        <ul class="sidebar-submenu">
+                            <li><a class="sidebar-link" href="cule-os/docs/uav/flight-controllers/cube-orange.md">Setup Guide</a></li>
+                            <li><a class="sidebar-link" href="cule-os/docs/uav/flight-controllers/cube-orange.md">IMU Configuration</a></li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="cule-os/docs/uav/flight-controllers/selection-guide.md">Selection Guide</a>
+                    </li>
                 </ul>
             </div>
-            
-            <div class="doc-card">
-                <div class="doc-icon">🐛</div>
-                <h3>Report Issues</h3>
-                <p>Found a bug? Report it on GitHub with detailed information.</p>
-                <ul class="doc-links">
-                    <li><a href="https://github.com/sanjaysparker27/cule-os/issues" target="_blank">GitHub Issues →</a></li>
-                    <li><a href="#">Bug Report Template →</a></li>
-                    <li><a href="#">Feature Requests →</a></li>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">Sensors</div>
+                <ul class="sidebar-menu">
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="cule-os/docs/uav/sensors/gps.md">GPS / GNSS</a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="cule-os/docs/uav/sensors/imu.md">IMU</a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="cule-os/docs/uav/sensors/compass.md">Compass</a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="cule-os/docs/uav/sensors/barometer.md">Barometer</a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="cule-os/docs/uav/sensors/rangefinder.md">Rangefinder</a>
+                    </li>
                 </ul>
             </div>
-            
-            <div class="doc-card">
-                <div class="doc-icon">🤝</div>
-                <h3>Contributing</h3>
-                <p>Want to contribute to Cule OS? Learn how to get involved.</p>
-                <ul class="doc-links">
-                    <li><a href="#">Contributing Guide →</a></li>
-                    <li><a href="#">Code of Conduct →</a></li>
-                    <li><a href="#">Development Setup →</a></li>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">Calibration</div>
+                <ul class="sidebar-menu">
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="cule-os/docs/uav/calibration/sensor-calibration.md">Sensor Calibration</a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="cule-os/docs/uav/calibration/radio-calibration.md">Radio Setup</a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="cule-os/docs/uav/calibration/esc-calibration.md">ESC Calibration</a>
+                    </li>
                 </ul>
             </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">Safety & Emergency</div>
+                <ul class="sidebar-menu">
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="cule-os/docs/uav/emergency/emergency-procedures.md">Emergency Procedures</a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="cule-os/docs/uav/emergency/failsafe.md">Failsafe Config</a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="cule-os/docs/uav/checklists/pre-flight.md">Pre-flight Checklist</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">Tuning</div>
+                <ul class="sidebar-menu">
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="cule-os/docs/uav/tuning/pid-tuning.md">PID Tuning</a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="cule-os/docs/uav/tuning/filters.md">Filter Configuration</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">Integration</div>
+                <ul class="sidebar-menu">
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="cule-os/docs/uav/mavlink/protocol.md">MAVLink Protocol</a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="cule-os/docs/uav/qgc/setup.md">QGroundControl</a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="content-wrapper">
+            <main class="content">
+                <!-- Breadcrumbs -->
+                <nav class="breadcrumbs">
+                    <a href="index.html">Home</a>
+                    <span class="separator">/</span>
+                    <span>Documentation</span>
+                </nav>
+
+                <!-- Page Header -->
+                <header class="page-header">
+                    <h1 class="page-title">Cule OS Documentation</h1>
+                    <p class="page-description">Complete guides, references, and tutorials for building and operating autonomous vehicles with Cule OS.</p>
+                </header>
+
+                <!-- Quick Start Cards -->
+                <div class="action-cards">
+                    <div class="action-card" onclick="location.href='docs/GETTING_STARTED.md'">
+                        <div class="action-icon">🚀</div>
+                        <h3>Quick Start</h3>
+                        <p>Get up and running with Cule OS in minutes. Installation and first flight guide.</p>
+                        <a class="action-link">Get Started →</a>
+                    </div>
+                    <div class="action-card" onclick="location.href='cule-os/docs/uav/flight-controllers/pixhawk.md'">
+                        <div class="action-icon">🎮</div>
+                        <h3>Flight Controllers</h3>
+                        <p>Setup guides for Pixhawk, Cube Orange, and supported hardware.</p>
+                        <a class="action-link">View Hardware →</a>
+                    </div>
+                    <div class="action-card" onclick="location.href='cule-os/docs/uav/tuning/pid-tuning.md'">
+                        <div class="action-icon">⚙️</div>
+                        <h3>Tuning Guide</h3>
+                        <p>Optimize flight performance with PID tuning and filter configuration.</p>
+                        <a class="action-link">Start Tuning →</a>
+                    </div>
+                </div>
+
+                <!-- UAV Documentation Section -->
+                <section class="doc-section">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <span class="section-icon">🚁</span>
+                            UAV / Drone Documentation
+                        </h2>
+                        <a href="cule-os/docs/uav/README.md" class="view-all">View All →</a>
+                    </div>
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <span class="feature-tag">Hardware</span>
+                            <h4>Flight Controllers</h4>
+                            <p>Comprehensive guides for Pixhawk, Cube Orange, and hardware selection.</p>
+                            <div class="feature-links">
+                                <a href="cule-os/docs/uav/flight-controllers/pixhawk.md" class="feature-link">Pixhawk →</a>
+                                <a href="cule-os/docs/uav/flight-controllers/cube-orange.md" class="feature-link">Cube →</a>
+                                <a href="cule-os/docs/uav/flight-controllers/selection-guide.md" class="feature-link">Guide →</a>
+                            </div>
+                        </div>
+                        <div class="feature-card">
+                            <span class="feature-tag">Sensors</span>
+                            <h4>GPS & Navigation</h4>
+                            <p>Setup and configuration for GPS, IMU, compass, and barometer sensors.</p>
+                            <div class="feature-links">
+                                <a href="cule-os/docs/uav/sensors/gps.md" class="feature-link">GPS →</a>
+                                <a href="cule-os/docs/uav/sensors/imu.md" class="feature-link">IMU →</a>
+                                <a href="cule-os/docs/uav/sensors/compass.md" class="feature-link">Compass →</a>
+                            </div>
+                        </div>
+                        <div class="feature-card">
+                            <span class="feature-tag">Setup</span>
+                            <h4>Sensor Calibration</h4>
+                            <p>Step-by-step calibration procedures for all sensors and peripherals.</p>
+                            <div class="feature-links">
+                                <a href="cule-os/docs/uav/calibration/sensor-calibration.md" class="feature-link">Sensors →</a>
+                                <a href="cule-os/docs/uav/calibration/radio-calibration.md" class="feature-link">Radio →</a>
+                                <a href="cule-os/docs/uav/calibration/esc-calibration.md" class="feature-link">ESC →</a>
+                            </div>
+                        </div>
+                        <div class="feature-card">
+                            <span class="feature-tag">Safety</span>
+                            <h4>Emergency Procedures</h4>
+                            <p>Critical safety protocols, failsafe configuration, and checklists.</p>
+                            <div class="feature-links">
+                                <a href="cule-os/docs/uav/emergency/emergency-procedures.md" class="feature-link">Procedures →</a>
+                                <a href="cule-os/docs/uav/emergency/failsafe.md" class="feature-link">Failsafe →</a>
+                                <a href="cule-os/docs/uav/checklists/pre-flight.md" class="feature-link">Checklist →</a>
+                            </div>
+                        </div>
+                        <div class="feature-card">
+                            <span class="feature-tag">Advanced</span>
+                            <h4>PID Tuning & Filters</h4>
+                            <p>Optimize flight performance with detailed tuning guides.</p>
+                            <div class="feature-links">
+                                <a href="cule-os/docs/uav/tuning/pid-tuning.md" class="feature-link">PID →</a>
+                                <a href="cule-os/docs/uav/tuning/filters.md" class="feature-link">Filters →</a>
+                            </div>
+                        </div>
+                        <div class="feature-card">
+                            <span class="feature-tag">Integration</span>
+                            <h4>MAVLink & QGroundControl</h4>
+                            <p>Protocol reference and ground control station setup.</p>
+                            <div class="feature-links">
+                                <a href="cule-os/docs/uav/mavlink/protocol.md" class="feature-link">MAVLink →</a>
+                                <a href="cule-os/docs/uav/qgc/setup.md" class="feature-link">QGC →</a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Code Example -->
+                <section class="doc-section">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <span class="section-icon">💻</span>
+                            Quick Example
+                        </h2>
+                    </div>
+                    <div class="code-preview">
+                        <div class="code-header">
+                            <span class="code-lang">bash</span>
+                            <button class="code-copy" onclick="copyCode(this)">Copy</button>
+                        </div>
+                        <pre><code class="language-bash"># Clone Cule OS repository
+git clone https://github.com/sanjaysparker27/cule-os.git
+cd cule-os
+
+# Build for Pixhawk 6X
+make clean
+make BOARD=px4_fmu-v6x_default
+
+# Flash to flight controller
+dfu-util -a 0 -D build/px4_fmu-v6x_default/cule-os.px4</code></pre>
+                    </div>
+                </section>
+
+                <!-- Footer -->
+                <footer class="docs-footer">
+                    <div class="footer-grid">
+                        <div class="footer-column">
+                            <h4>Product</h4>
+                            <ul>
+                                <li><a href="download.html">Download</a></li>
+                                <li><a href="#">Release Notes</a></li>
+                                <li><a href="#">Roadmap</a></li>
+                            </ul>
+                        </div>
+                        <div class="footer-column">
+                            <h4>Documentation</h4>
+                            <ul>
+                                <li><a href="cule-os/docs/uav/flight-controllers/pixhawk.md">Flight Controllers</a></li>
+                                <li><a href="cule-os/docs/uav/sensors/gps.md">Sensors</a></li>
+                                <li><a href="cule-os/docs/uav/tuning/pid-tuning.md">Tuning</a></li>
+                            </ul>
+                        </div>
+                        <div class="footer-column">
+                            <h4>Community</h4>
+                            <ul>
+                                <li><a href="https://github.com/sanjaysparker27/cule-os/discussions" target="_blank">Discussions</a></li>
+                                <li><a href="https://github.com/sanjaysparker27/cule-os/issues" target="_blank">Issues</a></li>
+                                <li><a href="#">Contributing</a></li>
+                            </ul>
+                        </div>
+                        <div class="footer-column">
+                            <h4>Support</h4>
+                            <ul>
+                                <li><a href="docs/troubleshooting/troubleshooting-guide.md">Troubleshooting</a></li>
+                                <li><a href="mailto:sanjay.sparker27@gmail.com">Contact</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="footer-bottom">
+                        <span>© 2026 Cule OS. Built for autonomous vehicles.</span>
+                        <span>Created by <a href="https://sanjaysparker27.github.io/sanjay-sparker-portfolio" target="_blank" style="color: var(--accent);">Sanjay</a></span>
+                    </div>
+                </footer>
+            </main>
+
+            <!-- Table of Contents Sidebar -->
+            <aside class="toc-sidebar">
+                <div class="toc-title">On this page</div>
+                <ul class="toc-list">
+                    <li class="toc-item"><a href="#" class="toc-link active">Introduction</a></li>
+                    <li class="toc-item"><a href="#" class="toc-link">Quick Start</a></li>
+                    <li class="toc-item"><a href="#" class="toc-link">UAV Documentation</a></li>
+                    <li class="toc-item"><a href="#" class="toc-link">Code Example</a></li>
+                    <li class="toc-item"><a href="#" class="toc-link">Related Resources</a></li>
+                </ul>
+            </aside>
         </div>
     </div>
 
-    <footer>
-        <p>© 2026 Cule OS. Built for autonomous vehicles.</p>
-        <p><a href="https://sanjaysparker27.github.io/sanjay-sparker-portfolio" target="_blank">Created by Sanjay</a></p>
-    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <script>
+        // Toggle Sidebar on Mobile
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        // Toggle Submenu
+        function toggleSubmenu(element) {
+            element.classList.toggle('expanded');
+            element.nextElementSibling.classList.toggle('expanded');
+        }
+
+        // Copy Code
+        function copyCode(button) {
+            const code = button.parentElement.nextElementSibling.textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                button.textContent = 'Copied!';
+                setTimeout(() => button.textContent = 'Copy', 2000);
+            });
+        }
+
+        // Search Functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase();
+            // Implement search logic here
+            console.log('Searching for:', query);
+        });
+
+        // Smooth Scroll for TOC Links
+        document.querySelectorAll('.toc-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelectorAll('.toc-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
 </body>
 </html>

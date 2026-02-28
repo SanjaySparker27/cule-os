@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UAV Documentation - Cule OS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #294172;
+            --primary-dark: #1a2a4a;
+            --primary-light: #3c6eb4;
+            --accent: #76b900;
+            --text: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --bg: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --border: #30363d;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        /* Header */
+        .header {
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+        }
+        
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--accent);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 80px 24px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Content */
+        .content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 24px;
+        }
+        
+        .doc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+        
+        .doc-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 32px;
+            transition: all 0.3s ease;
+        }
+        
+        .doc-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+        }
+        
+        .doc-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        
+        .doc-card h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+        
+        .doc-card p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        
+        .doc-links {
+            list-style: none;
+        }
+        
+        .doc-links li {
+            margin-bottom: 8px;
+        }
+        
+        .doc-links a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .doc-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .section-title {
+            font-size: 32px;
+            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .doc-section {
+            margin-bottom: 64px;
+        }
+        
+        footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            padding: 40px 24px;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+        
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        
+        /* Markdown content styles */
+        .markdown-content {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 48px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .markdown-content h1 {
+            font-size: 36px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .markdown-content h2 {
+            font-size: 28px;
+            margin: 40px 0 20px;
+            color: var(--accent);
+        }
+        
+        .markdown-content h3 {
+            font-size: 22px;
+            margin: 32px 0 16px;
+        }
+        
+        .markdown-content p {
+            margin-bottom: 16px;
+            line-height: 1.8;
+        }
+        
+        .markdown-content code {
+            background: var(--bg-tertiary);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+        }
+        
+        .markdown-content pre {
+            background: var(--bg-tertiary);
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        
+        .markdown-content pre code {
+            background: none;
+            padding: 0;
+        }
+        
+        .markdown-content ul, .markdown-content ol {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+        
+        .markdown-content li {
+            margin-bottom: 8px;
+        }
+        
+        .markdown-content a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        
+        .markdown-content a:hover {
+            text-decoration: underline;
+        }
+        
+        .markdown-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+        }
+        
+        .markdown-content th, .markdown-content td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .markdown-content th {
+            background: var(--bg-tertiary);
+            font-weight: 600;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent);
+            text-decoration: none;
+            margin-bottom: 24px;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="../../../index.html" class="logo">
+                <div class="logo-icon">C</div>
+                <span>Cule OS</span>
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="../../../index.html">Home</a></li>
+                    <li><a href="../../../docs.html">Documentation</a></li>
+                    <li><a href="../../../download.html">Download</a></li>
+                    <li><a href="https://github.com/sanjaysparker27/cule-os" target="_blank">GitHub</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>🚁 UAV Documentation</h1>
+        <p>Complete guides for building and operating autonomous drones with Cule OS</p>
+    </section>
+
+    <div class="content">
+        <div class="doc-section">
+            <h2 class="section-title">
+                <span class="section-icon">🎮</span>
+                Flight Controllers
+            </h2>
+            <div class="doc-grid">
+                <div class="doc-card">
+                    <div class="doc-icon">🚁</div>
+                    <h3>Pixhawk Series</h3>
+                    <p>Complete setup guide for Pixhawk 4, 4 Mini, 6X, and 6C flight controllers.</p>
+                    <ul class="doc-links">
+                        <li><a href="flight-controllers/pixhawk.html">View Documentation →</a></li>
+                    </ul>
+                </div>
+                
+                <div class="doc-card">
+                    <div class="doc-icon">📦</div>
+                    <h3>Cube Orange</h3>
+                    <p>Professional-grade flight controller setup and configuration.</p>
+                    <ul class="doc-links">
+                        <li><a href="flight-controllers/cube-orange.html">View Documentation →</a></li>
+                    </ul>
+                </div>
+                
+                <div class="doc-card">
+                    <div class="doc-icon">🎯</div>
+                    <h3>Selection Guide</h3>
+                    <p>Choose the right flight controller for your application.</p>
+                    <ul class="doc-links">
+                        <li><a href="flight-controllers/selection-guide.html">View Guide →</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="doc-section">
+            <h2 class="section-title">
+                <span class="section-icon">📡</span>
+                Sensors
+            </h2>
+            <div class="doc-grid">
+                <div class="doc-card">
+                    <div class="doc-icon">🛰️</div>
+                    <h3>GPS / GNSS</h3>
+                    <p>Setup and configuration for GPS modules including RTK systems.</p>
+                    <ul class="doc-links">
+                        <li><a href="sensors/gps.html">View Documentation →</a></li>
+                    </ul>
+                </div>
+                
+                <div class="doc-card">
+                    <div class="doc-icon">🧭</div>
+                    <h3>IMU</h3>
+                    <p>Inertial Measurement Unit configuration and calibration.</p>
+                    <ul class="doc-links">
+                        <li><a href="sensors/imu.html">View Documentation →</a></li>
+                    </ul>
+                </div>
+                
+                <div class="doc-card">
+                    <div class="doc-icon">🧲</div>
+                    <h3>Compass</h3>
+                    <p>Magnetometer setup and interference mitigation.</p>
+                    <ul class="doc-links">
+                        <li><a href="sensors/compass.html">View Documentation →</a></li>
+                    </ul>
+                </div>
+                
+                <div class="doc-card">
+                    <div class="doc-icon">📊</div>
+                    <h3>Barometer</h3>
+                    <p>Pressure sensor configuration for altitude hold.</p>
+                    <ul class="doc-links">
+                        <li><a href="sensors/barometer.html">View Documentation →</a></li>
+                    </ul>
+                </div>
+                
+                <div class="doc-card">
+                    <div class="doc-icon">📏</div>
+                    <h3>Rangefinder</h3>
+                    <p>LIDAR and ultrasonic sensor integration.</p>
+                    <ul class="doc-links">
+                        <li><a href="sensors/rangefinder.html">View Documentation →</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="doc-section">
+            <h2 class="section-title">
+                <span class="section-icon">🔧</span>
+                Calibration & Tuning
+            </h2>
+            <div class="doc-grid">
+                <div class="doc-card">
+                    <div class="doc-icon">⚙️</div>
+                    <h3>Sensor Calibration</h3>
+                    <p>Step-by-step calibration procedures for all sensors.</p>
+                    <ul class="doc-links">
+                        <li><a href="calibration/sensor-calibration.html">View Guide →</a></li>
+                    </ul>
+                </div>
+                
+                <div class="doc-card">
+                    <div class="doc-icon">📻</div>
+                    <h3>Radio Calibration</h3>
+                    <p>RC transmitter setup and binding procedures.</p>
+                    <ul class="doc-links">
+                        <li><a href="calibration/radio-calibration.html">View Guide →</a></li>
+                    </ul>
+                </div>
+                
+                <div class="doc-card">
+                    <div class="doc-icon">🔌</div>
+                    <h3>ESC Calibration</h3>
+                    <p>Motor controller setup and synchronization.</p>
+                    <ul class="doc-links">
+                        <li><a href="calibration/esc-calibration.html">View Guide →</a></li>
+                    </ul>
+                </div>
+                
+                <div class="doc-card">
+                    <div class="doc-icon">🎛️</div>
+                    <h3>PID Tuning</h3>
+                    <p>Optimize flight performance with PID tuning.</p>
+                    <ul class="doc-links">
+                        <li><a href="tuning/pid-tuning.html">View Guide →</a></li>
+                    </ul>
+                </div>
+                
+                <div class="doc-card">
+                    <div class="doc-icon">🔍</div>
+                    <h3>Filter Configuration</h3>
+                    <p>IMU filtering and vibration reduction.</p>
+                    <ul class="doc-links">
+                        <li><a href="tuning/filters.html">View Guide →</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="doc-section">
+            <h2 class="section-title">
+                <span class="section-icon">⚠️</span>
+                Safety & Emergency
+            </h2>
+            <div class="doc-grid">
+                <div class="doc-card">
+                    <div class="doc-icon">🚨</div>
+                    <h3>Emergency Procedures</h3>
+                    <p>Critical safety procedures and emergency protocols.</p>
+                    <ul class="doc-links">
+                        <li><a href="emergency/emergency-procedures.html">View Procedures →</a></li>
+                    </ul>
+                </div>
+                
+                <div class="doc-card">
+                    <div class="doc-icon">🛡️</div>
+                    <h3>Failsafe Configuration</h3>
+                    <p>Setup failsafes for RC loss, battery, and geofence.</p>
+                    <ul class="doc-links">
+                        <li><a href="emergency/failsafe.html">View Configuration →</a></li>
+                    </ul>
+                </div>
+                
+                <div class="doc-card">
+                    <div class="doc-icon">✅</div>
+                    <h3>Pre-flight Checklist</h3>
+                    <p>Essential checks before every flight.</p>
+                    <ul class="doc-links">
+                        <li><a href="checklists/pre-flight.html">View Checklist →</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="doc-section">
+            <h2 class="section-title">
+                <span class="section-icon">📡</span>
+                Integration
+            </h2>
+            <div class="doc-grid">
+                <div class="doc-card">
+                    <div class="doc-icon">📶</div>
+                    <h3>MAVLink Protocol</h3>
+                    <p>Communication protocol integration guide.</p>
+                    <ul class="doc-links">
+                        <li><a href="mavlink/protocol.html">View Protocol →</a></li>
+                        <li><a href="mavlink/messages.html">Message Reference →</a></li>
+                    </ul>
+                </div>
+                
+                <div class="doc-card">
+                    <div class="doc-icon">🎮</div>
+                    <h3>QGroundControl</h3>
+                    <p>Ground control station setup and configuration.</p>
+                    <ul class="doc-links">
+                        <li><a href="qgc/setup.html">Setup Guide →</a></li>
+                        <li><a href="qgc/configuration.html">Configuration →</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 Cule OS. Built for autonomous vehicles. <a href="https://sanjaysparker27.github.io/sanjay-sparker-portfolio" target="_blank">Created by Sanjay</a></p>
+    </footer>
+</body>
+</html>
