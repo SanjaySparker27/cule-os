@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UAV Documentation - Cule OS</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0d1117; color: #e0e0e0; line-height: 1.6; }
+        .header { background: #161b22; border-bottom: 1px solid #30363d; padding: 16px 24px; }
+        .header-content { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: white; font-weight: 700; font-size: 20px; }
+        .logo-icon { width: 36px; height: 36px; background: #76b900; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+        .nav a { color: #a0a0a0; text-decoration: none; margin-left: 24px; font-size: 14px; }
+        .nav a:hover { color: #76b900; }
+        .hero { background: linear-gradient(135deg, #294172 0%, #1a2a4a 100%); padding: 80px 24px; text-align: center; }
+        .hero h1 { font-size: 48px; margin-bottom: 16px; }
+        .hero p { font-size: 18px; color: #a0a0a0; max-width: 600px; margin: 0 auto; }
+        .content { max-width: 1200px; margin: 0 auto; padding: 60px 24px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 24px; }
+        .card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 32px; transition: all 0.3s ease; }
+        .card:hover { border-color: #76b900; transform: translateY(-4px); }
+        .card-icon { width: 56px; height: 56px; background: linear-gradient(135deg, #3c6eb4, #294172); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 28px; margin-bottom: 20px; }
+        .card h3 { font-size: 20px; margin-bottom: 12px; color: #76b900; }
+        .card p { color: #a0a0a0; font-size: 14px; margin-bottom: 16px; }
+        .card a { color: #58a6ff; text-decoration: none; font-size: 14px; }
+        .section-title { font-size: 32px; margin-bottom: 32px; }
+        footer { background: #161b22; border-top: 1px solid #30363d; padding: 40px 24px; text-align: center; color: #a0a0a0; margin-top: 80px; }
+        footer a { color: #76b900; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="logo"><div class="logo-icon">C</div><span>Cule OS</span></a>
+            <nav class="nav">
+                <a href="index.html">Home</a>
+                <a href="docs.html">Documentation</a>
+                <a href="download.html">Download</a>
+            </nav>
+        </div>
+    </header>
+    <section class="hero">
+        <h1>UAV Documentation</h1>
+        <p>Complete guides for building and operating autonomous drones</p>
+    </section>
+    <div class="content">
+        <h2 class="section-title">Flight Controllers</h2>
+        <div class="grid">
+            <div class="card">
+                <div class="card-icon">🎮</div>
+                <h3>Pixhawk Series</h3>
+                <p>Setup guide for Pixhawk 4, 4 Mini, 6X, and 6C flight controllers.</p>
+                <a href="https://github.com/sanjaysparker27/cule-os/tree/main/cule-os/docs/uav/flight-controllers">View on GitHub →</a>
+            </div>
+            <div class="card">
+                <div class="card-icon">📦</div>
+                <h3>Cube Orange</h3>
+                <p>Professional-grade flight controller setup and configuration.</p>
+                <a href="https://github.com/sanjaysparker27/cule-os/tree/main/cule-os/docs/uav/flight-controllers">View on GitHub →</a>
+            </div>
+        </div>
+        <h2 class="section-title" style="margin-top: 64px;">Sensors</h2>
+        <div class="grid">
+            <div class="card">
+                <div class="card-icon">🛰️</div>
+                <h3>GPS / GNSS</h3>
+                <p>Setup and configuration for GPS modules including RTK systems.</p>
+                <a href="https://github.com/sanjaysparker27/cule-os/tree/main/cule-os/docs/uav/sensors">View on GitHub →</a>
+            </div>
+            <div class="card">
+                <div class="card-icon">🧭</div>
+                <h3>IMU</h3>
+                <p>Inertial Measurement Unit configuration and calibration.</p>
+                <a href="https://github.com/sanjaysparker27/cule-os/tree/main/cule-os/docs/uav/sensors">View on GitHub →</a>
+            </div>
+            <div class="card">
+                <div class="card-icon">🧲</div>
+                <h3>Compass</h3>
+                <p>Magnetometer setup and interference mitigation.</p>
+                <a href="https://github.com/sanjaysparker27/cule-os/tree/main/cule-os/docs/uav/sensors">View on GitHub →</a>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>© 2026 Cule OS. <a href="https://sanjaysparker27.github.io/sanjay-sparker-portfolio" target="_blank">Created by Sanjay</a></p>
+    </footer>
+</body>
+</html>
